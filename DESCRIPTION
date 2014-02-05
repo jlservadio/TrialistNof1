@@ -1,9 +1,10 @@
-Package: TrialistNof1
+Package: trialist.nof1.dpu
 Type: Package
-Title: Bayesian N-of-1 Analysis
-Version: 1.0
-Date: 2014-02-05
+Title: Bayesian N-of-1 calculations
+Version: 0.2
+Date: 2014-02-04
 Author: Christopher Schmid, Joseph Servadio
 Maintainer: Christopher Schmid <christopher_schmid@brown.edu>, Joseph Servadio <joseph_servadio@brown.edu>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Description: For each individual N-of-1 study done for 6 different chronic pain outcomes, program runs MCMC algorithm in JAGS to calculate posterior distribution of treatment effect. Returns posterior median, 2.5 and 97.5 percentiles as well as posterior probabilities that effect is greater than 20% improvement or less than 20% improvement for treatment B compared to A and A compared to B (i.e. 4 probabilities). For now, just fits simple t-test model with non-informative priors. This will be updated in new versions.
+License: GPL
+Depends: rjags, runjags, combinat, jsonlite
