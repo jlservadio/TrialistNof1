@@ -1,9 +1,9 @@
 Package: TrialistNof1
 Type: Package
-Title: What the package does (short line)
+Title: Bayesian N-of-1 Analysis
 Version: 1.0
-Date: 2014-02-04
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
+Date: 2014-02-05
+Author: Christopher Schmid, Joseph Servadio
+Maintainer: Christopher Schmid <christopher_schmid@brown.edu>, Joseph Servadio <joseph_servadio@brown.edu>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
