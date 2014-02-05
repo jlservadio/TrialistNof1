@@ -40,6 +40,13 @@ To call this DPU remotely the client needs to perform a HTTP POST request as exe
     curl -H "Content-Type: application/json" --data @example_post.json \             https://pilots.ohmage.org/ocpu/github/jservadio/TrialistNof1/R/wrap/json
 
 
+    library(jsonlite)
+    library(TrialistNof1)
+
+    payload <- fromJSON("example_post.json")
+    res <- do.call(wrap, payload)
+    output <- toJSON(res)
+
 
 For the `observations` argument, we can either pass a set of rows (which is conventional in JSON):
 
