@@ -37,7 +37,7 @@ A DPU is simply an R function that is designed to be called either locally or re
 
 To call this DPU remotely the client needs to perform a HTTP POST request as exemplified with curl:
 
-curl -H "Content-Type: application/json" --data @example_post.json \ https://pilots.ohmage.org/ocpu/github/jservadio/TrialistNof1/R/wrap/json
+    curl -H "Content-Type: application/json" --data @example_post.json \             https://pilots.ohmage.org/ocpu/github/jservadio/TrialistNof1/R/wrap/json
 
 
 
