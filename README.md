@@ -9,7 +9,7 @@ A DPU is simply an R function that is designed to be called either locally or re
 
     #install
     library(devtools)
-    install_github("trialist.nof1.dpu", "openmhealth")
+    install_github("TrialistNof1", "openmhealth")
 
     #use
     library("trialist.nof1.dpu")
@@ -23,7 +23,9 @@ A DPU is simply an R function that is designed to be called either locally or re
       Treat = c(0,1,0,1,0,1,0,1)
     )
 
-    nof1 <- wrap.norm2(
+    out <- wrap(a) # a is an R object converted from a JSON string
+
+    nof1 <- analyze(
       observations = mydata,
       alphaprior = list("norm",0,1e-6),
       betaprior = list("norm",0,1e-6),
