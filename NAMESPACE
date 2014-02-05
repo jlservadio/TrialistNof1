@@ -1,1 +1,6 @@
+import(rjags)
+import(runjags)
+import(combinat)
+import(jsonlite)
+export(wrap)
 exportPattern("^[[:alpha:]]+")
