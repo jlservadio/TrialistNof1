@@ -1,4 +1,4 @@
-jdata = '{
+{
     "metadata": {
         "regimen_a":["Tylenol", "Complementary treatment: including but not limited to physical activity (exercise, stretching, yoga), mindfulness (meditation, relaxation, music therapy)"],
         "regimen_b":["Hydrocodone combination product (e.g., Vicodin, Norco)"],
@@ -905,4 +905,4 @@ jdata = '{
             "sleepDisturbancePrompt":2
         }
     ]
-}'
+}
