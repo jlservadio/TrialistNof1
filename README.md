@@ -35,11 +35,17 @@ A DPU is simply an R function that is designed to be called either locally or re
        
 ## Call remotely as DPU through OpenCPU
 
-For the `observations` argument, we can either pass a set of rows (which is conventional in JSON):
+To call this DPU remotely the client needs to perform a HTTP POST request as exemplified with curl:
 
-    curl https://pilots.ohmage.org/ocpu/github/openmhealth/trialist.nof1.dpu/R/wrap.norm2/json \
-    -H 'Content-Type: application/json' \
-    -d '{"observations":[
+curl -H "Content-Type: application/json" --data @example_post.json \ https://pilots.ohmage.org/ocpu/github/jservadio/TrialistNof1/R/wrap/json
+
+
+
+%%For the `observations` argument, we can either pass a set of rows (which is conventional in JSON):
+
+%%    curl https://pilots.ohmage.org/ocpu/github/openmhealth/trialist.nof1.dpu/R/wrap.norm2/json \
+%%    -H 'Content-Type: application/json' \
+%%    -d '{"observations":[
       {"Pain":22,"Fatigue":7,"Drowsy":5,"Sleep":4,"Thinking":5,"Constipation":10,"Treat":0},
       {"Pain":18,"Fatigue":4,"Drowsy":5,"Sleep":2,"Thinking":2,"Constipation":7,"Treat":1},
       {"Pain":21,"Fatigue":9,"Drowsy":5,"Sleep":4,"Thinking":6,"Constipation":10,"Treat":0},
@@ -51,11 +57,11 @@ For the `observations` argument, we can either pass a set of rows (which is conv
     ], "conv.limit": 1.05, "niters":10000, "setsize":1000, "alphaprior":["norm",0, 1e-6], 
     "betaprior": ["norm", 0, 1e-6], "varprior" : ["sd", "unif"], "varprior.params":[0,5]}'
     
-Or we can call the same function can using a list of columns:
+%% Or we can call the same function can using a list of columns:
 
-    curl https://pilots.ohmage.org/ocpu/github/openmhealth/trialist.nof1.dpu/R/wrap.norm2/json \
-    -H 'Content-Type: application/json' \
-    -d '{"observations":{
+%%    curl https://pilots.ohmage.org/ocpu/github/openmhealth/trialist.nof1.dpu/R/wrap.norm2/json \
+%%    -H 'Content-Type: application/json' \
+%%    -d '{"observations":{
       "Pain":[22,18,21,16,22,15,23,14], 
       "Fatigue":[7,4,9,3,7,4,8,3], 
       "Drowsy":[5,5,5,4,5,5,4,5], 
