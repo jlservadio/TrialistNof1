@@ -1,5 +1,5 @@
 wrap <-
-function(a) {
+function(data, metadata) {
 
 #####################################
 # Converting Output to Desired Format
@@ -7,22 +7,22 @@ function(a) {
 
 Intensity2 = Enjoyment2 = Activity2 = Fatigue2 = Drowsy2 = Sleep2 = 
 		Thinking2 = Constipation2 = Sharpness2 = Hotness2 = Sensitivity2 = 
-		Block2 = Day2 = rep(NA, nrow(a$data))
+		Block2 = Day2 = rep(NA, nrow(data))
 	
-	for (i in 1:nrow(a$data)) {
-		Day2[i] = as.numeric(as.Date(a$data[[1]][i]) - as.Date(a$metadata[[3]]))
-		Block2[i] = a$data[[3]][i]
-		Intensity2[i] = a$data[[4]][i]
-		Enjoyment2[i] = a$data[[5]][i]
-		Activity2[i] = a$data[[6]][i]
-		Fatigue2[i] = a$data[[7]][i]
-		Drowsy2[i] = a$data[[8]][i]
-		Sleep2[i] = a$data[[9]][i]
-		Thinking2[i] = a$data[[10]][i]
-		Constipation2[i] = a$data[[11]][i]
-		Sharpness2[i] = a$data[[12]][i]
-		Hotness2[i] = a$data[[13]][i]
-		Sensitivity2[i] = a$data[[14]][i]
+	for (i in 1:nrow(data)) {
+		Day2[i] = as.numeric(as.Date(data[[1]][i]) - as.Date(metadata[[3]]))
+		Block2[i] = data[[3]][i]
+		Intensity2[i] = data[[4]][i]
+		Enjoyment2[i] = data[[5]][i]
+		Activity2[i] = data[[6]][i]
+		Fatigue2[i] = data[[7]][i]
+		Drowsy2[i] = data[[8]][i]
+		Sleep2[i] = data[[9]][i]
+		Thinking2[i] = data[[10]][i]
+		Constipation2[i] = data[[11]][i]
+		Sharpness2[i] = data[[12]][i]
+		Hotness2[i] = data[[13]][i]
+		Sensitivity2[i] = data[[14]][i]
 	}
 	
 	Day2 = Day2 + 1
@@ -30,10 +30,10 @@ Intensity2 = Enjoyment2 = Activity2 = Fatigue2 = Drowsy2 = Sleep2 =
 	Pain2 = Intensity2 + Enjoyment2 + Activity2
 	Neuropain2 = Sharpness2 + Hotness2 + Sensitivity2
 	
-	Treat2 = rep(NA, nrow(a$data))
-	for (i in 1:nrow(a$data)) {
-		if (!is.na(a$data[[2]][i]) & a$data[[2]][i] == "A") {Treat2[i] = 0}
-		if (!is.na(a$data[[2]][i]) & a$data[[2]][i] == "B") {Treat2[i] = 1}
+	Treat2 = rep(NA, nrow(data))
+	for (i in 1:nrow(data)) {
+		if (!is.na(data[[2]][i]) & data[[2]][i] == "A") {Treat2[i] = 0}
+		if (!is.na(data[[2]][i]) & data[[2]][i] == "B") {Treat2[i] = 1}
 	}
 	
 	Covs2 = cbind(Day2, Block2)
