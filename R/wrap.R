@@ -64,8 +64,6 @@ Intensity2 = Enjoyment2 = Activity2 = Fatigue2 = Drowsy2 = Sleep2 =
 	observations = cbind(Day2, Pain2, Fatigue2, Drowsy2, Sleep2, Thinking2, 
 		Constipation2, Neuropain2, Treat2, Block2)
 	
-	logit = function(x)	log(x/(1-x))
-	
 	################
 	# Analyzing Data
 	################
