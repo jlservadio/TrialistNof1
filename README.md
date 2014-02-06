@@ -9,7 +9,7 @@ A DPU is simply an R function that is designed to be called either locally or re
 
     #install
     library(devtools)
-    install_github("TrialistNof1", "jservadio ")
+    install_github("TrialistNof1", "jservadio")
     
 To call the DPU locally in R using the example dataset included in the repo:
 
