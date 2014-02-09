@@ -10,19 +10,19 @@ Intensity2 = Enjoyment2 = Activity2 = Fatigue2 = Drowsy2 = Sleep2 =
 		Block2 = Day2 = rep(NA, nrow(data))
 	
 	for (i in 1:nrow(data)) {
-		Day2[i] = as.numeric(as.Date(data[[1]][i]) - as.Date(metadata[[3]]))
-		Block2[i] = data[[3]][i]
-		Intensity2[i] = data[[4]][i]
-		Enjoyment2[i] = data[[5]][i]
-		Activity2[i] = data[[6]][i]
-		Fatigue2[i] = data[[7]][i]
-		Drowsy2[i] = data[[8]][i]
-		Sleep2[i] = data[[9]][i]
-		Thinking2[i] = data[[10]][i]
-		Constipation2[i] = data[[11]][i]
-		Sharpness2[i] = data[[12]][i]
-		Hotness2[i] = data[[13]][i]
-		Sensitivity2[i] = data[[14]][i]
+		Day2[i] = as.numeric(as.Date(data[["timestamp"]][i]) - as.Date(metadata[["trial_start_date"]]))
+		Block2[i] = data[["cycle"]][i]
+		Intensity2[i] = data[["averagePainIntensity"]][i]
+		Enjoyment2[i] = data[["enjoymentOfLife"]][i]
+		Activity2[i] = data[["generalActivity"]][i]
+		Fatigue2[i] = data[["fatiguePrompt"]][i]
+		Drowsy2[i] = data[["drowsinessPrompt"]][i]
+		Sleep2[i] = data[["sleepDisturbancePrompt"]][i]
+		Thinking2[i] = data[["cognitiveFunctionSlowThinkingPrompt"]][i]
+		Constipation2[i] = data[["constipationPrompt"]][i]
+		Sharpness2[i] = data[["painSharpness"]][i]
+		Hotness2[i] = data[["painHotness"]][i]
+		Sensitivity2[i] = data[["painSensitivity"]][i]
 	}
 	
 	Day2 = Day2 + 1
@@ -32,34 +32,11 @@ Intensity2 = Enjoyment2 = Activity2 = Fatigue2 = Drowsy2 = Sleep2 =
 	
 	Treat2 = rep(NA, nrow(data))
 	for (i in 1:nrow(data)) {
-		if (!is.na(data[[2]][i]) & data[[2]][i] == "A") {Treat2[i] = 0}
-		if (!is.na(data[[2]][i]) & data[[2]][i] == "B") {Treat2[i] = 1}
+		if (!is.na(data[["regimen"]][i]) & data[["regimen"]][i] == "A") {Treat2[i] = 0}
+		if (!is.na(data[["regimen"]][i]) & data[["regimen"]][i] == "B") {Treat2[i] = 1}
 	}
 	
 	Covs2 = cbind(Day2, Block2)
-	
-	for (i in 1:length(Pain2)) {
-		if (Pain2[i] < 1) {Pain2[i] = 1}
-		if (Pain2[i] > 30) {Pain2[i] = 30}
-		
-		if (Fatigue2[i] < 1) {Fatigue2[i] = 1}
-		if (Fatigue2[i] > 4) {Fatigue2[i] = 4}
-		
-		if (Drowsy2[i] < 1) {Drowsy2[i] = 1}
-		if (Drowsy2[i] > 5) {Drowsy2[i] = 5}
-		
-		if (Sleep2[i] < 1) {Sleep2[i] = 1}
-		if (Sleep2[i] > 4) {Sleep2[i] = 4}
-		
-		if (Thinking2[i] < 1) {Thinking2[i] = 1}
-		if (Thinking2[i] > 4) {Thinking2[i] = 4}
-		
-		if (Constipation2[i] < 1) {Constipation2[i] = 1}
-		if (Constipation2[i] > 4) {Constipation2[i] = 4}
-		
-		if (Neuropain2[i] < 1) {Neuropain2[i] = 1}
-		if (Neuropain2[i] > 30) {Neuropain2[i] = 30}
-	}
 	
 	observations = cbind(Day2, Pain2, Fatigue2, Drowsy2, Sleep2, Thinking2, 
 		Constipation2, Neuropain2, Treat2, Block2)
@@ -77,7 +54,7 @@ Intensity2 = Enjoyment2 = Activity2 = Fatigue2 = Drowsy2 = Sleep2 =
 	Constipation=Constipation2,
 	Neuropain=Neuropain2,
 	Treat= Treat2, 
-	score.range = c(30, 4, 5, 4, 4, 4,30),
+	score.range = c(30, 5, 6, 5, 5, 5, 30),
 	Covs = NULL,
 	slopeprior = list("norm", 0, 0.1),
 	nChains = 3,
