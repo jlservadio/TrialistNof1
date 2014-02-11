@@ -18,11 +18,16 @@ Intensity2 = Enjoyment2 = Activity2 = Fatigue2 = Drowsy2 = Sleep2 =
 		Fatigue2[i] = data[["fatiguePrompt"]][i]
 		Drowsy2[i] = data[["drowsinessPrompt"]][i]
 		Sleep2[i] = data[["sleepDisturbancePrompt"]][i]
-		Thinking2[i] = data[["cognitiveFunctionSlowThinkingPrompt"]][i]
 		Constipation2[i] = data[["constipationPrompt"]][i]
 		Sharpness2[i] = data[["painSharpness"]][i]
 		Hotness2[i] = data[["painHotness"]][i]
 		Sensitivity2[i] = data[["painSensitivity"]][i]
+		
+		if (metadata[["cognitiveFunctionPromptKey]] == "cognitiveFunctionFoggyThinkingPrompt) {
+			Thinking2[i] = data[["cognitiveFunctionSlowThinkingPrompt"]][i]
+		} else if (metadata[["cognitiveFunctionPromptKey"]] == "cognitiveFunctionWorkingHarderPrompt") {
+			Thinking2[i] = data[["cognitiveFunctionWorkingHarderPrompt"]][i]
+		}
 	}
 	
 	Day2 = Day2 + 1
