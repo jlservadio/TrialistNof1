@@ -24,7 +24,7 @@ Intensity2 = Enjoyment2 = Activity2 = Fatigue2 = Drowsy2 = Sleep2 =
 		Sensitivity2[i] = data[["painSensitivity"]][i]
 		
 		if (metadata[["cognitiveFunctionPromptKey"]] == "cognitiveFunctionFoggyThinkingPrompt") {
-			Thinking2[i] = data[["cognitiveFunctionSlowThinkingPrompt"]][i]
+			Thinking2[i] = data[["cognitiveFunctionFoggyThinkingPrompt"]][i]
 		} else if (metadata[["cognitiveFunctionPromptKey"]] == "cognitiveFunctionWorkingHarderPrompt") {
 			Thinking2[i] = data[["cognitiveFunctionWorkingHarderPrompt"]][i]
 		}
