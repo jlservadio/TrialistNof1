@@ -1,7 +1,7 @@
 analyze <-
-function(Pain, Fatigue, Drowsy, Sleep, Thinking, Constipation, Treat, Neuropain, score.range = c(30, 4, 5, 4, 4, 4,30),
+  function(Pain, Fatigue, Drowsy, Sleep, Thinking, Constipation, Treat, Neuropain, score.range = c(30, 4, 5, 4, 4, 4,30),
            Covs,  slopeprior, nChains = 3, conv.limit = 1.05, niters = 50000, nruns = 5000, setsize = 4000, alphaprior, 
-		   beta.norm.prior, beta.ord.prior, c1prior, dcprior, varprior, varprior.params, path = "")
+		   beta.norm.prior, beta.ord.prior, c1prior, dcprior, varprior, varprior.params, path = "", i)
   {
 
     # Pain, Fatigue, Drowsy, Sleep, Thinking, Constipation, Neuropain are vectors of outcomes
@@ -42,38 +42,108 @@ function(Pain, Fatigue, Drowsy, Sleep, Thinking, Constipation, Treat, Neuropain,
     
     outnames = c("Pain", "Fatigue", "Drowsy", "Sleep", "Thinking", "Constipation", "Neuropathic Pain")
     names(score.range) = outnames
+	
+    cat("\n \n \n Pain", i, ".1 \n \n \n")
     
-    Pain.out = run.norm(Pain, Treat, Covs, "normal", "hom", nChains, conv.limit, niters, nruns, setsize, slopeprior, alphaprior, 
-		beta.norm.prior, varprior,varprior.params, path = "")  
-    Fatigue.out = run.ord(Fatigue, Treat, Covs, score.range[2]+1, "cumlogit", nChains, conv.limit, niters, nruns, setsize, 
-		beta.ord.prior, dcprior, c1prior, path)
-    Drowsy.out = run.ord(Drowsy, Treat, Covs, score.range[3]+1, "cumlogit", nChains, conv.limit, niters, nruns, setsize, 
-		beta.ord.prior, dcprior, c1prior, path)    
-    Sleep.out = run.ord(Sleep, Treat, Covs, score.range[4]+1, "cumlogit", nChains, conv.limit, niters, nruns, setsize, 
-		beta.ord.prior, dcprior, c1prior, path)
-    Thinking.out = run.ord(Thinking, Treat, Covs, score.range[5]+1, "cumlogit", nChains, conv.limit, niters, nruns, setsize, 
-		beta.ord.prior, dcprior, c1prior, path)
-    Constipation.out = run.ord(Constipation, Treat, Covs, score.range[6]+1, "cumlogit", nChains, conv.limit, niters, nruns, 
-		setsize, beta.ord.prior, dcprior, c1prior, path)
-    Neuropain.out = run.norm(Neuropain, Treat, Covs, "normal", "hom", nChains, conv.limit, niters, nruns, setsize, slopeprior, 
-		alphaprior, beta.norm.prior, varprior,varprior.params, path = "")  
+	Pain.out = tryCatch({run.norm(Pain, Treat, Covs, "normal", "hom", nChains, conv.limit, niters, nruns, setsize, slopeprior, 
+		alphaprior, beta.norm.prior, varprior,varprior.params, path = "")}, error=function(cond){
+		caught <- list("DIC" = 1000)})  
+		
+	cat("\n \n \n Fatigue", i, ".2 \n \n \n")
+    
+	Fatigue.out = tryCatch({run.ord(Fatigue, Treat, Covs, score.range[2]+1, "cumlogit", nChains, conv.limit, niters, nruns, 
+		setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+	
+	cat("\n \n \n Drowsy", i, ".3 \n \n \n")
+    
+	Drowsy.out = tryCatch({run.ord(Drowsy, Treat, Covs, score.range[3]+1, "cumlogit", nChains, conv.limit, niters, nruns, 
+		setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+	
+	cat("\n \n \n Sleep", i, ".4 \n \n \n")
+    
+	Sleep.out = tryCatch({run.ord(Sleep, Treat, Covs, score.range[4]+1, "cumlogit", nChains, conv.limit, niters, nruns, 
+		setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+	
+	cat("\n \n \n Thinking", i, ".5 \n \n \n")
+    
+	Thinking.out = tryCatch({run.ord(Thinking, Treat, Covs, score.range[5]+1, "cumlogit", nChains, conv.limit, niters, nruns, 
+		setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+	
+	cat("\n \n \n Constipation", i, ".6 \n \n \n")
+	
+	Constipation.out = tryCatch({run.ord(Constipation, Treat, Covs, score.range[6]+1, "cumlogit", nChains, conv.limit, niters, 
+	nruns, setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+	
+	cat("\n \n \n Neuropain", i, ".7 \n \n \n")
+    
+	Neuropain.out = tryCatch({run.norm(Neuropain, Treat, Covs, "normal", "hom", nChains, conv.limit, niters, nruns, setsize, 
+		slopeprior, alphaprior, beta.norm.prior, varprior,varprior.params, path = "")}, error=function(cond){
+		caught <- list("DIC" = 1000)})
 
-    Pain.treat.diff = Pain.out[["beta"]]
-    Fatigue.treat.diff = treat.diffs(Fatigue.out[["p"]], Treat)
-    Drowsy.treat.diff = treat.diffs(Drowsy.out[["p"]], Treat)
-    Sleep.treat.diff = treat.diffs(Sleep.out[["p"]], Treat)
-    Thinking.treat.diff = treat.diffs(Thinking.out[["p"]], Treat)
-    Constipation.treat.diff = treat.diffs(Constipation.out[["p"]], Treat)
-    Neuropain.treat.diff = Neuropain.out[["beta"]]
+    if (length(Pain.out) > 1) {Pain.treat.diff = Pain.out[["beta"]]}
+    if (length(Fatigue.out) > 1) {Fatigue.treat.diff = treat.diffs(Fatigue.out[["p"]], Treat)}
+    if (length(Drowsy.out) > 1) {Drowsy.treat.diff = treat.diffs(Drowsy.out[["p"]], Treat)}
+    if (length(Sleep.out) > 1) {Sleep.treat.diff = treat.diffs(Sleep.out[["p"]], Treat)}
+    if (length(Thinking.out) > 1) {Thinking.treat.diff = treat.diffs(Thinking.out[["p"]], Treat)}
+    if (length(Constipation.out) > 1) {Constipation.treat.diff = treat.diffs(Constipation.out[["p"]], Treat)}
+    if (length(Neuropain.out) > 1) {Neuropain.treat.diff = Neuropain.out[["beta"]]}
 
-    Pain.treat.diff.change = treat.diff.change(Pain.treat.diff, score.range[1])
-    Fatigue.treat.diff.change = treat.diff.change(Fatigue.treat.diff,score.range[2])
-    Drowsy.treat.diff.change = treat.diff.change(Drowsy.treat.diff,score.range[3])
-    Sleep.treat.diff.change = treat.diff.change(Sleep.treat.diff,score.range[4])
-    Thinking.treat.diff.change = treat.diff.change(Thinking.treat.diff,score.range[5])
-    Constipation.treat.diff.change = treat.diff.change(Constipation.treat.diff,score.range[6])
-    Neuropain.treat.diff.change = treat.diff.change(Neuropain.treat.diff, score.range[1])
-
+    if (length(Pain.out) > 1) {
+		Pain.treat.diff.change = treat.diff.change(Pain.treat.diff, score.range[1])
+		Pain.urun = FALSE
+	} else{
+		Pain.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+		Pain.urun = TRUE
+	}
+    
+	if (length(Fatigue.out) > 1) {
+		Fatigue.treat.diff.change = treat.diff.change(Fatigue.treat.diff,score.range[2])
+		Fatigue.urun = FALSE
+    } else{
+		Fatigue.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+		Fatigue.urun = TRUE
+	}
+    
+	if (length(Drowsy.out) > 1) {
+		Drowsy.treat.diff.change = treat.diff.change(Drowsy.treat.diff,score.range[3])
+		Drowsy.urun = FALSE
+    } else{
+		Drowsy.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+		Drowsy.urun = TRUE
+	}
+    
+	if (length(Sleep.out) > 1) {
+		Sleep.treat.diff.change = treat.diff.change(Sleep.treat.diff,score.range[4])
+		Sleep.urun = FALSE
+    } else{
+		Sleep.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+		Sleep.urun = TRUE
+	}
+    
+	if (length(Thinking.out) > 1) {
+		Thinking.treat.diff.change = treat.diff.change(Thinking.treat.diff,score.range[5])
+		Thinking.urun = FALSE
+    } else{
+		Thinking.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+		Thinking.urun = TRUE
+	}
+    
+	if (length(Constipation.out) > 1) {
+		Constipation.treat.diff.change = treat.diff.change(Constipation.treat.diff,score.range[6])
+		Constipation.urun = FALSE
+    } else{
+		Constipation.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+		Constipation.urun = TRUE
+	}
+    
+	if (length(Neuropain.out) > 1) {
+		Neuropain.treat.diff.change = treat.diff.change(Neuropain.treat.diff, score.range[1])
+		Neuropain.urun = FALSE
+	} else{
+		Neuropain.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+		Neuropain.urun = TRUE
+	}
+    
     change.interval = round(rbind(Pain.treat.diff.change[[1]], Fatigue.treat.diff.change[[1]], Drowsy.treat.diff.change[[1]], 
 		Sleep.treat.diff.change[[1]], Thinking.treat.diff.change[[1]], Constipation.treat.diff.change[[1]], 
 		Neuropain.treat.diff.change[[1]]),3)
@@ -89,7 +159,18 @@ function(Pain, Fatigue, Drowsy, Sleep, Thinking, Constipation, Treat, Neuropain,
         "probs" = structure(as.list(change.probs[i,]), names=paste("Proportion",c("< -0.2", "-0.2 - 0", "0 - 0.2", "> 0.2")))
       ) 
     }
-    names(output) = outnames
+	
+	output[[1 + nrow(change.interval)]] = list("Pain.DIC" = Pain.out[["DIC"]], 
+		"Fatigue.DIC" = Fatigue.out[["DIC"]], "Drowsy.DIC" = Drowsy.out[["DIC"]], 
+		"Sleep.DIC" = Sleep.out[["DIC"]], "Thinking.DIC" = Thinking.out[["DIC"]], 
+		"Constipation.DIC" = Constipation.out[["DIC"]], 
+		"Neuropain.DIC" = Neuropain.out[["DIC"]])
+		
+	output[[2 + nrow(change.interval)]] = list("Pain.urun" = Pain.urun, "Fatigue.urun" = Fatigue.urun, "Drowsy.urun" = 
+		Drowsy.urun, "Sleep.urun" = Sleep.urun, "Thinking.urun" = Thinking.urun, "Constipation.urun" = Constipation.urun, 
+		"Neuropain.urun" = Neuropain.urun)
+	
+    names(output) = c(outnames, "DICs", "uruns")
 		
     return(output)    
-  }
+}
