@@ -140,6 +140,9 @@ wrap <- function(data, metadata) {
 	uruns.1 = c(nof1$uruns$Pain.urun, nof1$uruns$Fatigue.urun, nof1$uruns$Drowsy.urun, nof1$uruns$Sleep.urun, 
 		nof1$uruns$Thinking.urun, nof1$uruns$Constipation.urun, nof1$uruns$Neuropain.urun)
 		
+	meta.data = list()
+	meta.data[[1]] = nof1[["metadata"]]
+		
 	#####################################
 	# Analyzing Data for Block Covariates
 	#####################################
@@ -168,6 +171,9 @@ wrap <- function(data, metadata) {
 	uruns.b = uruns.1
 	
 	s.1 = sum(DICs.1)
+	
+	
+	
 	
 	Results = Better
 	uruns = uruns.b
@@ -291,10 +297,15 @@ wrap <- function(data, metadata) {
 	neuropathic_pain = list(as.logical(1 - uruns[7]), graph_5, graph_6)
 	names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
 		
+	meta.data[[2]] = list("Models" = c("1. Null Covs"), 
+		"Better Model" = Better.Model, "DICs" = c(sum(DICs.1)), "Successful Runs" = 
+		list("Model1" = as.logical(1 - uruns.1)))
+	names(meta.data) = c("Input for Model 1", "Final Results")
+	
 	out = list(pain, sleep_problems, constipation, drowsiness, thinking_problems, fatigue, neuropathic_pain, 
-		Results, Better.Model, as.logical(1 - uruns.1))
+		Results, meta.data)
 	names(out) = c("pain", "sleep_problems", "constipation", "drowsiness", "thinking_problems", "fatigue", 
-		"neuropathic_pain")
+		"neuropathic_pain", "Results", "Metadata")
 	
 	return(out)
-}		
+}
