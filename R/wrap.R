@@ -1,6 +1,4 @@
-wrap <- 
-function(data, metadata) 
-{
+wrap <- function(data, metadata) {
 
 	#####################################
 	# Converting Output to Desired Format
@@ -22,9 +20,9 @@ function(data, metadata)
 		Drowsy2[i] = data[["drowsinessPrompt"]][i]
 		Sleep2[i] = data[["sleepDisturbancePrompt"]][i]
 		Constipation2[i] = data[["constipationPrompt"]][i]
-		Sharpness2[i] = data[["painSharpness"]][i]
-		Hotness2[i] = data[["painHotness"]][i]
-		Sensitivity2[i] = data[["painSensitivity"]][i]
+		if (!is.null(data[["painSharpness"]])) {Sharpness2[i] = data[["painSharpness"]][i]}
+		if (!is.null(data[["painHotness"]])) {Hotness2[i] = data[["painHotness"]][i]}
+		if (!is.null(data[["painSensitivity"]])) {Sensitivity2[i] = data[["painSensitivity"]][i]}
 
 		if (metadata[["cognitiveFunctionPromptKey"]] == "cognitiveFunctionFoggyThinkingPrompt") {
 			Thinking2[i] = data[["cognitiveFunctionFoggyThinkingPrompt"]][i]
@@ -42,9 +40,9 @@ function(data, metadata)
 	Drowsy2 = Drowsy2[!is.na(Drowsy2)]
 	Sleep2 = Sleep2[!is.na(Sleep2)]
 	Constipation2 = Constipation2[!is.na(Constipation2)]
-	Sharpness2 = Sharpness2[!is.na(Sharpness2)]
-	Hotness2 = Hotness2[!is.na(Hotness2)]
-	Sensitivity2 = Sensitivity2[!is.na(Sensitivity2)]
+	if (!is.null(data[["painSharpness"]])) {Sharpness2 = Sharpness2[!is.na(Sharpness2)]}
+	if (!is.null(data[["painHotness"]])) {Hotness2 = Hotness2[!is.na(Hotness2)]}
+	if (!is.null(data[["painSensitivity"]])) {Sensitivity2 = Sensitivity2[!is.na(Sensitivity2)]}
 	Thinking2 = Thinking2[!is.na(Thinking2)]
 
 	num.obs = length(Day2)
@@ -64,7 +62,11 @@ function(data, metadata)
 	Day2 = Day2 + 1
 
 	Pain2 = Intensity2 + Enjoyment2 + Activity2
-	Neuropain2 = Sharpness2 + Hotness2 + Sensitivity2
+	if (!is.null(data[["painSharpness"]])) {
+		Neuropain2 = Sharpness2 + Hotness2 + Sensitivity2
+	} else {
+		Neuropain2 = rep(15, length(Day2))
+	}
 
 	Treat2 = rep(NA, dim(data)[1])
 	for (i in 1:Days_in_Trial) {
