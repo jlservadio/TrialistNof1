@@ -1,21 +1,29 @@
-run.ord <-
-function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv.limit = 1.05, niters = 50000, nruns = 5000, 
+run.ord <- function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv.limit = 1.05, niters = 50000, nruns = 5000, 
     setsize = 4000, betaprior, dcprior, c1prior, path) 
 {
+
+	stopifnot(max(Y) > min(Y))
+
     nobs = length(Y)
     if (!is.null(Covs)) 
         Covs = as.matrix(Covs)
     prior = prior.ord(Covs, betaprior, dcprior, c1prior, slopeprior = list("norm", 0, 0.1))
-    inInits = inits.ord(Y, Covs, Treat, ncat)
+    inInitials = inits.ord(Y, Covs, Treat, ncat)
+	inInits = list(inInitials[[1]], inInitials[[2]], inInitials[[3]])
+	Significant = as.numeric(inInitials[[4]])
+	
+	
     inData <- data.ord(Y, Covs, ncat, prior, Treat)
     model.ord(Covs, prior, path)
     pars.to.save <- c("beta","or","c","p")
     if (!is.null(Covs)) 
         pars.to.save = c(pars.to.save, "slope")
-    jags.out <- jags.fit(inData, inInits, pars.to.save, model, "model.txt", nChains, niters, conv.limit, setsize, nruns, Covs)
+    jags.out <- jags.fit(inData, inInits, pars.to.save, model, "model.txt", nChains, niters, 
+		conv.limit, setsize, nruns=5000, Covs)
     burn.in <- jags.out[[1]]
     no.runs <- jags.out[[2]]
     samples <- jags.out[[3]]
+	DIC = jags.out[[4]]
     varnames <- dimnames(samples)[[3]]
     nvars <- dim(samples)[3]
     
@@ -36,12 +44,12 @@ function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv.limit = 1.
         slope <- samples[, , slope.vars]
     }
     if (is.null(Covs)) {
-        out <- list(burn.in, no.runs, Y, beta, or, c, p)
-        names(out) <- c("Burn In", "Number runs per chain", "Y", "beta", "or", "c", "p")
+        out <- list(burn.in, no.runs, Y, beta, or, c, p, DIC)
+        names(out) <- c("Burn In", "Number runs per chain", "Y", "beta", "or", "c", "p", "DIC")
     }
     else {
-        out <- list(burn.in, no.runs, Y, beta, or, p, slope)
-        names(out) <- c("Burn In", "Number runs per chain", "Y", "beta", "or", "p", "Slopes")
+        out <- list(burn.in, no.runs, Y, beta, or, p, slope, DIC)
+        names(out) <- c("Burn In", "Number runs per chain", "Y", "beta", "or", "p", "Slopes", "DIC")
     }
     return(out)
 }
