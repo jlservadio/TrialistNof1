@@ -1,5 +1,4 @@
-model.ord <-
-function (Covs, prior, path) 
+model.ord <- function (Covs, prior, path) 
 {
     cat("model\n{", file = paste(path, "model.txt", sep = ""))
     cat("
@@ -31,3 +30,4 @@ function (Covs, prior, path)
     or <- exp(beta)", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
     cat("\n    }", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 }
+
