@@ -1,12 +1,18 @@
-inits.norm <-
-function (Y, x, Treat, varprior, ntreat = 2) 
+inits.norm <- function (Y, x, Treat, varprior, ntreat = 2) 
 {
+
+
     if (is.null(x)) {
         fit <- summary(lm(Y ~ Treat))
-    }
-    else {
-    slope <- se.slope <- rep(NA, dim(x)[2]) # no.treat x no.x
+		Significant = TRUE
+    } else {
+		slope <- se.slope <- rep(NA, dim(x)[2]) # no.treat x no.x
         fit <- summary(lm(Y ~ Treat + x))
+		if (fit[[4]][nrow(fit[[4]]), 4] < 0.05) {
+			Significant = TRUE
+		} else {
+			Significant = FALSE
+		}
         slope <- coef(fit)[2+seq(dim(x)[2]),1]
         if (!is.nan(fit$fstat[1])) 
             se.slope <- coef(fit)[2+seq(dim(x)[2]),2]
@@ -18,8 +24,7 @@ function (Y, x, Treat, varprior, ntreat = 2)
         se.alpha = coef(fit)[1, 2]
         se.beta = coef(fit)[2, 2]
         tau <- fit$sigma^2
-    }  
-    else {
+    } else {
         se.alpha = se.beta = tau = 1
     }
     inits.1 = list(alpha = alpha + se.alpha * rnorm(1))
@@ -56,15 +61,15 @@ function (Y, x, Treat, varprior, ntreat = 2)
         inits.3[[1 + length(inits.3)]] = prec.3
         names(inits.3)[[length(inits.3)]] = "prec"
     }
-# This loop deals with Sd										#
-#    else if (varprior[[1]] == "Sd" & !is.null(x)) {				#
-#        inits.1[[1 + length(inits.1)]] = 0.5/sqrt(prec.1)		#
-#        names(inits.1)[[length(inits.1)]] = "Sd"				#
-#        inits.2[[1 + length(inits.2)]] = 0.5/sqrt(prec.2)		#
-#        names(inits.2)[[length(inits.2)]] = "Sd"				#
-#        inits.3[[1 + length(inits.3)]] = 0.5/sqrt(prec.3)		#
-#        names(inits.3)[[length(inits.3)]] = "Sd"				#
-#    }
+	#This loop deals with Sd									#
+    else if (varprior[[1]] == "Sd" & !is.null(x)) {			#
+        inits.1[[1 + length(inits.1)]] = 0.5/sqrt(prec.1)		#
+        names(inits.1)[[length(inits.1)]] = "Sd"				#
+        inits.2[[1 + length(inits.2)]] = 0.5/sqrt(prec.2)		#
+        names(inits.2)[[length(inits.2)]] = "Sd"				#
+        inits.3[[1 + length(inits.3)]] = 0.5/sqrt(prec.3)		#
+        names(inits.3)[[length(inits.3)]] = "Sd"				#
+    }
     else if (varprior[[1]] == "var") {
         inits.1[[1 + length(inits.1)]] = 1/prec.1
         names(inits.1)[[length(inits.1)]] = "Var"
@@ -73,6 +78,7 @@ function (Y, x, Treat, varprior, ntreat = 2)
         inits.3[[1 + length(inits.3)]] = 1/prec.3
         names(inits.3)[[length(inits.3)]] = "Var"
     }
-    inInits <- list(inits.1, inits.2, inits.3)
+    inInits <- list(inits.1, inits.2, inits.3, Significant)
     return(inInits)
 }
+
