@@ -1,5 +1,4 @@
-prior.ord <-
-function (Covs, betaprior, dcprior, c1prior, slopeprior = list("norm", 0, 0.1)) 
+prior.ord <- function (Covs, betaprior, dcprior, c1prior, slopeprior = list("norm", 0, 0.1)) 
 {
     mean.beta = betaprior[[2]]
     prec.beta = betaprior[[3]]
