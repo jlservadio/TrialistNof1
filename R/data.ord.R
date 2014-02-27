@@ -1,5 +1,4 @@
-data.ord <-
-function (Y, Covs, ncat, prior, Treat) 
+data.ord <- function (Y, Covs, ncat, prior, Treat) 
 {
     inData = list(Treat = Treat, Y = Y, ncat = ncat, nobs = length(Y), 
                   mean.beta = prior$mean.beta, prec.beta = prior$prec.beta, 
