@@ -1,5 +1,4 @@
-model.norm.obs <-
-function (nobs, Covs, prior, path) 
+model.norm.obs <- function (nobs, Covs, prior, path) 
 {
     cat("
     for (i in 1:", nobs, ") {
@@ -11,3 +10,4 @@ function (nobs, Covs, prior, path)
     cat("
     beta ~ ", prior$Prior.beta, file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 }
+
