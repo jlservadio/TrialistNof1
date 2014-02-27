@@ -1,5 +1,4 @@
-prior.norm <-
-function (Covs, alphaprior, betaprior, slopeprior, varprior, varprior.params) 
+prior.norm <- function (Covs, alphaprior, betaprior, slopeprior, varprior, varprior.params) 
 {
     mean.alpha = alphaprior[[2]]
     prec.alpha = alphaprior[[3]]
@@ -18,15 +17,13 @@ function (Covs, alphaprior, betaprior, slopeprior, varprior, varprior.params)
         if (varprior[[2]] == "gamma") 
             Prior.prec = paste("dgamma(prec.1, prec.2)", sep = "")
         else return("Only Gamma currently supported for precision distribution")
-    }
-    else if (varprior[[1]] == "Sd") {
+    } else if (varprior[[1]] == "Sd") {
         if (varprior[[2]] == "unif") 
             Prior.prec = paste("dunif(prec.1, prec.2)", sep = "")
         else if (varprior[[2]] == "hn") 
             Prior.prec = paste("dnorm(0,1)I(", varprior[[3]][1], ",", varprior[[3]][2], ")", sep = "")
         else return("Unsupported Sd distribution")
-    }
-    else if (varprior[[1]] == "var") {
+    } else if (varprior[[1]] == "var") {
         if (varprior[[2]] == "unif") 
             Prior.prec = paste("dunif(prec.1,prec.2)", sep = "")
         else if (varprior[[2]] == "hn") 
