@@ -1,7 +1,10 @@
-jags.fit <-
-function (inData, inInits, pars.to.save, model, model.file, n.chains, niters, conv.limit, setsize, nruns, Covs) 
+jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains, niters, conv.limit, 
+	setsize, nruns=5000, Covs) 
 {
-    mod = jags.model(model.file, data = inData, inits = inInits, n.chains = n.chains, n.adapt = 0)
+    mod = jags.model(model.file, data = inData, inits = inInits, n.chains, n.adapt = 0)
+	DIC1 = dic.samples(mod, niters)
+	DIC2 = as.list(DIC1)
+	DIC = sum(DIC2[[1]])
     done.adapt = adapt(mod, n.iter = 2 * setsize, end.adaptation = FALSE)
     while (!done.adapt) done.adapt = adapt(mod, n.iter = 2 * setsize, end.adaptation = FALSE)
     samples <- coda.samples(model = mod, variable.names = pars.to.save, n.iter = setsize, thin = 1)
@@ -21,7 +24,8 @@ function (inData, inInits, pars.to.save, model, model.file, n.chains, niters, co
         dimnames(temp.samples.array) <- list(NULL, NULL, varnames[c(alpha.vars, beta.vars, Sd.vars)])
     }
     else {
-        temp.samples.array = array(NA, c(niters, n.chains, length(alpha.vars) + length(beta.vars) + length(Sd.vars) + length(slope.vars)))
+        temp.samples.array = array(NA, c(niters, n.chains, length(alpha.vars) + length(beta.vars) + length(Sd.vars) + 
+			length(slope.vars)))
         temp.samples.array[seq(nsamples), 1, ] <- samples[[1]][, c(alpha.vars, slope.vars, beta.vars, Sd.vars)]
         temp.samples.array[seq(nsamples), 2, ] <- samples[[2]][, c(alpha.vars, slope.vars, beta.vars, Sd.vars)]
         temp.samples.array[seq(nsamples), 3, ] <- samples[[3]][, c(alpha.vars, slope.vars, beta.vars, Sd.vars)]
@@ -42,9 +46,12 @@ function (inData, inInits, pars.to.save, model, model.file, n.chains, niters, co
                 temp.samples.array[nsamples + seq(setsize), 3, ] = samples[[3]][, c(alpha.vars, beta.vars, Sd.vars)]
             }
             else {
-                temp.samples.array[nsamples + seq(setsize), 1, ] = samples[[1]][, c(alpha.vars, slope.vars, beta.vars, Sd.vars)]
-                temp.samples.array[nsamples + seq(setsize), 2, ] = samples[[2]][, c(alpha.vars, slope.vars, beta.vars, Sd.vars)]
-                temp.samples.array[nsamples + seq(setsize), 3, ] = samples[[3]][, c(alpha.vars, slope.vars, beta.vars, Sd.vars)]
+                temp.samples.array[nsamples + seq(setsize), 1, ] = samples[[1]][, c(alpha.vars, slope.vars, beta.vars, 
+					Sd.vars)]
+                temp.samples.array[nsamples + seq(setsize), 2, ] = samples[[2]][, c(alpha.vars, slope.vars, beta.vars, 
+					Sd.vars)]
+                temp.samples.array[nsamples + seq(setsize), 3, ] = samples[[3]][, c(alpha.vars, slope.vars, beta.vars, 
+					Sd.vars)]
             }
             nsamples = nsamples + setsize
             max.bgrRatio = max(apply(temp.samples.array[seq(nsamples), , ,drop=F], 3, maxbgrRatio))
@@ -68,7 +75,7 @@ function (inData, inInits, pars.to.save, model, model.file, n.chains, niters, co
     samples.array[, 2, ] = samples[[2]]
     samples.array[, 3, ] = samples[[3]]
     dimnames(samples.array) = list(NULL,NULL,varnames)
-    out <- list(no.to.converge, dim(samples.array)[1], samples.array)
-    names(out) <- c("BurnIn", "No. Runs Per Chain", "Samples")
+    out <- list(no.to.converge, dim(samples.array)[1], samples.array, DIC)
+    names(out) <- c("BurnIn", "No. Runs Per Chain", "Samples", "DIC")
     return(out)
 }
