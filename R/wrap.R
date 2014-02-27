@@ -6,6 +6,11 @@ wrap <- function(data, metadata) {
 
 	Days_in_Trial = as.numeric(as.Date(metadata[["trial_end_date"]]) - as.Date(metadata[["trial_start_date"]])) + 1
 
+	No_Neuropain = is.null(data[["painSharpness"]])
+	
+	meta.data = list()
+	meta.data[[1]] = No_Neuropain
+	
 	Intensity2 = Enjoyment2 = Activity2 = Fatigue2 = Drowsy2 = Sleep2 =
 	Thinking2 = Constipation2 = Sharpness2 = Hotness2 = Sensitivity2 =
 	Block2 = Day2 = rep(NA, dim(data)[1])
@@ -164,9 +169,14 @@ wrap <- function(data, metadata) {
 
 	uruns.1 = c(nof1$uruns$Pain.urun, nof1$uruns$Fatigue.urun, nof1$uruns$Drowsy.urun, nof1$uruns$Sleep.urun,
 	nof1$uruns$Thinking.urun, nof1$uruns$Constipation.urun, nof1$uruns$Neuropain.urun)
-
-	meta.data = list()
-	meta.data[[1]] = nof1[["metadata"]]
+	
+	if (No_Neuropain) {
+		Results.1 = Results.1[-nrow(Results.1), ]
+		DICs.1 = DICs.1[-length(DICs.1)]
+		uruns.1 = uruns.1[-length(uruns.1)]
+	}
+	
+	meta.data[[2]] = nof1[["metadata"]]
 
 	#####################################
 	# Analyzing Data for Block Covariates
@@ -204,7 +214,7 @@ wrap <- function(data, metadata) {
 	# Rearranging nof1 Output
 	###########################
 
-	Results_mod = matrix(NA, ncol = 10, nrow = 7)
+	Results_mod = matrix(NA, ncol = 10, nrow = nrow(Results))
 	for (i in 1:nrow(Results_mod)) {
 		if (Results[i, 2] < 0) {Results_mod[i, 1] = "A"}
 		if (Results[i, 2] > 0) {Results_mod[i, 1] = "B"}
@@ -224,12 +234,20 @@ wrap <- function(data, metadata) {
 		Results_mod[i, 9] = Results[i, 4]
 		Results_mod[i, 10] = Results[i, 5]
 	}
-
-	colnames(Results_mod) = c("more_effective_regimen", "median_effect", "upper_bound", "upper_bound_regimen",
-		"lower_bound", "lower_bound_regimen", "b_clinically_better", "b_marginally_better", "a_clinically_better",
-		"a_marginally_better")
-	rownames(Results_mod) = c("pain", "fatigue", "drowsiness", "sleep_problems", "thinking_problems",
-		"constipation", "neuropathic_pain")
+	
+	if (No_Neuropain) {
+		colnames(Results_mod) = c("more_effective_regimen", "median_effect", "upper_bound", "upper_bound_regimen",
+			"lower_bound", "lower_bound_regimen", "b_clinically_better", "b_marginally_better", "a_clinically_better",
+			"a_marginally_better")
+		rownames(Results_mod) = c("pain", "fatigue", "drowsiness", "sleep_problems", "thinking_problems",
+			"constipation")
+	} else{
+		colnames(Results_mod) = c("more_effective_regimen", "median_effect", "upper_bound", "upper_bound_regimen",
+			"lower_bound", "lower_bound_regimen", "b_clinically_better", "b_marginally_better", "a_clinically_better",
+			"a_marginally_better")
+		rownames(Results_mod) = c("pain", "fatigue", "drowsiness", "sleep_problems", "thinking_problems",
+			"constipation", "neuropathic_pain")
+	}
 
 	####################
 	# The list
@@ -307,28 +325,38 @@ wrap <- function(data, metadata) {
 	fatigue = list(as.logical(1 - uruns[2]), graph_5, graph_6)
 	names(fatigue) = c("successful_run", "graph_5", "graph_6")	
 
-	graph_5 = list("more_effective_regimen" = Results_mod[7, 1], "median_effect" = as.numeric(Results_mod[7, 2]),
-		"upper_bound" = as.numeric(Results_mod[7, 3]), "upper_bound_regimen" = Results_mod[7, 4],
-		"lower_bound" = as.numeric(Results_mod[7, 5]), "lower_bound_regimen" = Results_mod[7, 6])
+	if (!No_Neuropain) {
+	
+		graph_5 = list("more_effective_regimen" = Results_mod[7, 1], "median_effect" = as.numeric(Results_mod[7, 2]),
+			"upper_bound" = as.numeric(Results_mod[7, 3]), "upper_bound_regimen" = Results_mod[7, 4],
+			"lower_bound" = as.numeric(Results_mod[7, 5]), "lower_bound_regimen" = Results_mod[7, 6])
 
-	graph_6 = list("b_clinically_better" = as.numeric(Results_mod[7, 7]),
-		"b_marginally_better" = as.numeric(Results_mod[7, 8]),
-		"a_clinically_better" = as.numeric(Results_mod[7, 9]),
-		"a_marginally_better" = as.numeric(Results_mod[7, 10]))
+		graph_6 = list("b_clinically_better" = as.numeric(Results_mod[7, 7]),
+			"b_marginally_better" = as.numeric(Results_mod[7, 8]),
+			"a_clinically_better" = as.numeric(Results_mod[7, 9]),
+			"a_marginally_better" = as.numeric(Results_mod[7, 10]))
 
-	neuropathic_pain = list(as.logical(1 - uruns[7]), graph_5, graph_6)
-	names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
+		neuropathic_pain = list(as.logical(1 - uruns[7]), graph_5, graph_6)
+		names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
+	
+	}
 
-	meta.data[[2]] = list("Models" = c("1. Null Covs"),
+	meta.data[[3]] = list("Models" = c("1. Null Covs"),
 		"Better Model" = Better.Model, "DICs" = c(sum(DICs.1)), "Successful Runs" =
 		list("Model1" = as.logical(1 - uruns.1)))
-	names(meta.data) = c("Input for Model 1", "Final Results")
+	names(meta.data) = c("No_Neuropain", "Input for Model 1", "Final Results")
 
-	out = list(pain, sleep_problems, constipation, drowsiness, thinking_problems, fatigue, neuropathic_pain,
-		Results, meta.data)
-	names(out) = c("pain", "sleep_problems", "constipation", "drowsiness", "thinking_problems", "fatigue",
-		"neuropathic_pain", "Results", "Metadata")
-
+	if (No_Neuropain) {
+		out = list(pain, sleep_problems, constipation, drowsiness, thinking_problems, fatigue,
+			Results, meta.data)
+		names(out) = c("pain", "sleep_problems", "constipation", "drowsiness", "thinking_problems", "fatigue",
+			"Results", "Metadata")
+	} else{	
+		out = list(pain, sleep_problems, constipation, drowsiness, thinking_problems, fatigue, neuropathic_pain,
+			Results, meta.data)
+		names(out) = c("pain", "sleep_problems", "constipation", "drowsiness", "thinking_problems", "fatigue",
+			"neuropathic_pain", "Results", "Metadata")
+	}
+	
 	return(out)
 }
-
