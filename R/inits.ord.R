@@ -1,5 +1,4 @@
-inits.ord <-
-function (Y, x, Treat, ncat) 
+inits.ord <- function (Y, x, Treat, ncat) 
 {
 	nobs = length(Y)
 	p = rep(NA, ncat)
@@ -36,17 +35,27 @@ function (Y, x, Treat, ncat)
 	dc1 = c(c1[1],c1[-1] - c1[-(ncat-1)])
 	dc2 = c(c2[1],c2[-1] - c2[-(ncat-1)])
 	dc3 = c(c3[1],c3[-1] - c3[-(ncat-1)])
+	
+	
+	
     if (is.null(x)) {
         fit <- summary(lm(Y ~ Treat))
+		Significant = TRUE
     }
 	else {
-    slope <- se.slope <- rep(NA, dim(x)[2]) # no.treat x no.x
+		slope <- se.slope <- rep(NA, dim(x)[2]) # no.treat x no.x
         fit <- summary(lm(Y ~ Treat + x))
+		if (fit[[4]][nrow(fit[[4]]), 4] < 0.05) {
+			Significant = TRUE
+		} else {
+			Significant = FALSE
+		}
         slope <- coef(fit)[2+seq(dim(x)[2]),1]
         if (!is.nan(fit$fstat[1])) 
             se.slope <- coef(fit)[2+seq(dim(x)[2]),2]
         else se.slope <- rep(1,length(se.slope))
     }
+	
     beta = coef(fit)[2, 1]
     if (!is.nan(fit$fstat[1])) {
         se.beta = coef(fit)[2, 2]
@@ -68,6 +77,7 @@ function (Y, x, Treat, ncat)
         inits.3[[1 + length(inits.3)]] = slope + se.slope * rnorm(1)
         names(inits.3)[[length(inits.3)]] = "slope"
     }
-    inInits <- list(inits.1, inits.2, inits.3)
+    inInits <- list(inits.1, inits.2, inits.3, Significant)
     return(inInits)
 }
+
