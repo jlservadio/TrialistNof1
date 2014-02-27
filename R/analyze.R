@@ -43,42 +43,83 @@ analyze <-
     outnames = c("Pain", "Fatigue", "Drowsy", "Sleep", "Thinking", "Constipation", "Neuropathic Pain")
     names(score.range) = outnames
 	
-    cat("\n \n \n Pain", i, ".1 \n \n \n")
-    
-	Pain.out = tryCatch({run.norm(Pain, Treat, Covs, "normal", "hom", nChains, conv.limit, niters, nruns, setsize, slopeprior, 
-		alphaprior, beta.norm.prior, varprior,varprior.params, path = "")}, error=function(cond){
-		caught <- list("DIC" = 1000)})  
+	if (i != 4) {
+	
+		cat("\n \n \n Pain", i, ".1 \n \n \n")
 		
-	cat("\n \n \n Fatigue", i, ".2 \n \n \n")
-    
-	Fatigue.out = tryCatch({run.ord(Fatigue, Treat, Covs, score.range[2]+1, "cumlogit", nChains, conv.limit, niters, nruns, 
-		setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
-	
-	cat("\n \n \n Drowsy", i, ".3 \n \n \n")
-    
-	Drowsy.out = tryCatch({run.ord(Drowsy, Treat, Covs, score.range[3]+1, "cumlogit", nChains, conv.limit, niters, nruns, 
-		setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
-	
-	cat("\n \n \n Sleep", i, ".4 \n \n \n")
-    
-	Sleep.out = tryCatch({run.ord(Sleep, Treat, Covs, score.range[4]+1, "cumlogit", nChains, conv.limit, niters, nruns, 
-		setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
-	
-	cat("\n \n \n Thinking", i, ".5 \n \n \n")
-    
-	Thinking.out = tryCatch({run.ord(Thinking, Treat, Covs, score.range[5]+1, "cumlogit", nChains, conv.limit, niters, nruns, 
-		setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
-	
-	cat("\n \n \n Constipation", i, ".6 \n \n \n")
-	
-	Constipation.out = tryCatch({run.ord(Constipation, Treat, Covs, score.range[6]+1, "cumlogit", nChains, conv.limit, niters, 
-	nruns, setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
-	
-	cat("\n \n \n Neuropain", i, ".7 \n \n \n")
-    
-	Neuropain.out = tryCatch({run.norm(Neuropain, Treat, Covs, "normal", "hom", nChains, conv.limit, niters, nruns, setsize, 
-		slopeprior, alphaprior, beta.norm.prior, varprior,varprior.params, path = "")}, error=function(cond){
-		caught <- list("DIC" = 1000)})
+		Pain.out = tryCatch({run.norm(Pain, Treat, Covs, "normal", "hom", nChains, conv.limit, niters, nruns, setsize, 
+			slopeprior, alphaprior, beta.norm.prior, varprior,varprior.params, path = "")}, error=function(cond){
+			caught <- list("DIC" = 1000)})  
+			
+		cat("\n \n \n Fatigue", i, ".2 \n \n \n")
+		
+		Fatigue.out = tryCatch({run.ord(Fatigue, Treat, Covs, score.range[2]+1, "cumlogit", nChains, conv.limit, niters, 
+			nruns, setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+		
+		cat("\n \n \n Drowsy", i, ".3 \n \n \n")
+		
+		Drowsy.out = tryCatch({run.ord(Drowsy, Treat, Covs, score.range[3]+1, "cumlogit", nChains, conv.limit, niters, 
+			nruns, setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+		
+		cat("\n \n \n Sleep", i, ".4 \n \n \n")
+		
+		Sleep.out = tryCatch({run.ord(Sleep, Treat, Covs, score.range[4]+1, "cumlogit", nChains, conv.limit, niters, nruns, 
+			setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+		
+		cat("\n \n \n Thinking", i, ".5 \n \n \n")
+		
+		Thinking.out = tryCatch({run.ord(Thinking, Treat, Covs, score.range[5]+1, "cumlogit", nChains, conv.limit, niters, 
+			nruns, setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+		
+		cat("\n \n \n Constipation", i, ".6 \n \n \n")
+		
+		Constipation.out = tryCatch({run.ord(Constipation, Treat, Covs, score.range[6]+1, "cumlogit", nChains, conv.limit, 
+		niters, nruns, setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+		
+		cat("\n \n \n Neuropain", i, ".7 \n \n \n")
+		
+		Neuropain.out = tryCatch({run.norm(Neuropain, Treat, Covs, "normal", "hom", nChains, conv.limit, niters, nruns, 
+			setsize, slopeprior, alphaprior, beta.norm.prior, varprior,varprior.params, path = "")}, error=function(cond){
+			caught <- list("DIC" = 1000)})
+			
+	} else {
+		cat("\n \n \n Pain", i, ".1 \n \n \n")
+		
+		Pain.out = tryCatch({run.norm(Pain, Treat, Covs[ , 1], "normal", "hom", nChains, conv.limit, niters, nruns, setsize, 
+			slopeprior, alphaprior, beta.norm.prior, varprior,varprior.params, path = "")}, error=function(cond){
+			caught <- list("DIC" = 1000)})  
+			
+		cat("\n \n \n Fatigue", i, ".2 \n \n \n")
+		
+		Fatigue.out = tryCatch({run.ord(Fatigue, Treat, Covs[ , 2], score.range[2]+1, "cumlogit", nChains, conv.limit, niters, 
+			nruns, setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+		
+		cat("\n \n \n Drowsy", i, ".3 \n \n \n")
+		
+		Drowsy.out = tryCatch({run.ord(Drowsy, Treat, Covs[ , 3], score.range[3]+1, "cumlogit", nChains, conv.limit, niters, 
+			nruns, setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+		
+		cat("\n \n \n Sleep", i, ".4 \n \n \n")
+		
+		Sleep.out = tryCatch({run.ord(Sleep, Treat, Covs[ , 4], score.range[4]+1, "cumlogit", nChains, conv.limit, niters, 
+			nruns, setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+		
+		cat("\n \n \n Thinking", i, ".5 \n \n \n")
+		
+		Thinking.out = tryCatch({run.ord(Thinking, Treat, Covs[ , 5], score.range[5]+1, "cumlogit", nChains, conv.limit, niters, 
+			nruns, setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+		
+		cat("\n \n \n Constipation", i, ".6 \n \n \n")
+		
+		Constipation.out = tryCatch({run.ord(Constipation, Treat, Covs[ , 6], score.range[6]+1, "cumlogit", nChains, conv.limit, 
+		niters, nruns, setsize, beta.ord.prior, dcprior, c1prior, path)}, error=function(cond){caught <- list("DIC" = 1000)})
+		
+		cat("\n \n \n Neuropain", i, ".7 \n \n \n")
+		
+		Neuropain.out = tryCatch({run.norm(Neuropain, Treat, Covs[ , 7], "normal", "hom", nChains, conv.limit, niters, nruns, 
+			setsize, slopeprior, alphaprior, beta.norm.prior, varprior,varprior.params, path = "")}, error=function(cond){
+			caught <- list("DIC" = 1000)})
+	}
 
     if (length(Pain.out) > 1) {Pain.treat.diff = Pain.out[["beta"]]}
     if (length(Fatigue.out) > 1) {Fatigue.treat.diff = treat.diffs(Fatigue.out[["p"]], Treat)}
@@ -169,8 +210,13 @@ analyze <-
 	output[[2 + nrow(change.interval)]] = list("Pain.urun" = Pain.urun, "Fatigue.urun" = Fatigue.urun, "Drowsy.urun" = 
 		Drowsy.urun, "Sleep.urun" = Sleep.urun, "Thinking.urun" = Thinking.urun, "Constipation.urun" = Constipation.urun, 
 		"Neuropain.urun" = Neuropain.urun)
+		
+	output[[3 + nrow(change.interval)]] = list("slope prior" = slopeprior, "number of Chains" = nChains,
+		"Convergence Limit" = conv.limit, "Iterations" = niters, "Set size" = setsize, "Alpha prior" = 
+		alphaprior, "Normal Beta Prior" = beta.norm.prior, "Ordinal Beta Prior" = beta.ord.prior, "dc prior" = 
+		dcprior, "c1 prior" = c1prior, "Variance prior" = varprior, "Variance Parameters" = varprior.params)
 	
-    names(output) = c(outnames, "DICs", "uruns")
+    names(output) = c(outnames, "DICs", "uruns", "metadata")
 		
     return(output)    
 }
