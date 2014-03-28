@@ -89,6 +89,22 @@ wrap <- function(data, metadata) {
 
 	observations = cbind(Day2, Pain2, Fatigue2, Drowsy2, Sleep2, Thinking2, Constipation2, Neuropain2, Treat2, Block2)
 
+	insufficient_data = FALSE
+
+	Block1.Treat1 = (rep(1, length(Pain2)) - Block.2 - Block.3 - Block.4) * Treat2
+	Block2.Treat1 = Block.2 * Treat2
+	Block3.Treat1 = Block.3 * Treat2
+	Block4.Treat1 = Block.4 * Treat2
+	Block1.Treat0 = (rep(1, length(Pain2)) - Block.2 - Block.3 - Block.4) * (rep(1, length(Treat2)) - Treat2)
+	Block2.Treat0 = Block.2 * (rep(1, length(Treat2)) - Treat2)
+	Block3.Treat0 = Block.3 * (rep(1, length(Treat2)) - Treat2)
+	Block4.Treat0 = Block.4 * (rep(1, length(Treat2)) - Treat2)
+
+	if (sum(Block1.Treat1) < 1 || sum(Block2.Treat1) < 1 || sum(Block3.Treat1) < 1 || sum(Block4.Treat1) < 1 ||
+		sum(Block1.Treat0) < 1 || sum(Block2.Treat0) < 1 || sum(Block3.Treat0) < 1 || sum(Block4.Treat0) < 1) {
+		insufficient_data = TRUE
+	}
+
 	####################################
 	# Analyzing Data for Null Covariates
 	####################################
@@ -117,7 +133,8 @@ wrap <- function(data, metadata) {
 	varprior=list("Sd","unif"),
 	varprior.params=c(2,4),
 	path="",
-	i = 1)
+	i = 1, 
+	insufficent_data)
 
 	P025.1 = t(cbind(nof1$Pain$interval$P025, nof1$Fatigue$interval$P025, nof1$Drowsy$interval$P025,
 	nof1$Sleep$interval$P025, nof1$Thinking$interval$P025, nof1$Constipation$interval$P025,
@@ -331,4 +348,3 @@ wrap <- function(data, metadata) {
 
 	return(out)
 }
-
