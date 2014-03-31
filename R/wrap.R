@@ -3,6 +3,8 @@ wrap <- function(data, metadata) {
 	#####################################
 	# Converting Output to Desired Format
 	#####################################
+	
+	insufficient_data = FALSE
 
 	Days_in_Trial = as.numeric(as.Date(metadata[["trial_end_date"]]) - as.Date(metadata[["trial_start_date"]])) + 1
 
@@ -74,19 +76,26 @@ wrap <- function(data, metadata) {
 		if (!is.na(data[["regimen"]][i]) & data[["regimen"]][i] == "B") {Treat2[i] = 1}
 	}
 
-	Pain2.lag = Fatigue2.lag = Drowsy2.lag = Sleep2.lag = Thinking2.lag = Constipation2.lag = Neuropain2.lag =
-	rep(NA, length(Pain2))
-
-	for (i in 2:length(Pain2)) {
-		Pain2.lag[i] = Pain2[i - 1]
-		Fatigue2.lag[i] = Fatigue2[i - 1]
-		Drowsy2.lag[i] = Drowsy2[i - 1]
-		Sleep2.lag[i] = Sleep2[i - 1]
-		Thinking2.lag[i] = Thinking2[i - 1]
-		Constipation2.lag[i] = Constipation2[i - 1]
-		Neuropain2.lag[i] = Neuropain2[i - 1]
+	tbl = table(Treat2)
+	if (dim(tbl) != 2) {
+		insufficient_data = TRUE
 	}
+	
+	if (insufficient_data == FALSE) {
+	
+		Pain2.lag = Fatigue2.lag = Drowsy2.lag = Sleep2.lag = Thinking2.lag = Constipation2.lag = Neuropain2.lag =
+		rep(NA, length(Pain2))
 
+		for (i in 2:length(Pain2)) {
+			Pain2.lag[i] = Pain2[i - 1]
+			Fatigue2.lag[i] = Fatigue2[i - 1]
+			Drowsy2.lag[i] = Drowsy2[i - 1]
+			Sleep2.lag[i] = Sleep2[i - 1]
+			Thinking2.lag[i] = Thinking2[i - 1]
+			Constipation2.lag[i] = Constipation2[i - 1]
+			Neuropain2.lag[i] = Neuropain2[i - 1]
+		}
+	}
 	observations = cbind(Day2, Pain2, Fatigue2, Drowsy2, Sleep2, Thinking2, Constipation2, Neuropain2, Treat2, Block2)
 
 	####################################
@@ -117,7 +126,8 @@ wrap <- function(data, metadata) {
 	varprior=list("Sd","unif"),
 	varprior.params=c(2,4),
 	path="",
-	i = 1)
+	i = 1, 
+	insuf = insufficient_data)
 
 	P025.1 = t(cbind(nof1$Pain$interval$P025, nof1$Fatigue$interval$P025, nof1$Drowsy$interval$P025,
 	nof1$Sleep$interval$P025, nof1$Thinking$interval$P025, nof1$Constipation$interval$P025,
@@ -331,5 +341,4 @@ wrap <- function(data, metadata) {
 
 	return(out)
 }
-
 
