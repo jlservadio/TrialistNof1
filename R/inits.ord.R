@@ -4,10 +4,10 @@ inits.ord <- function (Y, x, Treat, ncat)
 	p = rep(NA, ncat)
 	c1 = c2 = c3 = rep(NA, ncat-1)
 	for (i in seq(ncat)) {
-		p[i] = sum(Y==i)/nobs
-		if (p[i] == 0) p[i] = 0.05
+		p[i] = sum(Y[!is.na(Y)]==i)/nobs
+		if (!is.na(p[i]) & p[i] == 0) p[i] = 0.05
 	}
-	if (sum(p)> 1) 
+	if (sum(p[!is.na(p)])> 1) 
 		p[max(which(p==max(p)))] = p[max(which(p==max(p)))] + 1 - sum(p)
 	p1 = rmultz2(nobs,p)/nobs
 	if (any(p1 == 0)) {
@@ -40,22 +40,31 @@ inits.ord <- function (Y, x, Treat, ncat)
 	
     if (is.null(x)) {
         fit <- summary(lm(Y ~ Treat))
-		Significant = TRUE
-    }
-	else {
+    } else {
 		slope <- se.slope <- rep(NA, dim(x)[2]) # no.treat x no.x
         fit <- summary(lm(Y ~ Treat + x))
-		if (fit[[4]][nrow(fit[[4]]), 4] < 0.05) {
-			Significant = TRUE
-		} else {
-			Significant = FALSE
-		}
+		
         slope <- coef(fit)[2+seq(dim(x)[2]),1]
         if (!is.nan(fit$fstat[1])) 
             se.slope <- coef(fit)[2+seq(dim(x)[2]),2]
         else se.slope <- rep(1,length(se.slope))
     }
 	
+	if (fit[[4]]["Treat", "Pr(>|t|)"] < 0.05) {
+		Treat.Significant = TRUE
+	} else {
+		Treat.Significant = FALSE
+	}
+	
+	Covs.Significant = NULL
+	if (!is.null(x)) {
+		if (fit[[4]]["x", "Pr(>|t|)"] < 0.05) {
+			Covs.Significant = TRUE
+		} else {
+			Covs.Significant = FALSE
+		}
+	}
+		
     beta = coef(fit)[2, 1]
     if (!is.nan(fit$fstat[1])) {
         se.beta = coef(fit)[2, 2]
@@ -77,7 +86,10 @@ inits.ord <- function (Y, x, Treat, ncat)
         inits.3[[1 + length(inits.3)]] = slope + se.slope * rnorm(1)
         names(inits.3)[[length(inits.3)]] = "slope"
     }
-    inInits <- list(inits.1, inits.2, inits.3, Significant)
+	
+	Diagnostics = list("Treat.Significant" = Treat.Significant, "Covs.Significant" = Covs.Significant, "fit" = fit)
+	
+    inInits <- list(inits.1, inits.2, inits.3, Diagnostics)
     return(inInits)
 }
 
