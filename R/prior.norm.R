@@ -39,6 +39,7 @@ prior.norm <- function (Covs, alphaprior, betaprior, slopeprior, varprior, varpr
         names(out)[[length(out)]] = "prec.slope"
         out[[1 + length(out)]] = Prior.slope
         names(out)[[length(out)]] = "Prior.slope"
-    }
+    } 
     return(out)
 }
+
