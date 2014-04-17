@@ -1,23 +1,35 @@
 inits.norm <- function (Y, x, Treat, varprior, ntreat = 2) 
 {
-
+	if (!is.null(x)) {x = as.matrix(x)}
 
     if (is.null(x)) {
         fit <- summary(lm(Y ~ Treat))
-		Significant = TRUE
     } else {
-		slope <- se.slope <- rep(NA, dim(x)[2]) # no.treat x no.x
+		slope <- se.slope <- rep(NA, dim(as.matrix(x))[2]) # no.treat x no.x
         fit <- summary(lm(Y ~ Treat + x))
-		if (fit[[4]][nrow(fit[[4]]), 4] < 0.05) {
-			Significant = TRUE
-		} else {
-			Significant = FALSE
-		}
         slope <- coef(fit)[2+seq(dim(x)[2]),1]
-        if (!is.nan(fit$fstat[1])) 
+        if (!is.nan(fit$fstat[1])) {
             se.slope <- coef(fit)[2+seq(dim(x)[2]),2]
-        else se.slope <- rep(1,length(se.slope))
+        } else {
+			se.slope <- rep(1,length(se.slope))
+		}
     }
+	
+	if (fit[[4]]["Treat", "Pr(>|t|)"] < 0.05) {
+		Treat.Significant = TRUE
+	} else {
+		Treat.Significant = FALSE
+	}
+	
+	Covs.Significant = NULL
+	if (!is.null(x)) {
+		if (fit[[4]]["x", "Pr(>|t|)"] < 0.05) {
+			Covs.Significant = TRUE
+		} else {
+			Covs.Significant = FALSE
+		}
+	}
+	
     alpha = coef(fit)[1, 1]
     beta = coef(fit)[2, 1]
     if (!is.nan(fit$fstat[1])) {
@@ -60,17 +72,15 @@ inits.norm <- function (Y, x, Treat, varprior, ntreat = 2)
         names(inits.2)[[length(inits.2)]] = "prec"
         inits.3[[1 + length(inits.3)]] = prec.3
         names(inits.3)[[length(inits.3)]] = "prec"
-    }
+    } else if (varprior[[1]] == "Sd" & !is.null(x)) {
 	#This loop deals with Sd									#
-    else if (varprior[[1]] == "Sd" & !is.null(x)) {			#
         inits.1[[1 + length(inits.1)]] = 0.5/sqrt(prec.1)		#
         names(inits.1)[[length(inits.1)]] = "Sd"				#
         inits.2[[1 + length(inits.2)]] = 0.5/sqrt(prec.2)		#
         names(inits.2)[[length(inits.2)]] = "Sd"				#
         inits.3[[1 + length(inits.3)]] = 0.5/sqrt(prec.3)		#
         names(inits.3)[[length(inits.3)]] = "Sd"				#
-    }
-    else if (varprior[[1]] == "var") {
+    } else if (varprior[[1]] == "var") {
         inits.1[[1 + length(inits.1)]] = 1/prec.1
         names(inits.1)[[length(inits.1)]] = "Var"
         inits.2[[1 + length(inits.2)]] = 1/prec.2
@@ -78,7 +88,9 @@ inits.norm <- function (Y, x, Treat, varprior, ntreat = 2)
         inits.3[[1 + length(inits.3)]] = 1/prec.3
         names(inits.3)[[length(inits.3)]] = "Var"
     }
-    inInits <- list(inits.1, inits.2, inits.3, Significant)
+	
+	Diagnostics = list("Treat.Significant" = Treat.Significant, "Covs.Significant" = Covs.Significant, "fit" = fit)
+	
+    inInits <- list(inits.1, inits.2, inits.3, Diagnostics)
     return(inInits)
 }
-
