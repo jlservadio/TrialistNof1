@@ -28,3 +28,4 @@ prior.ord <- function (Covs, betaprior, dcprior, c1prior, slopeprior = list("nor
     }
     return(out)
 }
+
