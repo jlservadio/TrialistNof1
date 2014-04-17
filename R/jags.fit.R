@@ -1,6 +1,9 @@
 jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains, niters, conv.limit, 
 	setsize, nruns=5000, Covs) 
 {
+
+	
+
     mod = jags.model(model.file, data = inData, inits = inInits, n.chains, n.adapt = 0)
 	DIC1 = dic.samples(mod, niters)
 	DIC2 = as.list(DIC1)
@@ -22,8 +25,7 @@ jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains
         temp.samples.array[seq(nsamples), 2, ] <- samples[[2]][, c(alpha.vars, beta.vars, Sd.vars)]
         temp.samples.array[seq(nsamples), 3, ] <- samples[[3]][, c(alpha.vars, beta.vars, Sd.vars)]
         dimnames(temp.samples.array) <- list(NULL, NULL, varnames[c(alpha.vars, beta.vars, Sd.vars)])
-    }
-    else {
+    } else {
         temp.samples.array = array(NA, c(niters, n.chains, length(alpha.vars) + length(beta.vars) + length(Sd.vars) + 
 			length(slope.vars)))
         temp.samples.array[seq(nsamples), 1, ] <- samples[[1]][, c(alpha.vars, slope.vars, beta.vars, Sd.vars)]
@@ -44,8 +46,7 @@ jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains
                 temp.samples.array[nsamples + seq(setsize), 1, ] = samples[[1]][, c(alpha.vars, beta.vars, Sd.vars)]
                 temp.samples.array[nsamples + seq(setsize), 2, ] = samples[[2]][, c(alpha.vars, beta.vars, Sd.vars)]
                 temp.samples.array[nsamples + seq(setsize), 3, ] = samples[[3]][, c(alpha.vars, beta.vars, Sd.vars)]
-            }
-            else {
+            } else {
                 temp.samples.array[nsamples + seq(setsize), 1, ] = samples[[1]][, c(alpha.vars, slope.vars, beta.vars, 
 					Sd.vars)]
                 temp.samples.array[nsamples + seq(setsize), 2, ] = samples[[2]][, c(alpha.vars, slope.vars, beta.vars, 
@@ -64,9 +65,9 @@ jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains
     print(max.bgrRatio)
     flush.console()
     no.to.keep <- no.to.converge/2
-    if (nruns > no.to.keep) 
+    if (nruns > no.to.keep) { 
         samples = coda.samples(mod, variable.names = pars.to.save, n.iter = nruns, thin = 1)
-    else {
+    } else {
         thin <- floor(no.to.keep/nruns)
         samples <- coda.samples(mod, variable.names = pars.to.save, n.iter = no.to.keep, n.thin = thin)
     }
