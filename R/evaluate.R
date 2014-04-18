@@ -73,7 +73,6 @@ evaluate = function(observations, Covs, i, No_Neuropain) {
 	
 	if (No_Neuropain) {
 		Results.1 = Results.1[-nrow(Results.1), ]
-		DICs.1 = DICs.1[-length(DICs.1)]
 		uruns.1 = uruns.1[-length(uruns.1)]
 	}
 	
