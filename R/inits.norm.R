@@ -89,7 +89,7 @@ inits.norm <- function (Y, x, Treat, varprior, ntreat = 2)
         names(inits.3)[[length(inits.3)]] = "Var"
     }
 	
-	Diagnostics = list("Treat.Significant" = Treat.Significant, "Covs.Significant" = Covs.Significant, "fit" = fit)
+	Diagnostics = list("Treat.Significant" = Treat.Significant, "Covs.Significant" = Covs.Significant)
 	
     inInits <- list(inits.1, inits.2, inits.3, Diagnostics)
     return(inInits)
