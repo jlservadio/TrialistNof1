@@ -1,4 +1,4 @@
-PPC <- function(observations, ForPPC, Covs, Outcome) {
+ppc <- function(observations, ForPPC, Covs, Outcome) {
 
 	if (Outcome == "Pain") { index = 1
 	} else if (Outcome == "Fatigue") { index = 2
