@@ -3,17 +3,17 @@ wrap <- function(data, metadata) {
 	#####################################
 	# Converting Output to Desired Format
 	#####################################
-	
+
 	insufficient_data = FALSE
 
 	days_in_trial = as.numeric(as.Date(metadata[["trial_end_date"]]) - as.Date(metadata[["trial_start_date"]])) + 1
 
 	No_Neuropain = is.null(data[["painSharpness"]])
-	
+
 	meta.data = list()
 	meta.data[[1]] = No_Neuropain
 	names(meta.data)[length(meta.data)] = "No_Neuropain"
-	
+
 	Day2 = as.numeric(as.Date(data[["timestamp"]]) - as.Date(metadata[["trial_start_date"]]))
 	Intensity2 = data[["averagePainIntensity"]]
 	Enjoyment2 = data[["enjoymentOfLife"]]
@@ -56,7 +56,7 @@ wrap <- function(data, metadata) {
 	}
 
 	Day2 = Day2 + 1
-	
+
 	Pain2 = Intensity2 + Enjoyment2 + Activity2
 	if (!is.null(data[["painSharpness"]])) {
 		Neuropain2 = Sharpness2 + Hotness2 + Sensitivity2
@@ -65,37 +65,39 @@ wrap <- function(data, metadata) {
 	}
 
 	Time2 = data[["timestamp"]]
-	
+
 	for (i in 1:length(Time2)) {
 		Time2[i] = substr(Time2[i], 12, 13)
 	}
 	Time2 = as.numeric(Time2)
 	Time2 = Time2 / 24
 	
+	Sleep2 = 6 - Sleep2
+
 	observations = cbind(Day2, Time2, Pain2, Fatigue2, Drowsy2, Sleep2, Thinking2, Constipation2, Neuropain2)
-	
+
 	#############################
 	# Completing the Day Variable
 	#############################
-	
+
 	if (observations[1, 1] != 1) {
 		observations = rbind(c(1, rep(NA, ncol(observations) - 1)), observations)
 	}
-	
+
 	if (observations[nrow(observations), 1] != days_in_trial) {
 		observations = rbind(observations, c(days_in_trial, rep(NA, ncol(observations) - 1)))
 	}
-	
+
 	gaps = rep(0, nrow(observations) - 1)
 	for (i in 2:(nrow(observations))) {
 		gaps[i - 1] = observations[i, 1] - observations[i - 1]
 	}
-	
+
 	observations = rbind(observations, rep(NA, ncol(observations)))
-	
+
 	j = 1
 	while (j <= max(gaps)) {
-	
+
 		for (i in (nrow(observations) - 2):1) { 
 			if (observations[i, 1] < observations[i + 1, 1] - 1) {
 				observations[nrow(observations), 1] = observations[i + 1, 1] - 1
@@ -105,31 +107,31 @@ wrap <- function(data, metadata) {
 				observations = rbind(observations, rep(NA, ncol(observations)))
 			}
 		}
-		
+
 		j = j + 1
 	}
-	
+
 	observations = observations[-nrow(observations), ]
-	
+
 	#####################################
 	# Adding Complete Treatment and Block
 	#####################################
-	
+
 	treatment.schedule = rep(NA, nchar(metadata[["cycle_ab_pairs"]]))
 	Treat.full = NULL
 	for (i in 1:length(treatment.schedule)) {
 		treatment.schedule[i] = substr(metadata[["cycle_ab_pairs"]], i, i)
 		if (treatment.schedule[i] == ",") { treatment.schedule[i] = NA }	
 	}
-	
+
 	treatment.schedule = treatment.schedule[!is.na(treatment.schedule)]
-	
+
 	for (i in 1:length(treatment.schedule)) {
 		if (treatment.schedule[i] == "A") { Treat.full = c(Treat.full, rep(0, metadata[["regimen_duration"]])) 
 		} else if (treatment.schedule[i] == "B") {Treat.full = c(Treat.full, rep(1, metadata[["regimen_duration"]]))
 		}
 	}
-	
+
 	rm(i)
 	i = 1
 	Block.full = NULL
@@ -137,21 +139,28 @@ wrap <- function(data, metadata) {
 		Block.full = c(Block.full, rep(i, (2 * metadata[["regimen_duration"]])))
 		i = i + 1
 	}
-	
+
 	Treat2 = Block2 = rep(NA, nrow(observations))
 	observations = cbind(observations, Treat2, Block2)
-	
+
 	for (i in 1:nrow(observations)) {
 		observations[i, 10] = Treat.full[observations[i, 1]]
 		observations[i, 11] = Block.full[observations[i, 1]]
 	}
-	
+
 	observations = as.data.frame(observations)
-	
+
 	###########################
 	# Creating Block Categories
 	###########################
 	
+	for (i in 2:nrow(observations)) {
+		if (is.na(observations$Treat2[i])) {
+			observations$Treat2[i] = observations$Treat2[i-1]
+			observations$Block2[i] = observations$Block2[i-1]
+		}
+	}
+
 	Block.2 = Block.3 = Block.4 = rep(0, nrow(observations))
 	for (i in 1:nrow(observations)) {
 		if (observations$Block2[i] == 2) {
@@ -162,9 +171,9 @@ wrap <- function(data, metadata) {
 			Block.4[i] = 1
 		}
 	}
-	
+
 	Block.Covs = Block.2
-	
+
 	if (sum(Block.3) != 0) { 
 		Block.Covs = cbind(Block.Covs, Block.3) 
 		colnames(Block.Covs) = c("Block.2", "Block.3")
@@ -173,109 +182,109 @@ wrap <- function(data, metadata) {
 		Block.Covs = cbind(Block.Covs, Block.4) 
 		colnames(Block.Covs) = c("Block.2", "Block.3", "Block.4")
 	}
-	
+
 	#########################
 	# Creating Lag Covariates
 	#########################
-	
+
 	Lag.Covs = make.lag(observations)
 
 	#################################
 	# Adjusting for insufficient Data
 	#################################
-	
+
 	Treatments = data[["regimen"]]
-	
+
 	Blocks = data[["cycle"]]
-	
+
 	if (dim(table(Treatments)) != 2) { insufficient_data = TRUE }
 	if (min(Blocks) == max(Blocks)) { insufficient_data = TRUE }
-	
+
 	if (insufficient_data == TRUE) {
 		observations$Pain2 = observations$Fatigue2 = observations$Drowsy2 = observations$Sleep2 = 
 		observations$Thinking2 = observations$Constipation2 = observations$Neuropain2 = 
 		rep(3, nrow(observations))
 	}
-	
+
 	########################
 	# Making Time Continuous
 	########################
-	
-	observations$Time2 = observations$Day + observations$Time2
-	
+
+	observations$Time2 = observations$Day2 + observations$Time2
+
 	meta.data[[length(meta.data) + 1]] = insufficient_data
 	names(meta.data)[length(meta.data)] = "Insufficient_Data"
-	
+
 	meta.data[[length(meta.data) + 1]] = observations
 	names(meta.data)[length(meta.data)] = "Observations"
-	
+
 	####################################
 	# Analyzing Data for Null Covariates
 	####################################
-	
+
 	nof1 = evaluate(observations, Covs = NULL, i = 1, No_Neuropain)
 	Results.1 = nof1$Results
 	Diagnostics.1 = nof1$Diagnostics
 	uruns.1 = nof1$uruns
 	ForPPC.1 = nof1$ForPPC
-	
+
 	####################################
 	# Analyzing Data for Time Covariates
 	####################################
-	
+
 	nof1 = evaluate(observations, Covs = observations$Time2, i = 2, No_Neuropain)
 	Results.2 = nof1$Results
 	Diagnostics.2 = nof1$Diagnostics
 	uruns.2 = nof1$uruns
 	ForPPC.2 = nof1$ForPPC
-	
+
 	#####################################
 	# Analyzing Data for Block Covariates
 	#####################################
-	
+
 	nof1 = evaluate(observations, Covs = observations$Block2, i = 3, No_Neuropain)
 	Results.3 = nof1$Results
 	Diagnostics.3 = nof1$Diagnostics
 	uruns.3 = nof1$uruns
 	ForPPC.3 = nof1$ForPPC
-	
+
 	######################################
 	# Analyzing Data for Lagged Covariates
 	######################################
-	
+
 	nof1 = evaluate(observations, Covs = Lag.Covs, i = 4, No_Neuropain)
 	Results.4 = nof1$Results
 	Diagnostics.4 = nof1$Diagnostics
 	uruns.4 = nof1$uruns
 	ForPPC.4 = nof1$ForPPC
-	
+
 	meta.data[[length(meta.data) + 1]] = nof1$Inputs
 	names(meta.data)[length(meta.data)] = "Inputs"
-	
+
 	#################
 	# PPC for model 1
 	#################
-	
-	
-		
+
+
+
 	#################
 	# PPC for model 2
 	#################
-	
-	
-	
+
+
+
 	#################
 	# PPC for model 3
 	#################
-	
-	
-	
+
+
+
 	#################
 	# PPC for model 4
 	#################
-	
-	
-	
+
+
+
 	##########################
 	# Selecting the Best Model
 	##########################
@@ -284,8 +293,8 @@ wrap <- function(data, metadata) {
 	Better.Model = 1
 	uruns.b = uruns.1
 
-	
-	
+
+
 
 	Results = Better
 	uruns = uruns.b
@@ -306,7 +315,7 @@ wrap <- function(data, metadata) {
 		if (Results[i, 1] < 0) {Results_mod[i, 6] = "B"}
 		if (Results[i, 1] > 0) {Results_mod[i, 6] = "A"}
 	}
-	
+
 	Results_mod[ , 2] = abs(Results[ , 2])
 	Results_mod[ , 3] = abs(Results[ , 3])
 	Results_mod[ , 5] = abs(Results[ , 1])
@@ -314,7 +323,7 @@ wrap <- function(data, metadata) {
 	Results_mod[ , 8] = Results[ , 6]
 	Results_mod[ , 9] = Results[ , 4]
 	Results_mod[ , 10] = Results[ , 5]
-	
+
 	if (No_Neuropain) {
 		colnames(Results_mod) = c("more_effective_regimen", "median_effect", "upper_bound", "upper_bound_regimen",
 			"lower_bound", "lower_bound_regimen", "a_clinically_better", "a_marginally_better", "b_clinically_better",
@@ -332,7 +341,7 @@ wrap <- function(data, metadata) {
 	#####################
 	# Constructing Output
 	#####################
-	
+
 	graph_5 = list("more_effective_regimen" = Results_mod[1, 1], "median_effect" = as.numeric(Results_mod[1, 2]),
 		"upper_bound" = as.numeric(Results_mod[1, 3]), "upper_bound_regimen" = Results_mod[1, 4],
 		"lower_bound" = as.numeric(Results_mod[1, 5]), "lower_bound_regimen" = Results_mod[1, 6])
@@ -406,7 +415,7 @@ wrap <- function(data, metadata) {
 	names(fatigue) = c("successful_run", "graph_5", "graph_6")	
 
 	if (!No_Neuropain) {
-	
+
 		graph_5 = list("more_effective_regimen" = Results_mod[7, 1], "median_effect" = as.numeric(Results_mod[7, 2]),
 			"upper_bound" = as.numeric(Results_mod[7, 3]), "upper_bound_regimen" = Results_mod[7, 4],
 			"lower_bound" = as.numeric(Results_mod[7, 5]), "lower_bound_regimen" = Results_mod[7, 6])
@@ -418,7 +427,7 @@ wrap <- function(data, metadata) {
 
 		neuropathic_pain = list(as.logical(1 - uruns[7]), graph_5, graph_6)
 		names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
-	
+
 	}
 
 	meta.data[[length(meta.data) + 1]] = list(
@@ -428,10 +437,10 @@ wrap <- function(data, metadata) {
 			"Model3" = as.logical(1 - uruns.3), "Model4" = as.logical(1 - uruns.4))
 	)
 	names(meta.data)[length(meta.data)] = "Final Results"
-	
+
 	Diagnostics = list("Diagnostics.1" = Diagnostics.1, "Diagnostics.2" = Diagnostics.2, 
 			"Diagnostics.3" = Diagnostics.3, "Diagnostics.4" = Diagnostics.4)
-	
+
 	if (No_Neuropain) {
 		out = list(pain, sleep_problems, constipation, drowsiness, thinking_problems, fatigue,
 			Results, Diagnostics, meta.data)
@@ -443,7 +452,7 @@ wrap <- function(data, metadata) {
 		names(out) = c("pain", "sleep_problems", "constipation", "drowsiness", "thinking_problems", "fatigue",
 			"neuropathic_pain", "Results", "Diagnostics", "Metadata")
 	}
-	
+
 	return(out)
 }
 
