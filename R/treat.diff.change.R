@@ -7,4 +7,3 @@ treat.diff.change <- function (treat.diff, score.range)
 		c(-1, -0.2, 0, 0.2, 1))))/length(treat.diff.change)
     return(list(treat.diff.change.1, treat.diff.change.2))
 }
-
