@@ -3,7 +3,7 @@ prior.ord <- function (Covs, betaprior, dcprior, c1prior, slopeprior = list("nor
     mean.beta = betaprior[[2]]
     prec.beta = betaprior[[3]]
     lower.dc = dcprior[[2]]
-    upper.dc = dcprior[[3]]
+    upper.dc = dcprior[[3]] 
     lower.c1 = c1prior[[2]]
     upper.c1 = c1prior[[3]]
     Prior.beta = paste("d", betaprior[[1]], "(mean.beta,prec.beta)", sep = "")
@@ -28,4 +28,3 @@ prior.ord <- function (Covs, betaprior, dcprior, c1prior, slopeprior = list("nor
     }
     return(out)
 }
-
