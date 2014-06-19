@@ -36,8 +36,6 @@ inits.ord <- function (Y, x, Treat, ncat)
 	dc2 = c(c2[1],c2[-1] - c2[-(ncat-1)])
 	dc3 = c(c3[1],c3[-1] - c3[-(ncat-1)])
 	
-	
-	
     if (is.null(x)) {
         fit <- summary(lm(Y ~ Treat))
     } else {
@@ -50,21 +48,6 @@ inits.ord <- function (Y, x, Treat, ncat)
         else se.slope <- rep(1,length(se.slope))
     }
 	
-	if (fit[[4]]["Treat", "Pr(>|t|)"] < 0.05) {
-		Treat.Significant = TRUE
-	} else {
-		Treat.Significant = FALSE
-	}
-	
-	Covs.Significant = NULL
-	if (!is.null(x)) {
-		if (fit[[4]]["x", "Pr(>|t|)"] < 0.05) {
-			Covs.Significant = TRUE
-		} else {
-			Covs.Significant = FALSE
-		}
-	}
-		
     beta = coef(fit)[2, 1]
     if (!is.nan(fit$fstat[1])) {
         se.beta = coef(fit)[2, 2]
@@ -87,9 +70,6 @@ inits.ord <- function (Y, x, Treat, ncat)
         names(inits.3)[[length(inits.3)]] = "slope"
     }
 	
-	Diagnostics = list("Treat.Significant" = Treat.Significant, "Covs.Significant" = Covs.Significant)
-	
-    inInits <- list(inits.1, inits.2, inits.3, Diagnostics)
+    inInits <- list(inits.1, inits.2, inits.3)
     return(inInits)
 }
-
