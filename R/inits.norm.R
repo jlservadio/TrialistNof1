@@ -14,22 +14,7 @@ inits.norm <- function (Y, x, Treat, varprior, ntreat = 2)
 			se.slope <- rep(1,length(se.slope))
 		}
     }
-	
-	if (fit[[4]]["Treat", "Pr(>|t|)"] < 0.05) {
-		Treat.Significant = TRUE
-	} else {
-		Treat.Significant = FALSE
-	}
-	
-	Covs.Significant = NULL
-	if (!is.null(x)) {
-		if (fit[[4]]["x", "Pr(>|t|)"] < 0.05) {
-			Covs.Significant = TRUE
-		} else {
-			Covs.Significant = FALSE
-		}
-	}
-	
+
     alpha = coef(fit)[1, 1]
     beta = coef(fit)[2, 1]
     if (!is.nan(fit$fstat[1])) {
@@ -73,13 +58,12 @@ inits.norm <- function (Y, x, Treat, varprior, ntreat = 2)
         inits.3[[1 + length(inits.3)]] = prec.3
         names(inits.3)[[length(inits.3)]] = "prec"
     } else if (varprior[[1]] == "Sd" & !is.null(x)) {
-	#This loop deals with Sd									#
-        inits.1[[1 + length(inits.1)]] = 0.5/sqrt(prec.1)		#
-        names(inits.1)[[length(inits.1)]] = "Sd"				#
-        inits.2[[1 + length(inits.2)]] = 0.5/sqrt(prec.2)		#
-        names(inits.2)[[length(inits.2)]] = "Sd"				#
-        inits.3[[1 + length(inits.3)]] = 0.5/sqrt(prec.3)		#
-        names(inits.3)[[length(inits.3)]] = "Sd"				#
+        inits.1[[1 + length(inits.1)]] = 0.5/sqrt(prec.1)
+        names(inits.1)[[length(inits.1)]] = "Sd"
+        inits.2[[1 + length(inits.2)]] = 0.5/sqrt(prec.2)
+        names(inits.2)[[length(inits.2)]] = "Sd"
+        inits.3[[1 + length(inits.3)]] = 0.5/sqrt(prec.3)
+        names(inits.3)[[length(inits.3)]] = "Sd"
     } else if (varprior[[1]] == "var") {
         inits.1[[1 + length(inits.1)]] = 1/prec.1
         names(inits.1)[[length(inits.1)]] = "Var"
@@ -89,8 +73,6 @@ inits.norm <- function (Y, x, Treat, varprior, ntreat = 2)
         names(inits.3)[[length(inits.3)]] = "Var"
     }
 	
-	Diagnostics = list("Treat.Significant" = Treat.Significant, "Covs.Significant" = Covs.Significant)
-	
-    inInits <- list(inits.1, inits.2, inits.3, Diagnostics)
+    inInits <- list(inits.1, inits.2, inits.3)
     return(inInits)
 }
