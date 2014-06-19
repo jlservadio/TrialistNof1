@@ -1,5 +1,5 @@
 run.ord <- function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv.limit = 1.05, niters = 50000, nruns = 5000, 
-    setsize = 4000, betaprior, dcprior, c1prior, path, i) 
+    setsize = 4000, betaprior, dcprior, c1prior, path, mod.id) 
 {
 
 	stopifnot(max(Y[!is.na(Y)]) > min(Y[!is.na(Y)]))
@@ -8,27 +8,112 @@ run.ord <- function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv
     if (!is.null(Covs)) 
         Covs = as.matrix(Covs)
     prior = prior.ord(Covs, betaprior, dcprior, c1prior, slopeprior = list("norm", 0, 0.1))
-    inInitials = inits.ord(Y, Covs, Treat, ncat)
-	inInits = list(inInitials[[1]], inInitials[[2]], inInitials[[3]])
-	Diagnostics = inInitials[[4]]
+    inInits = inits.ord(Y, Covs, Treat, ncat)
 		
-    inData <- data.ord(Y, Covs, ncat, prior, Treat, i)
-    model.ord(Covs, prior, path, i)
+    inData <- data.ord(Y, Covs, ncat, prior, Treat, mod.id)
+	if (mod.id == 2) { inData$x = as.numeric(inData$x) 
+	} else if (mod.id == 3) {
+		if (ncol(inData$x) == 1) { inData$x1 = as.numeric(inData$x[ , 1])
+		} else if (ncol(inData$x) == 2) {
+			inData$x1 = as.numeric(inData$x[ , 1])
+			inData$x2 = as.numeric(inData$x[ , 2])
+		} else if (ncol(inData$x) == 3) {
+			inData$x1 = as.numeric(inData$x[ , 1])
+			inData$x2 = as.numeric(inData$x[ , 2])
+			inData$x3 = as.numeric(inData$x[ , 3])
+		}
+	} else if (mod.id == 4.1) { inData$x = inData$x[ , 2] 
+	} else if (mod.id == 4.2) {
+		if (ncol(Covs) == 2) {
+			inData$x1 = as.numeric(inData$x[ , 2])
+		} else if (ncol(Covs) == 3) {
+			inData$x1 = as.numeric(inData$x[ , 2])
+			inData$x2 = as.numeric(inData$x[ , 3])
+		} else if (ncol(Covs) == 4) {
+			inData$x1 = as.numeric(inData$x[ , 2])
+			inData$x2 = as.numeric(inData$x[ , 3])
+			inData$x3 = as.numeric(inData$x[ , 4])
+		}
+	} else if (mod.id == 5.1) {
+		inData$z1 = as.numeric(inData$x[ , 1])
+		inData$z2 = as.numeric(inData$x[ , 2])
+	} else if (mod.id == 5.2) {
+		inData$z1 = as.numeric(inData$x[ , 2])
+		inData$z2 = as.numeric(inData$x[ , 3])
+		inData$x = inData$x[ , 1]
+	} else if (mod.id == 5.3) {
+		if (ncol(Covs) == 3) {
+			inData$x1 = as.numeric(inData$x[ , 1])
+			inData$z1 = as.numeric(inData$x[ , 2])
+			inData$z2 = as.numeric(inData$x[ , 3])
+		} else if (ncol(Covs) == 4) {
+			inData$x1 = as.numeric(inData$x[ , 1])
+			inData$x2 = as.numeric(inData$x[ , 2])
+			inData$z1 = as.numeric(inData$x[ , 3])
+			inData$z2 = as.numeric(inData$x[ , 4])
+		} else if (ncol(Covs) == 5) {
+			inData$x1 = as.numeric(inData$x[ , 1])
+			inData$x2 = as.numeric(inData$x[ , 2])
+			inData$x3 = as.numeric(inData$x[ , 3])
+			inData$z1 = as.numeric(inData$x[ , 4])
+			inData$z2 = as.numeric(inData$x[ , 5])
+		}
+	} else if (mod.id == 5.4) {
+		inData$z1 = as.numeric(inData$x[ , 2])
+		inData$z2 = as.numeric(inData$x[ , 3])
+	} else if (mod.id == 5.41) {
+		inData$z1 = as.numeric(inData$x[ , 3])
+		inData$z2 = as.numeric(inData$x[ , 4])
+		inData$x = inData$x[ , 2]
+	} else if (mod.id == 5.42) {
+		if (ncol(Covs) == 4) {
+			inData$z1 = as.numeric(inData$x[ , 3])
+			inData$z2 = as.numeric(inData$x[ , 4])
+			inData$x1 = as.numeric(inData$x[ , 2])
+		} else if (ncol(Covs) == 5) {
+			inData$z1 = as.numeric(inData$x[ , 4])
+			inData$z2 = as.numeric(inData$x[ , 5])
+			inData$x1 = as.numeric(inData$x[ , 2])
+			inData$x2 = as.numeric(inData$x[ , 3])
+		} else if (ncol(Covs) == 6) {
+			inData$z1 = as.numeric(inData$x[ , 5])
+			inData$z2 = as.numeric(inData$x[ , 6])
+			inData$x1 = as.numeric(inData$x[ , 2])
+			inData$x2 = as.numeric(inData$x[ , 3])
+			inData$x3 = as.numeric(inData$x[ , 4])
+		}
+	}
+	
+	if (ncat == 6) { inData$v = c(0.1, 0.15, 0.25, 0.25, 0.15, 0.1) }
+		
+    model.ord(Covs, prior, path, mod.id)
     pars.to.save <- c("beta","or","c","p")
-    if (!is.null(Covs)) 
-        pars.to.save = c(pars.to.save, "slope")
-    jags.out <- jags.fit(inData, inInits, pars.to.save, model, "model.txt", nChains, niters, 
+	
+	if (is.null(Covs)) { pars.to.save = pars.to.save
+	} else if (ncol(Covs) == 1) {
+		pars.to.save = c(pars.to.save, "slope")
+	} else if (ncol(Covs) == 2) {
+		pars.to.save = c(pars.to.save, "slope1", "slope2")
+	} else if (ncol(Covs) == 3) {
+		pars.to.save = c(pars.to.save, "slope1", "slope2", "slope3")
+	} else if (ncol(Covs) == 4) {
+		pars.to.save = c(pars.to.save, "slope1", "slope2", "slope3", "slope4")
+	} else if (ncol(Covs) == 5) {
+		pars.to.save = c(pars.to.save, "slope1", "slope2", "slope3", "slope4", "slope5")
+	} else if (ncol(Covs) == 6) {
+		pars.to.save = c(pars.to.save, "slope1", "slope2", "slope3", "slope4", "slope5", "slope6")
+	}
+	
+	jags.out <- jags.fit(inData, inInits, pars.to.save, model, "model.txt", nChains, niters, 
 		conv.limit, setsize, nruns=5000, Covs)
-    burn.in <- jags.out[[1]]
+
+	burn.in <- jags.out[[1]]
     no.runs <- jags.out[[2]]
     samples <- jags.out[[3]]
 	DIC = jags.out[[4]]
     varnames <- dimnames(samples)[[3]]
     nvars <- dim(samples)[3]
 	
-	Diagnostics[[length(Diagnostics) + 1]] = DIC
-	names(Diagnostics)[length(Diagnostics)] = "DIC"
-    
     beta.vars <- grep("beta", varnames)
     beta <- as.vector(samples[, , beta.vars])
     
@@ -40,22 +125,18 @@ run.ord <- function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv
     
     p.vars <- grep("p", varnames)
     p <- array(matrix(samples[, , p.vars], c(no.runs * nChains, length(p.vars))), c(no.runs * nChains, nobs, ncat))
-    
-	Posterior = list("beta" = mean(beta), "or" = mean(or), "c" = mean(c), "p" = mean(p))
-	Diagnostics[[length(Diagnostics) + 1]] = Posterior
-	names(Diagnostics)[length(Diagnostics)] = "Posterior"
 	
     if (!is.null(Covs)) {
         slope.vars <- grep("slope", varnames)
         slope <- samples[, , slope.vars]
     }
     if (is.null(Covs)) {
-        out <- list(burn.in, no.runs, Y, beta, or, c, p, Diagnostics)
-        names(out) <- c("Burn In", "Number runs per chain", "Y", "beta", "or", "c", "p", "Diagnostics")
+        out <- list(burn.in, no.runs, Y, beta, or, c, p, DIC)
+        names(out) <- c("Burn In", "Number runs per chain", "Y", "beta", "or", "c", "p", "DIC")
     }
     else {
-        out <- list(burn.in, no.runs, Y, beta, or, p, slope, Diagnostics)
-        names(out) <- c("Burn In", "Number runs per chain", "Y", "beta", "or", "p", "Slopes", "Diagnostics")
+        out <- list(burn.in, no.runs, Y, beta, or, p, slope, DIC)
+        names(out) <- c("Burn In", "Number runs per chain", "Y", "beta", "or", "p", "Slopes", "DIC")
     }
     return(out)
 }
