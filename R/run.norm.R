@@ -1,22 +1,107 @@
 run.norm <- function (Y, Treat, Covs, model, var.model, nChains = 3, conv.limit = 1.05, niters = 50000, nruns = 5000, 
-    setsize = 4000, slopeprior, alphaprior, betaprior, varprior, varprior.params, path, i) 
+    setsize = 4000, slopeprior, alphaprior, betaprior, varprior, varprior.params, path, mod.id) 
 {
 
 	stopifnot(max(Y[!is.na(Y)]) > min(Y[!is.na(Y)]))
 	
     nobs = length(Y)
-    if (!is.null(Covs)) 
-        Covs = as.matrix(Covs)
+    if (!is.null(Covs)) { Covs = as.matrix(Covs) }
     prior = prior.norm(Covs, alphaprior, betaprior, slopeprior, varprior, varprior.params)
-    inInitials = inits.norm(Y, Covs, Treat, varprior, ntreat = 2)
-    inInits = list(inInitials[[1]], inInitials[[2]], inInitials[[3]])
-	Diagnostics = inInitials[[4]]
+    inInits = inits.norm(Y, Covs, Treat, varprior, ntreat = 2)
 	
-	inData <- data.norm(Y, Covs, prior, Treat, i)
-    model.norm(nobs, Covs, prior, varprior, path, i)
+	inData <- data.norm(Y, Covs, prior, Treat, mod.id)
+	
+	if (mod.id == 2) { inData$x = as.numeric(inData$x) 
+	} else if (mod.id == 3) {
+		if (ncol(inData$x) == 1) { inData$x1 = as.numeric(inData$x[ , 1])
+		} else if (ncol(inData$x) == 2) {
+			inData$x1 = as.numeric(inData$x[ , 1])
+			inData$x2 = as.numeric(inData$x[ , 2])
+		} else if (ncol(inData$x) == 3) {
+			inData$x1 = as.numeric(inData$x[ , 1])
+			inData$x2 = as.numeric(inData$x[ , 2])
+			inData$x3 = as.numeric(inData$x[ , 3])
+		}
+	} else if (mod.id == 4.1) { inData$x = inData$x[ , 2] 
+	} else if (mod.id == 4.2) {
+		if (ncol(Covs) == 2) {
+			inData$x1 = as.numeric(inData$x[ , 2])
+		} else if (ncol(Covs) == 3) {
+			inData$x1 = as.numeric(inData$x[ , 2])
+			inData$x2 = as.numeric(inData$x[ , 3])
+		} else if (ncol(Covs) == 4) {
+			inData$x1 = as.numeric(inData$x[ , 2])
+			inData$x2 = as.numeric(inData$x[ , 3])
+			inData$x3 = as.numeric(inData$x[ , 4])
+		}
+	} else if (mod.id == 5.1) {
+		inData$z1 = as.numeric(inData$x[ , 1])
+		inData$z2 = as.numeric(inData$x[ , 2])
+	} else if (mod.id == 5.2) {
+		inData$z1 = as.numeric(inData$x[ , 2])
+		inData$z2 = as.numeric(inData$x[ , 3])
+		inData$x = inData$x[ , 1]
+	} else if (mod.id == 5.3) {
+		if (ncol(Covs) == 3) {
+			inData$x1 = as.numeric(inData$x[ , 1])
+			inData$z1 = as.numeric(inData$x[ , 2])
+			inData$z2 = as.numeric(inData$x[ , 3])
+		} else if (ncol(Covs) == 4) {
+			inData$x1 = as.numeric(inData$x[ , 1])
+			inData$x2 = as.numeric(inData$x[ , 2])
+			inData$z1 = as.numeric(inData$x[ , 3])
+			inData$z2 = as.numeric(inData$x[ , 4])
+		} else if (ncol(Covs) == 5) {
+			inData$x1 = as.numeric(inData$x[ , 1])
+			inData$x2 = as.numeric(inData$x[ , 2])
+			inData$x3 = as.numeric(inData$x[ , 3])
+			inData$z1 = as.numeric(inData$x[ , 4])
+			inData$z2 = as.numeric(inData$x[ , 5])
+		}
+	} else if (mod.id == 5.4) {
+		inData$z1 = as.numeric(inData$x[ , 2])
+		inData$z2 = as.numeric(inData$x[ , 3])
+	} else if (mod.id == 5.41) {
+		inData$z1 = as.numeric(inData$x[ , 3])
+		inData$z2 = as.numeric(inData$x[ , 4])
+		inData$x = inData$x[ , 2]
+	} else if (mod.id == 5.42) {
+		if (ncol(Covs) == 4) {
+			inData$z1 = as.numeric(inData$x[ , 3])
+			inData$z2 = as.numeric(inData$x[ , 4])
+			inData$x1 = as.numeric(inData$x[ , 2])
+		} else if (ncol(Covs) == 5) {
+			inData$z1 = as.numeric(inData$x[ , 4])
+			inData$z2 = as.numeric(inData$x[ , 5])
+			inData$x1 = as.numeric(inData$x[ , 2])
+			inData$x2 = as.numeric(inData$x[ , 3])
+		} else if (ncol(Covs) == 6) {
+			inData$z1 = as.numeric(inData$x[ , 5])
+			inData$z2 = as.numeric(inData$x[ , 6])
+			inData$x1 = as.numeric(inData$x[ , 2])
+			inData$x2 = as.numeric(inData$x[ , 3])
+			inData$x3 = as.numeric(inData$x[ , 4])
+		}
+	}
+	
+    model.norm(nobs, Covs, prior, varprior, path, mod.id)
     pars.to.save <- c("alpha", "beta")
-    if (!is.null(Covs)) 
-        pars.to.save = c(pars.to.save, "slope")
+	
+	if (is.null(Covs)) { pars.to.save = pars.to.save
+	} else if (ncol(Covs) == 1) {
+		pars.to.save = c(pars.to.save, "slope")
+	} else if (ncol(Covs) == 2) {
+		pars.to.save = c(pars.to.save, "slope1", "slope2")
+	} else if (ncol(Covs) == 3) {
+		pars.to.save = c(pars.to.save, "slope1", "slope2", "slope3")
+	} else if (ncol(Covs) == 4) {
+		pars.to.save = c(pars.to.save, "slope1", "slope2", "slope3", "slope4")
+	} else if (ncol(Covs) == 5) {
+		pars.to.save = c(pars.to.save, "slope1", "slope2", "slope3", "slope4", "slope5")
+	} else if (ncol(Covs) == 6) {
+		pars.to.save = c(pars.to.save, "slope1", "slope2", "slope3", "slope4", "slope5", "slope6")
+	}
+	
     pars.to.save = c(pars.to.save, "Sd")
     jags.out <- jags.fit(inData, inInits, pars.to.save, model, "model.txt", nChains, niters, conv.limit, 
 		setsize, nruns=5000, Covs)
@@ -24,9 +109,6 @@ run.norm <- function (Y, Treat, Covs, model, var.model, nChains = 3, conv.limit 
     no.runs <- jags.out[[2]]
     samples <- jags.out[[3]]
 	DIC = jags.out[[4]]
-	
-	Diagnostics[[length(Diagnostics) + 1]] = DIC
-	names(Diagnostics)[length(Diagnostics)] = "DIC"	
 	
     varnames <- dimnames(samples)[[3]]
     nvars <- dim(samples)[3]
@@ -41,16 +123,12 @@ run.norm <- function (Y, Treat, Covs, model, var.model, nChains = 3, conv.limit 
         slope <- samples[, , slope.vars]
     }
 	
-	Posterior = list("alpha" = mean(alpha), "beta" = mean(beta), "Sd" = mean(Sd))
-	Diagnostics[[length(Diagnostics) + 1]] = Posterior
-	names(Diagnostics)[length(Diagnostics)] = "Posterior"
-	
     if (is.null(Covs)) {
-        out <- list(burn.in, no.runs, Y, alpha, beta, Sd, Diagnostics)
-        names(out) <- c("Burn In", "Number runs per chain", "Y", "alpha", "beta", "Sd", "Diagnostics")
+        out <- list(burn.in, no.runs, Y, alpha, beta, Sd, DIC)
+        names(out) <- c("Burn In", "Number runs per chain", "Y", "alpha", "beta", "Sd", "DIC")
     } else {
-        out <- list(burn.in, no.runs, Y, alpha, beta, Sd, slope, Diagnostics)
-        names(out) <- c("Burn In", "Number runs per chain", "Y", "alpha", "beta", "Sd", "Slopes", "Diagnostics")
+        out <- list(burn.in, no.runs, Y, alpha, beta, Sd, slope, DIC)
+        names(out) <- c("Burn In", "Number runs per chain", "Y", "alpha", "beta", "Sd", "Slopes", "DIC")
     }
     return(out)
 }
