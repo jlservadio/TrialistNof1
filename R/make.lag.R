@@ -18,3 +18,4 @@ make.lag = function(observations) {
 		
 	return(Lag.Covs)
 }
+
