@@ -1,10 +1,10 @@
+
 jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains, niters, conv.limit, 
 	setsize, nruns=5000, Covs) 
 {
 
-	
-
     mod = jags.model(model.file, data = inData, inits = inInits, n.chains, n.adapt = 0)
+	
 	DIC1 = dic.samples(mod, niters)
 	DIC2 = as.list(DIC1)
 	DIC = sum(DIC2[[1]])
@@ -80,3 +80,4 @@ jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains
     names(out) <- c("BurnIn", "No. Runs Per Chain", "Samples", "DIC")
     return(out)
 }
+
