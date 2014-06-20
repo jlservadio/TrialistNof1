@@ -7,4 +7,4 @@ Author: Christopher Schmid, Joseph Servadio
 Maintainer: Christopher Schmid <christopher_schmid@brown.edu>, Joseph Servadio <joseph_servadio@brown.edu>
 Description: For each individual N-of-1 study done for 6 different chronic pain outcomes, program runs MCMC algorithm in JAGS to calculate posterior distribution of treatment effect. Returns posterior median, 2.5 and 97.5 percentiles as well as posterior probabilities that effect is greater than 20% improvement or less than 20% improvement for treatment B compared to A and A compared to B (i.e. 4 probabilities). For now, just fits simple t-test model with non-informative priors. This will be updated in new versions.
 License: GPL
-Depends: rjags, runjags, combinat, jsonlite
+Depends: rjags, runjags, combinat, jsonlite, matrixStats
