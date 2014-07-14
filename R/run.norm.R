@@ -8,7 +8,30 @@ run.norm <- function (Y, Treat, Covs, model, var.model, nChains = 3, conv.limit 
     if (!is.null(Covs)) { Covs = as.matrix(Covs) }
     prior = prior.norm(Covs, alphaprior, betaprior, slopeprior, varprior, varprior.params)
     inInits = inits.norm(Y, Covs, Treat, varprior, ntreat = 2)
+		
+	if (length(inInits[[1]]$slope) >= 2) {
+		for (i in 1:nChains) {
+			inInits[[i]]$slope1 = inInits[[i]]$slope[1]
+			inInits[[i]]$slope2 = inInits[[i]]$slope[2]
+		}
+	}
+	if (length(inInits[[1]]$slope) >= 3) {
+		for (i in 1:nChains) { inInits[[i]]$slope3 = inInits[[i]]$slope[3] }
+	}
+	if (length(inInits[[1]]$slope) >= 4) {
+		for (i in 1:nChains) { inInits[[i]]$slope4 = inInits[[i]]$slope[4] }
+	}
+	if (length(inInits[[1]]$slope) >= 5) {
+		for (i in 1:nChains) { inInits[[i]]$slope5 = inInits[[i]]$slope[5] }
+	}
+	if (length(inInits[[1]]$slope) >= 6) {
+		for (i in 1:nChains) { inInits[[i]]$slope6 = inInits[[i]]$slope[6] }
+	}
 	
+	if (length(inInits[[1]]$slope) >= 2) {
+		for (i in 1:nChains) { inInits[[i]]$slope = NULL }
+	}
+		
 	inData <- data.norm(Y, Covs, prior, Treat, mod.id)
 	
 	if (mod.id == 2) { inData$x = as.numeric(inData$x) 
@@ -22,6 +45,7 @@ run.norm <- function (Y, Treat, Covs, model, var.model, nChains = 3, conv.limit 
 			inData$x2 = as.numeric(inData$x[ , 2])
 			inData$x3 = as.numeric(inData$x[ , 3])
 		}
+		inData$x = NULL
 	} else if (mod.id == 4.1) { inData$x = inData$x[ , 2] 
 	} else if (mod.id == 4.2) {
 		if (ncol(Covs) == 2) {
@@ -34,6 +58,7 @@ run.norm <- function (Y, Treat, Covs, model, var.model, nChains = 3, conv.limit 
 			inData$x2 = as.numeric(inData$x[ , 3])
 			inData$x3 = as.numeric(inData$x[ , 4])
 		}
+		inData$x = NULL
 	} else if (mod.id == 5.1) {
 		inData$z1 = as.numeric(inData$x[ , 1])
 		inData$z2 = as.numeric(inData$x[ , 2])
