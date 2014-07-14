@@ -5,10 +5,11 @@ inits.ord <- function (Y, x, Treat, ncat)
 	c1 = c2 = c3 = rep(NA, ncat-1)
 	for (i in seq(ncat)) {
 		p[i] = sum(Y[!is.na(Y)]==i)/nobs
-		if (!is.na(p[i]) & p[i] == 0) p[i] = 0.05
+		if (!is.na(p[i]) & p[i] == 0) { p[i] = 0.05 }
 	}
-	if (sum(p[!is.na(p)])> 1) 
+	if (sum(p[!is.na(p)])> 1) {
 		p[max(which(p==max(p)))] = p[max(which(p==max(p)))] + 1 - sum(p)
+	}
 	p1 = rmultz2(nobs,p)/nobs
 	if (any(p1 == 0)) {
 		p1[which(p1 == 0)] = 0.05
@@ -41,18 +42,19 @@ inits.ord <- function (Y, x, Treat, ncat)
     } else {
 		slope <- se.slope <- rep(NA, dim(x)[2]) # no.treat x no.x
         fit <- summary(lm(Y ~ Treat + x))
+		slope <- tryCatch({coef(fit)[2+seq(dim(x)[2]), 1]}, error=function(cond) { caught <- rep(0, length(slope)) })
 		
-        slope <- coef(fit)[2+seq(dim(x)[2]),1]
-        if (!is.nan(fit$fstat[1])) 
-            se.slope <- coef(fit)[2+seq(dim(x)[2]),2]
-        else se.slope <- rep(1,length(se.slope))
+        if (!is.nan(fit$fstat[1]) && sum(slope) != 0) { 
+			se.slope <- coef(fit)[2+seq(dim(x)[2]),2]
+        } else { 
+			se.slope <- rep(1,length(se.slope))
+		}
     }
 	
     beta = coef(fit)[2, 1]
     if (!is.nan(fit$fstat[1])) {
         se.beta = coef(fit)[2, 2]
-    }
-    else {
+    } else {
         se.beta = 1
     }
     inits.1 = list(dc1, beta + se.beta * rnorm(1))
