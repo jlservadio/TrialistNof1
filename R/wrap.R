@@ -81,7 +81,7 @@ wrap <- function(data, metadata) {
 			PPC.Pain.4 = ppc(observations, "Pain", Pain.M4$ForPPC, Lag.Covs[ , 1], 4)
 			Pain.M4[[length(Pain.M4) + 1]] = PPC.Pain.4
 			names(Pain.M4)[length(Pain.M4)] = "PPC.Pain.4"
-			if (!exists("PPC.Pain.1")) { PPC.Pain.1 = ppc(observations, "Pain", Covs = NULL, 1) 
+			if (!exists("PPC.Pain.1")) { PPC.Pain.1 = ppc(observations, "Pain", Pain.M1$ForPPC, Covs = NULL, 1) 
 				Pain.M1[[length(Pain.M1) + 1]] = PPC.Pain.1
 				names(Pain.M1)[length(Pain.M1)] = "PPC.Pain.1"
 			}
@@ -99,7 +99,7 @@ wrap <- function(data, metadata) {
 			PPC.Pain.4.1 = ppc(observations, "Pain", Pain.M4.1$ForPPC, cbind(Lag.Covs[ , 1], observations$Time2), 4.1)
 			Pain.M1[[length(Pain.M4.1) + 1]] = PPC.Pain.4.1
 			names(Pain.M4.1)[length(Pain.M4.1)] = "PPC.Pain.4.1"
-			if (!exists("PPC.Pain.2")) { PPC.Pain.2 = ppc(observations, "Pain", observations$Time2, 2) 
+			if (!exists("PPC.Pain.2")) { PPC.Pain.2 = ppc(observations, "Pain", Pain.M2$ForPPC, observations$Time2, 2) 
 				Pain.M2[[length(Pain.M2) + 1]] = PPC.Pain.2
 				names(Pain.M2)[length(Pain.M2)] = "PPC.Pain.2"
 			}
@@ -117,7 +117,7 @@ wrap <- function(data, metadata) {
 			PPC.Pain.4.2 = ppc(observations, "Pain", Pain.M4.2$ForPPC, cbind(Lag.Covs[ , 1], Block.Covs), 4.2)
 			Pain.M4.2[[length(Pain.M1) + 1]] = PPC.Pain.4.2
 		names(Pain.M4.2)[length(Pain.M4.2)] = "PPC.Pain.4.2"
-			if (!exists("PPC.Pain.3")) { PPC.Pain.3 = ppc(observations, "Pain", Block.Covs, 3) 
+			if (!exists("PPC.Pain.3")) { PPC.Pain.3 = ppc(observations, "Pain", Pain.M3$ForPPC, Block.Covs, 3) 
 				Pain.M3[[length(Pain.M3) + 1]] = PPC.Pain.3
 				names(Pain.M3)[length(Pain.M3)] = "PPC.Pain.3"
 			}
@@ -143,7 +143,7 @@ wrap <- function(data, metadata) {
 			PPC.Pain.5.1 = ppc(observations, "Pain", Pain.M5.1$ForPPC, cbind(observations$car.A, observations$car.B), 5.1)
 			Pain.M5.1[[length(Pain.M5.1) + 1]] = PPC.Pain.5.1
 			names(Pain.M5.1)[length(Pain.M5.1)] = "PPC.Pain.5.1"
-			if (!exists("PPC.Pain.1")) { PPC.Pain.1 = ppc(observations, "Pain", Covs = NULL, 1) 
+			if (!exists("PPC.Pain.1")) { PPC.Pain.1 = ppc(observations, "Pain", Pain.M1$ForPPC, Covs = NULL, 1) 
 				Pain.M1[[length(Pain.M1) + 1]] = PPC.Pain.1
 				names(Pain.M1)[length(Pain.M1)] = "PPC.Pain.1"
 			}
@@ -170,7 +170,7 @@ wrap <- function(data, metadata) {
 			PPC.Pain.5.2 = ppc(observations, "Pain", Pain.M5.2$ForPPC, cbind(observations$Time2, observations$car.A, observations$car.B), 5.2)
 			Pain.M5.2[[length(Pain.M5.2) + 1]] = PPC.Pain.5.2
 			names(Pain.M5.2)[length(Pain.M5.2)] = "PPC.Pain.5.2"
-			if (!exists("PPC.Pain.2")) { PPC.Pain.2 = ppc(observations, "Pain", observations$Time2, 2) 
+			if (!exists("PPC.Pain.2")) { PPC.Pain.2 = ppc(observations, "Pain", Pain.M2$ForPPC, observations$Time2, 2) 
 				Pain.M2[[length(Pain.M2) + 1]] = PPC.Pain.2
 				names(Pain.M2)[length(Pain.M2)] = "PPC.Pain.2"
 			}
@@ -199,7 +199,7 @@ wrap <- function(data, metadata) {
 			PPC.Pain.5.3 = ppc(observations, "Pain", Pain.M5.3$ForPPC, cbind(Block.Covs, observations$car.A, observations$car.B), 5.3)
 			Pain.M5.3[[length(Pain.M5.3) + 1]] = PPC.Pain.5.3
 			names(Pain.M5.3)[length(Pain.M5.3)] = "PPC.Pain.5.3"
-			if (!exists("PPC.Pain.3")) { PPC.Pain.3 = ppc(observations, "Pain", Block.Covs, 3) 
+			if (!exists("PPC.Pain.3")) { PPC.Pain.3 = ppc(observations, "Pain", Pain.M3$ForPPC, Block.Covs, 3) 
 				Pain.M3[[length(Pain.M3) + 1]] = PPC.Pain.3
 				names(Pain.M3)[length(Pain.M3)] = "PPC.Pain.3"
 			}
@@ -228,7 +228,7 @@ wrap <- function(data, metadata) {
 			PPC.Pain.5.4 = ppc(observations, "Pain", Pain.M5.4$ForPPC, cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4)
 			Pain.M5.4[[length(Pain.M5.4) + 1]] = PPC.Pain.5.4
 			names(Pain.M5.4)[length(Pain.M5.4)] = "PPC.Pain.5.4"
-			if (!exists("PPC.Pain.4")) { PPC.Pain.4 = ppc(observations, "Pain", Lag.Covs[ , 1], 4) 
+			if (!exists("PPC.Pain.4")) { PPC.Pain.4 = ppc(observations, "Pain", Pain.M4$ForPPC, Lag.Covs[ , 1], 4) 
 				Pain.M4[[length(Pain.M4) + 1]] = PPC.Pain.4
 				names(Pain.M4)[length(Pain.M4)] = "PPC.Pain.4"
 			}
@@ -259,7 +259,7 @@ wrap <- function(data, metadata) {
 				observations$car.B), 5.41)
 			Pain.M5.41[[length(Pain.M5.41) + 1]] = PPC.Pain.5.41
 			names(Pain.M5.41)[length(Pain.M5.41)] = "PPC.Pain.5.41"
-			if (!exists("PPC.Pain.4.1")) { PPC.Pain.4.1 = ppc(observations, "Pain", cbind(Lag.Covs[ , 1], observations$Time2), 4.1) 
+			if (!exists("PPC.Pain.4.1")) { PPC.Pain.4.1 = ppc(observations, "Pain", Pain.M4.1$ForPPC, cbind(Lag.Covs[ , 1], observations$Time2), 4.1) 
 				Pain.M4.1[[length(Pain.M4.1) + 1]] = PPC.Pain.4.1
 				names(Pain.M4.1)[length(Pain.M4.1)] = "PPC.Pain.4.1"
 			}
@@ -290,7 +290,7 @@ wrap <- function(data, metadata) {
 				observations$car.B), 5.42)
 			Pain.M5.42[[length(Pain.M5.42) + 1]] = PPC.Pain.5.42
 			names(Pain.M5.42)[length(Pain.M5.42)] = "PPC.Pain.5.42"
-			if (!exists("PPC.Pain.4.2")) { PPC.Pain.4.2 = ppc(observations, "Pain", cbind(Lag.Covs[ , 1], Block.Covs), 4.2) 
+			if (!exists("PPC.Pain.4.2")) { PPC.Pain.4.2 = ppc(observations, "Pain", Pain.M4.2$ForPPC, cbind(Lag.Covs[ , 1], Block.Covs), 4.2) 
 				Pain.M4.2[[length(Pain.M4.2) + 1]] = PPC.Pain.4.2
 				names(Pain.M4.2)[length(Pain.M4.2)] = "PPC.Pain.4.2"
 			}
@@ -374,7 +374,7 @@ wrap <- function(data, metadata) {
 			PPC.Fatigue.4 = ppc(observations, "Fatigue", Fatigue.M4$ForPPC, Lag.Covs[ , 2], 4)
 			Fatigue.M4[[length(Fatigue.M4) + 1]] = PPC.Fatigue.4
 			names(Fatigue.M4)[length(Fatigue.M4)] = "PPC.Fatigue.4"
-			if (!exists("PPC.Fatigue.1")) { PPC.Fatigue.1 = ppc(observations, "Fatigue", Covs = NULL, 1) 
+			if (!exists("PPC.Fatigue.1")) { PPC.Fatigue.1 = ppc(observations, "Fatigue", Fatigue.M1$ForPPC, Covs = NULL, 1) 
 				Fatigue.M1[[length(Fatigue.M1) + 1]] = PPC.Fatigue.1
 				names(Fatigue.M1)[length(Fatigue.M1)] = "PPC.Fatigue.1"
 			}
@@ -392,7 +392,7 @@ wrap <- function(data, metadata) {
 			PPC.Fatigue.4.1 = ppc(observations, "Fatigue", Fatigue.M4.1$ForPPC, cbind(Lag.Covs[ , 2], observations$Time2), 4.1)
 			Fatigue.M1[[length(Fatigue.M4.1) + 1]] = PPC.Fatigue.4.1
 			names(Fatigue.M4.1)[length(Fatigue.M4.1)] = "PPC.Fatigue.4.1"
-			if (!exists("PPC.Fatigue.2")) { PPC.Fatigue.2 = ppc(observations, "Fatigue", observations$Time2, 2) 
+			if (!exists("PPC.Fatigue.2")) { PPC.Fatigue.2 = ppc(observations, "Fatigue", Fatigue.M2$ForPPC, observations$Time2, 2) 
 				Fatigue.M2[[length(Fatigue.M2) + 1]] = PPC.Fatigue.2
 				names(Fatigue.M2)[length(Fatigue.M2)] = "PPC.Fatigue.2"
 			}
@@ -410,7 +410,7 @@ wrap <- function(data, metadata) {
 			PPC.Fatigue.4.2 = ppc(observations, "Fatigue", Fatigue.M4.2$ForPPC, cbind(Lag.Covs[ , 2], Block.Covs), 4.2)
 			Fatigue.M4.2[[length(Fatigue.M1) + 1]] = PPC.Fatigue.4.2
 		names(Fatigue.M4.2)[length(Fatigue.M4.2)] = "PPC.Fatigue.4.2"
-			if (!exists("PPC.Fatigue.3")) { PPC.Fatigue.3 = ppc(observations, "Fatigue", Block.Covs, 3) 
+			if (!exists("PPC.Fatigue.3")) { PPC.Fatigue.3 = ppc(observations, "Fatigue", Fatigue.M3$ForPPC, Block.Covs, 3) 
 				Fatigue.M3[[length(Fatigue.M3) + 1]] = PPC.Fatigue.3
 				names(Fatigue.M3)[length(Fatigue.M3)] = "PPC.Fatigue.3"
 			}
@@ -436,7 +436,7 @@ wrap <- function(data, metadata) {
 			PPC.Fatigue.5.1 = ppc(observations, "Fatigue", Fatigue.M5.1$ForPPC, cbind(observations$car.A, observations$car.B), 5.1)
 			Fatigue.M5.1[[length(Fatigue.M5.1) + 1]] = PPC.Fatigue.5.1
 			names(Fatigue.M5.1)[length(Fatigue.M5.1)] = "PPC.Fatigue.5.1"
-			if (!exists("PPC.Fatigue.1")) { PPC.Fatigue.1 = ppc(observations, "Fatigue", Covs = NULL, 1) 
+			if (!exists("PPC.Fatigue.1")) { PPC.Fatigue.1 = ppc(observations, "Fatigue", Fatigue.M1$ForPPC, Covs = NULL, 1) 
 				Fatigue.M1[[length(Fatigue.M1) + 1]] = PPC.Fatigue.1
 				names(Fatigue.M1)[length(Fatigue.M1)] = "PPC.Fatigue.1"
 			}
@@ -463,7 +463,7 @@ wrap <- function(data, metadata) {
 			PPC.Fatigue.5.2 = ppc(observations, "Fatigue", Fatigue.M5.2$ForPPC, cbind(observations$Time2, observations$car.A, observations$car.B), 5.2)
 			Fatigue.M5.2[[length(Fatigue.M5.2) + 1]] = PPC.Fatigue.5.2
 			names(Fatigue.M5.2)[length(Fatigue.M5.2)] = "PPC.Fatigue.5.2"
-			if (!exists("PPC.Fatigue.2")) { PPC.Fatigue.2 = ppc(observations, "Fatigue", observations$Time2, 2) 
+			if (!exists("PPC.Fatigue.2")) { PPC.Fatigue.2 = ppc(observations, "Fatigue", Fatigue.M2$ForPPC, observations$Time2, 2) 
 				Fatigue.M2[[length(Fatigue.M2) + 1]] = PPC.Fatigue.2
 				names(Fatigue.M2)[length(Fatigue.M2)] = "PPC.Fatigue.2"
 			}
@@ -492,7 +492,7 @@ wrap <- function(data, metadata) {
 			PPC.Fatigue.5.3 = ppc(observations, "Fatigue", Fatigue.M5.3$ForPPC, cbind(Block.Covs, observations$car.A, observations$car.B), 5.3)
 			Fatigue.M5.3[[length(Fatigue.M5.3) + 1]] = PPC.Fatigue.5.3
 			names(Fatigue.M5.3)[length(Fatigue.M5.3)] = "PPC.Fatigue.5.3"
-			if (!exists("PPC.Fatigue.3")) { PPC.Fatigue.3 = ppc(observations, "Fatigue", Block.Covs, 3) 
+			if (!exists("PPC.Fatigue.3")) { PPC.Fatigue.3 = ppc(observations, "Fatigue", Fatigue.M3$ForPPC, Block.Covs, 3) 
 				Fatigue.M3[[length(Fatigue.M3) + 1]] = PPC.Fatigue.3
 				names(Fatigue.M3)[length(Fatigue.M3)] = "PPC.Fatigue.3"
 			}
@@ -521,7 +521,7 @@ wrap <- function(data, metadata) {
 			PPC.Fatigue.5.4 = ppc(observations, "Fatigue", Fatigue.M5.4$ForPPC, cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4)
 			Fatigue.M5.4[[length(Fatigue.M5.4) + 1]] = PPC.Fatigue.5.4
 			names(Fatigue.M5.4)[length(Fatigue.M5.4)] = "PPC.Fatigue.5.4"
-			if (!exists("PPC.Fatigue.4")) { PPC.Fatigue.4 = ppc(observations, "Fatigue", Lag.Covs[ , 2], 4) 
+			if (!exists("PPC.Fatigue.4")) { PPC.Fatigue.4 = ppc(observations, "Fatigue", Fatigue.M4$ForPPC, Lag.Covs[ , 2], 4) 
 				Fatigue.M4[[length(Fatigue.M4) + 1]] = PPC.Fatigue.4
 				names(Fatigue.M4)[length(Fatigue.M4)] = "PPC.Fatigue.4"
 			}
@@ -552,7 +552,7 @@ wrap <- function(data, metadata) {
 				observations$car.B), 5.41)
 			Fatigue.M5.41[[length(Fatigue.M5.41) + 1]] = PPC.Fatigue.5.41
 			names(Fatigue.M5.41)[length(Fatigue.M5.41)] = "PPC.Fatigue.5.41"
-			if (!exists("PPC.Fatigue.4.1")) { PPC.Fatigue.4.1 = ppc(observations, "Fatigue", cbind(Lag.Covs[ , 2], observations$Time2), 4.1) 
+			if (!exists("PPC.Fatigue.4.1")) { PPC.Fatigue.4.1 = ppc(observations, "Fatigue", Fatige.M4.1$ForPPC, cbind(Lag.Covs[ , 2], observations$Time2), 4.1) 
 				Fatigue.M4.1[[length(Fatigue.M4.1) + 1]] = PPC.Fatigue.4.1
 				names(Fatigue.M4.1)[length(Fatigue.M4.1)] = "PPC.Fatigue.4.1"
 			}
@@ -583,7 +583,7 @@ wrap <- function(data, metadata) {
 				observations$car.B), 5.42)
 			Fatigue.M5.42[[length(Fatigue.M5.42) + 1]] = PPC.Fatigue.5.42
 			names(Fatigue.M5.42)[length(Fatigue.M5.42)] = "PPC.Fatigue.5.42"
-			if (!exists("PPC.Fatigue.4.2")) { PPC.Fatigue.4.2 = ppc(observations, "Fatigue", cbind(Lag.Covs[ , 2], Block.Covs), 4.2) 
+			if (!exists("PPC.Fatigue.4.2")) { PPC.Fatigue.4.2 = ppc(observations, "Fatigue", Fatigue.4.2$ForPPC, cbind(Lag.Covs[ , 2], Block.Covs), 4.2) 
 				Fatigue.M4.2[[length(Fatigue.M4.2) + 1]] = PPC.Fatigue.4.2
 				names(Fatigue.M4.2)[length(Fatigue.M4.2)] = "PPC.Fatigue.4.2"
 			}
@@ -667,7 +667,7 @@ wrap <- function(data, metadata) {
 			PPC.Drowsy.4 = ppc(observations, "Drowsy", Drowsy.M4$ForPPC, Lag.Covs[ , 3], 4)
 			Drowsy.M4[[length(Drowsy.M4) + 1]] = PPC.Drowsy.4
 			names(Drowsy.M4)[length(Drowsy.M4)] = "PPC.Drowsy.4"
-			if (!exists("PPC.Drowsy.1")) { PPC.Drowsy.1 = ppc(observations, "Drowsy", Covs = NULL, 1) 
+			if (!exists("PPC.Drowsy.1")) { PPC.Drowsy.1 = ppc(observations, "Drowsy", Drowsy.M1$ForPPC, Covs = NULL, 1) 
 				Drowsy.M1[[length(Drowsy.M1) + 1]] = PPC.Drowsy.1
 				names(Drowsy.M1)[length(Drowsy.M1)] = "PPC.Drowsy.1"
 			}
@@ -685,7 +685,7 @@ wrap <- function(data, metadata) {
 			PPC.Drowsy.4.1 = ppc(observations, "Drowsy", Drowsy.M4.1$ForPPC, cbind(Lag.Covs[ , 3], observations$Time2), 4.1)
 			Drowsy.M1[[length(Drowsy.M4.1) + 1]] = PPC.Drowsy.4.1
 			names(Drowsy.M4.1)[length(Drowsy.M4.1)] = "PPC.Drowsy.4.1"
-			if (!exists("PPC.Drowsy.2")) { PPC.Drowsy.2 = ppc(observations, "Drowsy", observations$Time2, 2) 
+			if (!exists("PPC.Drowsy.2")) { PPC.Drowsy.2 = ppc(observations, "Drowsy", Drowsy.M2$ForPPC, observations$Time2, 2) 
 				Drowsy.M2[[length(Drowsy.M2) + 1]] = PPC.Drowsy.2
 				names(Drowsy.M2)[length(Drowsy.M2)] = "PPC.Drowsy.2"
 			}
@@ -703,7 +703,7 @@ wrap <- function(data, metadata) {
 			PPC.Drowsy.4.2 = ppc(observations, "Drowsy", Drowsy.M4.2$ForPPC, cbind(Lag.Covs[ , 3], Block.Covs), 4.2)
 			Drowsy.M4.2[[length(Drowsy.M1) + 1]] = PPC.Drowsy.4.2
 		names(Drowsy.M4.2)[length(Drowsy.M4.2)] = "PPC.Drowsy.4.2"
-			if (!exists("PPC.Drowsy.3")) { PPC.Drowsy.3 = ppc(observations, "Drowsy", Block.Covs, 3) 
+			if (!exists("PPC.Drowsy.3")) { PPC.Drowsy.3 = ppc(observations, "Drowsy", Drowsy.M3$ForPPC, Block.Covs, 3) 
 				Drowsy.M3[[length(Drowsy.M3) + 1]] = PPC.Drowsy.3
 				names(Drowsy.M3)[length(Drowsy.M3)] = "PPC.Drowsy.3"
 			}
@@ -729,7 +729,7 @@ wrap <- function(data, metadata) {
 			PPC.Drowsy.5.1 = ppc(observations, "Drowsy", Drowsy.M5.1$ForPPC, cbind(observations$car.A, observations$car.B), 5.1)
 			Drowsy.M5.1[[length(Drowsy.M5.1) + 1]] = PPC.Drowsy.5.1
 			names(Drowsy.M5.1)[length(Drowsy.M5.1)] = "PPC.Drowsy.5.1"
-			if (!exists("PPC.Drowsy.1")) { PPC.Drowsy.1 = ppc(observations, "Drowsy", Covs = NULL, 1) 
+			if (!exists("PPC.Drowsy.1")) { PPC.Drowsy.1 = ppc(observations, "Drowsy", Drowsy.M1$ForPPC, Covs = NULL, 1) 
 				Drowsy.M1[[length(Drowsy.M1) + 1]] = PPC.Drowsy.1
 				names(Drowsy.M1)[length(Drowsy.M1)] = "PPC.Drowsy.1"
 			}
@@ -756,7 +756,7 @@ wrap <- function(data, metadata) {
 			PPC.Drowsy.5.2 = ppc(observations, "Drowsy", Drowsy.M5.2$ForPPC, cbind(observations$Time2, observations$car.A, observations$car.B), 5.2)
 			Drowsy.M5.2[[length(Drowsy.M5.2) + 1]] = PPC.Drowsy.5.2
 			names(Drowsy.M5.2)[length(Drowsy.M5.2)] = "PPC.Drowsy.5.2"
-			if (!exists("PPC.Drowsy.2")) { PPC.Drowsy.2 = ppc(observations, "Drowsy", observations$Time2, 2) 
+			if (!exists("PPC.Drowsy.2")) { PPC.Drowsy.2 = ppc(observations, "Drowsy", Drowsy.M2$ForPPC, observations$Time2, 2) 
 				Drowsy.M2[[length(Drowsy.M2) + 1]] = PPC.Drowsy.2
 				names(Drowsy.M2)[length(Drowsy.M2)] = "PPC.Drowsy.2"
 			}
@@ -785,7 +785,7 @@ wrap <- function(data, metadata) {
 			PPC.Drowsy.5.3 = ppc(observations, "Drowsy", Drowsy.M5.3$ForPPC, cbind(Block.Covs, observations$car.A, observations$car.B), 5.3)
 			Drowsy.M5.3[[length(Drowsy.M5.3) + 1]] = PPC.Drowsy.5.3
 			names(Drowsy.M5.3)[length(Drowsy.M5.3)] = "PPC.Drowsy.5.3"
-			if (!exists("PPC.Drowsy.3")) { PPC.Drowsy.3 = ppc(observations, "Drowsy", Block.Covs, 3) 
+			if (!exists("PPC.Drowsy.3")) { PPC.Drowsy.3 = ppc(observations, "Drowsy", Drowsy.M3$ForPPC, Block.Covs, 3) 
 				Drowsy.M3[[length(Drowsy.M3) + 1]] = PPC.Drowsy.3
 				names(Drowsy.M3)[length(Drowsy.M3)] = "PPC.Drowsy.3"
 			}
@@ -814,7 +814,7 @@ wrap <- function(data, metadata) {
 			PPC.Drowsy.5.4 = ppc(observations, "Drowsy", Drowsy.M5.4$ForPPC, cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4)
 			Drowsy.M5.4[[length(Drowsy.M5.4) + 1]] = PPC.Drowsy.5.4
 			names(Drowsy.M5.4)[length(Drowsy.M5.4)] = "PPC.Drowsy.5.4"
-			if (!exists("PPC.Drowsy.4")) { PPC.Drowsy.4 = ppc(observations, "Drowsy", Lag.Covs[ , 3], 4) 
+			if (!exists("PPC.Drowsy.4")) { PPC.Drowsy.4 = ppc(observations, "Drowsy", Drowsy.M4$ForPPC, Lag.Covs[ , 3], 4) 
 				Drowsy.M4[[length(Drowsy.M4) + 1]] = PPC.Drowsy.4
 				names(Drowsy.M4)[length(Drowsy.M4)] = "PPC.Drowsy.4"
 			}
@@ -845,7 +845,7 @@ wrap <- function(data, metadata) {
 				observations$car.B), 5.41)
 			Drowsy.M5.41[[length(Drowsy.M5.41) + 1]] = PPC.Drowsy.5.41
 			names(Drowsy.M5.41)[length(Drowsy.M5.41)] = "PPC.Drowsy.5.41"
-			if (!exists("PPC.Drowsy.4.1")) { PPC.Drowsy.4.1 = ppc(observations, "Drowsy", cbind(Lag.Covs[ , 3], observations$Time2), 4.1) 
+			if (!exists("PPC.Drowsy.4.1")) { PPC.Drowsy.4.1 = ppc(observations, "Drowsy", Drowsy.M4.1$ForPPC, cbind(Lag.Covs[ , 3], observations$Time2), 4.1) 
 				Drowsy.M4.1[[length(Drowsy.M4.1) + 1]] = PPC.Drowsy.4.1
 				names(Drowsy.M4.1)[length(Drowsy.M4.1)] = "PPC.Drowsy.4.1"
 			}
@@ -876,7 +876,7 @@ wrap <- function(data, metadata) {
 				observations$car.B), 5.42)
 			Drowsy.M5.42[[length(Drowsy.M5.42) + 1]] = PPC.Drowsy.5.42
 			names(Drowsy.M5.42)[length(Drowsy.M5.42)] = "PPC.Drowsy.5.42"
-			if (!exists("PPC.Drowsy.4.2")) { PPC.Drowsy.4.2 = ppc(observations, "Drowsy", cbind(Lag.Covs[ , 3], Block.Covs), 4.2) 
+			if (!exists("PPC.Drowsy.4.2")) { PPC.Drowsy.4.2 = ppc(observations, "Drowsy", Drowsy.4.2$ForPPC, cbind(Lag.Covs[ , 3], Block.Covs), 4.2) 
 				Drowsy.M4.2[[length(Drowsy.M4.2) + 1]] = PPC.Drowsy.4.2
 				names(Drowsy.M4.2)[length(Drowsy.M4.2)] = "PPC.Drowsy.4.2"
 			}
@@ -960,7 +960,7 @@ wrap <- function(data, metadata) {
 			PPC.Sleep.4 = ppc(observations, "Sleep", Sleep.M4$ForPPC, Lag.Covs[ , 4], 4)
 			Sleep.M4[[length(Sleep.M4) + 1]] = PPC.Sleep.4
 			names(Sleep.M4)[length(Sleep.M4)] = "PPC.Sleep.4"
-			if (!exists("PPC.Sleep.1")) { PPC.Sleep.1 = ppc(observations, "Sleep", Covs = NULL, 1) 
+			if (!exists("PPC.Sleep.1")) { PPC.Sleep.1 = ppc(observations, "Sleep", Sleep.M1$ForPPC, Covs = NULL, 1) 
 				Sleep.M1[[length(Sleep.M1) + 1]] = PPC.Sleep.1
 				names(Sleep.M1)[length(Sleep.M1)] = "PPC.Sleep.1"
 			}
@@ -978,7 +978,7 @@ wrap <- function(data, metadata) {
 			PPC.Sleep.4.1 = ppc(observations, "Sleep", Sleep.M4.1$ForPPC, cbind(Lag.Covs[ , 4], observations$Time2), 4.1)
 			Sleep.M1[[length(Sleep.M4.1) + 1]] = PPC.Sleep.4.1
 			names(Sleep.M4.1)[length(Sleep.M4.1)] = "PPC.Sleep.4.1"
-			if (!exists("PPC.Sleep.2")) { PPC.Sleep.2 = ppc(observations, "Sleep", observations$Time2, 2) 
+			if (!exists("PPC.Sleep.2")) { PPC.Sleep.2 = ppc(observations, "Sleep", Sleep.M2$ForPPC, observations$Time2, 2) 
 				Sleep.M2[[length(Sleep.M2) + 1]] = PPC.Sleep.2
 				names(Sleep.M2)[length(Sleep.M2)] = "PPC.Sleep.2"
 			}
@@ -996,7 +996,7 @@ wrap <- function(data, metadata) {
 			PPC.Sleep.4.2 = ppc(observations, "Sleep", Sleep.M4.2$ForPPC, cbind(Lag.Covs[ , 4], Block.Covs), 4.2)
 			Sleep.M4.2[[length(Sleep.M1) + 1]] = PPC.Sleep.4.2
 		names(Sleep.M4.2)[length(Sleep.M4.2)] = "PPC.Sleep.4.2"
-			if (!exists("PPC.Sleep.3")) { PPC.Sleep.3 = ppc(observations, "Sleep", Block.Covs, 3) 
+			if (!exists("PPC.Sleep.3")) { PPC.Sleep.3 = ppc(observations, "Sleep", Sleep.M3$ForPPC, Block.Covs, 3) 
 				Sleep.M3[[length(Sleep.M3) + 1]] = PPC.Sleep.3
 				names(Sleep.M3)[length(Sleep.M3)] = "PPC.Sleep.3"
 			}
@@ -1253,7 +1253,7 @@ wrap <- function(data, metadata) {
 			PPC.Thinking.4 = ppc(observations, "Thinking", Thinking.M4$ForPPC, Lag.Covs[ , 5], 4)
 			Thinking.M4[[length(Thinking.M4) + 1]] = PPC.Thinking.4
 			names(Thinking.M4)[length(Thinking.M4)] = "PPC.Thinking.4"
-			if (!exists("PPC.Thinking.1")) { PPC.Thinking.1 = ppc(observations, "Thinking", Covs = NULL, 1) 
+			if (!exists("PPC.Thinking.1")) { PPC.Thinking.1 = ppc(observations, "Thinking", Thinking.M1$ForPPC, Covs = NULL, 1) 
 				Thinking.M1[[length(Thinking.M1) + 1]] = PPC.Thinking.1
 				names(Thinking.M1)[length(Thinking.M1)] = "PPC.Thinking.1"
 			}
@@ -1271,7 +1271,7 @@ wrap <- function(data, metadata) {
 			PPC.Thinking.4.1 = ppc(observations, "Thinking", Thinking.M4.1$ForPPC, cbind(Lag.Covs[ , 5], observations$Time2), 4.1)
 			Thinking.M1[[length(Thinking.M4.1) + 1]] = PPC.Thinking.4.1
 			names(Thinking.M4.1)[length(Thinking.M4.1)] = "PPC.Thinking.4.1"
-			if (!exists("PPC.Thinking.2")) { PPC.Thinking.2 = ppc(observations, "Thinking", observations$Time2, 2) 
+			if (!exists("PPC.Thinking.2")) { PPC.Thinking.2 = ppc(observations, "Thinking", Thinking.M2$ForPPC, observations$Time2, 2) 
 				Thinking.M2[[length(Thinking.M2) + 1]] = PPC.Thinking.2
 				names(Thinking.M2)[length(Thinking.M2)] = "PPC.Thinking.2"
 			}
@@ -1289,7 +1289,7 @@ wrap <- function(data, metadata) {
 			PPC.Thinking.4.2 = ppc(observations, "Thinking", Thinking.M4.2$ForPPC, cbind(Lag.Covs[ , 5], Block.Covs), 4.2)
 			Thinking.M4.2[[length(Thinking.M1) + 1]] = PPC.Thinking.4.2
 		names(Thinking.M4.2)[length(Thinking.M4.2)] = "PPC.Thinking.4.2"
-			if (!exists("PPC.Thinking.3")) { PPC.Thinking.3 = ppc(observations, "Thinking", Block.Covs, 3) 
+			if (!exists("PPC.Thinking.3")) { PPC.Thinking.3 = ppc(observations, "Thinking", Thinking.M3$ForPPC, Block.Covs, 3) 
 				Thinking.M3[[length(Thinking.M3) + 1]] = PPC.Thinking.3
 				names(Thinking.M3)[length(Thinking.M3)] = "PPC.Thinking.3"
 			}
@@ -1315,7 +1315,7 @@ wrap <- function(data, metadata) {
 			PPC.Thinking.5.1 = ppc(observations, "Thinking", Thinking.M5.1$ForPPC, cbind(observations$car.A, observations$car.B), 5.1)
 			Thinking.M5.1[[length(Thinking.M5.1) + 1]] = PPC.Thinking.5.1
 			names(Thinking.M5.1)[length(Thinking.M5.1)] = "PPC.Thinking.5.1"
-			if (!exists("PPC.Thinking.1")) { PPC.Thinking.1 = ppc(observations, "Thinking", Covs = NULL, 1) 
+			if (!exists("PPC.Thinking.1")) { PPC.Thinking.1 = ppc(observations, "Thinking", Thinking.M1$ForPPC, Covs = NULL, 1) 
 				Thinking.M1[[length(Thinking.M1) + 1]] = PPC.Thinking.1
 				names(Thinking.M1)[length(Thinking.M1)] = "PPC.Thinking.1"
 			}
@@ -1342,7 +1342,7 @@ wrap <- function(data, metadata) {
 			PPC.Thinking.5.2 = ppc(observations, "Thinking", Thinking.M5.2$ForPPC, cbind(observations$Time2, observations$car.A, observations$car.B), 5.2)
 			Thinking.M5.2[[length(Thinking.M5.2) + 1]] = PPC.Thinking.5.2
 			names(Thinking.M5.2)[length(Thinking.M5.2)] = "PPC.Thinking.5.2"
-			if (!exists("PPC.Thinking.2")) { PPC.Thinking.2 = ppc(observations, "Thinking", observations$Time2, 2) 
+			if (!exists("PPC.Thinking.2")) { PPC.Thinking.2 = ppc(observations, "Thinking", Thinking.M2$ForPPC, observations$Time2, 2) 
 				Thinking.M2[[length(Thinking.M2) + 1]] = PPC.Thinking.2
 				names(Thinking.M2)[length(Thinking.M2)] = "PPC.Thinking.2"
 			}
@@ -1371,7 +1371,7 @@ wrap <- function(data, metadata) {
 			PPC.Thinking.5.3 = ppc(observations, "Thinking", Thinking.M5.3$ForPPC, cbind(Block.Covs, observations$car.A, observations$car.B), 5.3)
 			Thinking.M5.3[[length(Thinking.M5.3) + 1]] = PPC.Thinking.5.3
 			names(Thinking.M5.3)[length(Thinking.M5.3)] = "PPC.Thinking.5.3"
-			if (!exists("PPC.Thinking.3")) { PPC.Thinking.3 = ppc(observations, "Thinking", Block.Covs, 3) 
+			if (!exists("PPC.Thinking.3")) { PPC.Thinking.3 = ppc(observations, "Thinking", Thinking.M3$ForPPC, Block.Covs, 3) 
 				Thinking.M3[[length(Thinking.M3) + 1]] = PPC.Thinking.3
 				names(Thinking.M3)[length(Thinking.M3)] = "PPC.Thinking.3"
 			}
@@ -1400,7 +1400,7 @@ wrap <- function(data, metadata) {
 			PPC.Thinking.5.4 = ppc(observations, "Thinking", Thinking.M5.4$ForPPC, cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4)
 			Thinking.M5.4[[length(Thinking.M5.4) + 1]] = PPC.Thinking.5.4
 			names(Thinking.M5.4)[length(Thinking.M5.4)] = "PPC.Thinking.5.4"
-			if (!exists("PPC.Thinking.4")) { PPC.Thinking.4 = ppc(observations, "Thinking", Lag.Covs[ , 5], 4) 
+			if (!exists("PPC.Thinking.4")) { PPC.Thinking.4 = ppc(observations, "Thinking", Thinking.M4$ForPPC, Lag.Covs[ , 5], 4) 
 				Thinking.M4[[length(Thinking.M4) + 1]] = PPC.Thinking.4
 				names(Thinking.M4)[length(Thinking.M4)] = "PPC.Thinking.4"
 			}
@@ -1431,7 +1431,7 @@ wrap <- function(data, metadata) {
 				observations$car.B), 5.41)
 			Thinking.M5.41[[length(Thinking.M5.41) + 1]] = PPC.Thinking.5.41
 			names(Thinking.M5.41)[length(Thinking.M5.41)] = "PPC.Thinking.5.41"
-			if (!exists("PPC.Thinking.4.1")) { PPC.Thinking.4.1 = ppc(observations, "Thinking", cbind(Lag.Covs[ , 5], observations$Time2), 4.1) 
+			if (!exists("PPC.Thinking.4.1")) { PPC.Thinking.4.1 = ppc(observations, "Thinking", Thinking.M4.1$ForPPC, cbind(Lag.Covs[ , 5], observations$Time2), 4.1) 
 				Thinking.M4.1[[length(Thinking.M4.1) + 1]] = PPC.Thinking.4.1
 				names(Thinking.M4.1)[length(Thinking.M4.1)] = "PPC.Thinking.4.1"
 			}
@@ -1462,7 +1462,7 @@ wrap <- function(data, metadata) {
 				observations$car.B), 5.42)
 			Thinking.M5.42[[length(Thinking.M5.42) + 1]] = PPC.Thinking.5.42
 			names(Thinking.M5.42)[length(Thinking.M5.42)] = "PPC.Thinking.5.42"
-			if (!exists("PPC.Thinking.4.2")) { PPC.Thinking.4.2 = ppc(observations, "Thinking", cbind(Lag.Covs[ , 5], Block.Covs), 4.2) 
+			if (!exists("PPC.Thinking.4.2")) { PPC.Thinking.4.2 = ppc(observations, "Thinking", Thinking.M4.2$ForPPC, cbind(Lag.Covs[ , 5], Block.Covs), 4.2) 
 				Thinking.M4.2[[length(Thinking.M4.2) + 1]] = PPC.Thinking.4.2
 				names(Thinking.M4.2)[length(Thinking.M4.2)] = "PPC.Thinking.4.2"
 			}
@@ -1546,7 +1546,7 @@ wrap <- function(data, metadata) {
 			PPC.Constipation.4 = ppc(observations, "Constipation", Constipation.M4$ForPPC, Lag.Covs[ , 6], 4)
 			Constipation.M4[[length(Constipation.M4) + 1]] = PPC.Constipation.4
 			names(Constipation.M4)[length(Constipation.M4)] = "PPC.Constipation.4"
-			if (!exists("PPC.Constipation.1")) { PPC.Constipation.1 = ppc(observations, "Constipation", Covs = NULL, 1) 
+			if (!exists("PPC.Constipation.1")) { PPC.Constipation.1 = ppc(observations, "Constipation", Constipation.M1$ForPPC, Covs = NULL, 1) 
 				Constipation.M1[[length(Constipation.M1) + 1]] = PPC.Constipation.1
 				names(Constipation.M1)[length(Constipation.M1)] = "PPC.Constipation.1"
 			}
@@ -1564,7 +1564,7 @@ wrap <- function(data, metadata) {
 			PPC.Constipation.4.1 = ppc(observations, "Constipation", Constipation.M4.1$ForPPC, cbind(Lag.Covs[ , 6], observations$Time2), 4.1)
 			Constipation.M1[[length(Constipation.M4.1) + 1]] = PPC.Constipation.4.1
 			names(Constipation.M4.1)[length(Constipation.M4.1)] = "PPC.Constipation.4.1"
-			if (!exists("PPC.Constipation.2")) { PPC.Constipation.2 = ppc(observations, "Constipation", observations$Time2, 2) 
+			if (!exists("PPC.Constipation.2")) { PPC.Constipation.2 = ppc(observations, "Constipation", Constipation.M2$ForPPC, observations$Time2, 2) 
 				Constipation.M2[[length(Constipation.M2) + 1]] = PPC.Constipation.2
 				names(Constipation.M2)[length(Constipation.M2)] = "PPC.Constipation.2"
 			}
@@ -1582,7 +1582,7 @@ wrap <- function(data, metadata) {
 			PPC.Constipation.4.2 = ppc(observations, "Constipation", Constipation.M4.2$ForPPC, cbind(Lag.Covs[ , 6], Block.Covs), 4.2)
 			Constipation.M4.2[[length(Constipation.M1) + 1]] = PPC.Constipation.4.2
 		names(Constipation.M4.2)[length(Constipation.M4.2)] = "PPC.Constipation.4.2"
-			if (!exists("PPC.Constipation.3")) { PPC.Constipation.3 = ppc(observations, "Constipation", Block.Covs, 3) 
+			if (!exists("PPC.Constipation.3")) { PPC.Constipation.3 = ppc(observations, "Constipation", Constipation.M3$ForPPC, Block.Covs, 3) 
 				Constipation.M3[[length(Constipation.M3) + 1]] = PPC.Constipation.3
 				names(Constipation.M3)[length(Constipation.M3)] = "PPC.Constipation.3"
 			}
@@ -1608,7 +1608,7 @@ wrap <- function(data, metadata) {
 			PPC.Constipation.5.1 = ppc(observations, "Constipation", Constipation.M5.1$ForPPC, cbind(observations$car.A, observations$car.B), 5.1)
 			Constipation.M5.1[[length(Constipation.M5.1) + 1]] = PPC.Constipation.5.1
 			names(Constipation.M5.1)[length(Constipation.M5.1)] = "PPC.Constipation.5.1"
-			if (!exists("PPC.Constipation.1")) { PPC.Constipation.1 = ppc(observations, "Constipation", Covs = NULL, 1) 
+			if (!exists("PPC.Constipation.1")) { PPC.Constipation.1 = ppc(observations, "Constipation", Constipation.M1$ForPPC, Covs = NULL, 1) 
 				Constipation.M1[[length(Constipation.M1) + 1]] = PPC.Constipation.1
 				names(Constipation.M1)[length(Constipation.M1)] = "PPC.Constipation.1"
 			}
@@ -1635,7 +1635,7 @@ wrap <- function(data, metadata) {
 			PPC.Constipation.5.2 = ppc(observations, "Constipation", Constipation.M5.2$ForPPC, cbind(observations$Time2, observations$car.A, observations$car.B), 5.2)
 			Constipation.M5.2[[length(Constipation.M5.2) + 1]] = PPC.Constipation.5.2
 			names(Constipation.M5.2)[length(Constipation.M5.2)] = "PPC.Constipation.5.2"
-			if (!exists("PPC.Constipation.2")) { PPC.Constipation.2 = ppc(observations, "Constipation", observations$Time2, 2) 
+			if (!exists("PPC.Constipation.2")) { PPC.Constipation.2 = ppc(observations, "Constipation", Constipation.M2$ForPPC, observations$Time2, 2) 
 				Constipation.M2[[length(Constipation.M2) + 1]] = PPC.Constipation.2
 				names(Constipation.M2)[length(Constipation.M2)] = "PPC.Constipation.2"
 			}
@@ -1664,7 +1664,7 @@ wrap <- function(data, metadata) {
 			PPC.Constipation.5.3 = ppc(observations, "Constipation", Constipation.M5.3$ForPPC, cbind(Block.Covs, observations$car.A, observations$car.B), 5.3)
 			Constipation.M5.3[[length(Constipation.M5.3) + 1]] = PPC.Constipation.5.3
 			names(Constipation.M5.3)[length(Constipation.M5.3)] = "PPC.Constipation.5.3"
-			if (!exists("PPC.Constipation.3")) { PPC.Constipation.3 = ppc(observations, "Constipation", Block.Covs, 3) 
+			if (!exists("PPC.Constipation.3")) { PPC.Constipation.3 = ppc(observations, "Constipation", Constipation.M3$ForPPC, Block.Covs, 3) 
 				Constipation.M3[[length(Constipation.M3) + 1]] = PPC.Constipation.3
 				names(Constipation.M3)[length(Constipation.M3)] = "PPC.Constipation.3"
 			}
@@ -1693,7 +1693,7 @@ wrap <- function(data, metadata) {
 			PPC.Constipation.5.4 = ppc(observations, "Constipation", Constipation.M5.4$ForPPC, cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4)
 			Constipation.M5.4[[length(Constipation.M5.4) + 1]] = PPC.Constipation.5.4
 			names(Constipation.M5.4)[length(Constipation.M5.4)] = "PPC.Constipation.5.4"
-			if (!exists("PPC.Constipation.4")) { PPC.Constipation.4 = ppc(observations, "Constipation", Lag.Covs[ , 6], 4) 
+			if (!exists("PPC.Constipation.4")) { PPC.Constipation.4 = ppc(observations, "Constipation", Constipation.M4$ForPPC, Lag.Covs[ , 6], 4) 
 				Constipation.M4[[length(Constipation.M4) + 1]] = PPC.Constipation.4
 				names(Constipation.M4)[length(Constipation.M4)] = "PPC.Constipation.4"
 			}
@@ -1724,7 +1724,7 @@ wrap <- function(data, metadata) {
 				observations$car.B), 5.41)
 			Constipation.M5.41[[length(Constipation.M5.41) + 1]] = PPC.Constipation.5.41
 			names(Constipation.M5.41)[length(Constipation.M5.41)] = "PPC.Constipation.5.41"
-			if (!exists("PPC.Constipation.4.1")) { PPC.Constipation.4.1 = ppc(observations, "Constipation", cbind(Lag.Covs[ , 6], observations$Time2), 4.1) 
+			if (!exists("PPC.Constipation.4.1")) { PPC.Constipation.4.1 = ppc(observations, "Constipation", Constipation.M4.1$ForPPC, cbind(Lag.Covs[ , 6], observations$Time2), 4.1) 
 				Constipation.M4.1[[length(Constipation.M4.1) + 1]] = PPC.Constipation.4.1
 				names(Constipation.M4.1)[length(Constipation.M4.1)] = "PPC.Constipation.4.1"
 			}
@@ -1755,7 +1755,7 @@ wrap <- function(data, metadata) {
 				observations$car.B), 5.42)
 			Constipation.M5.42[[length(Constipation.M5.42) + 1]] = PPC.Constipation.5.42
 			names(Constipation.M5.42)[length(Constipation.M5.42)] = "PPC.Constipation.5.42"
-			if (!exists("PPC.Constipation.4.2")) { PPC.Constipation.4.2 = ppc(observations, "Constipation", cbind(Lag.Covs[ , 6], Block.Covs), 4.2) 
+			if (!exists("PPC.Constipation.4.2")) { PPC.Constipation.4.2 = ppc(observations, "Constipation", Constipation.M4.2$ForPPC, cbind(Lag.Covs[ , 6], Block.Covs), 4.2) 
 				Constipation.M4.2[[length(Constipation.M4.2) + 1]] = PPC.Constipation.4.2
 				names(Constipation.M4.2)[length(Constipation.M4.2)] = "PPC.Constipation.4.2"
 			}
@@ -1840,7 +1840,7 @@ wrap <- function(data, metadata) {
 				PPC.Neuropain.4 = ppc(observations, "Neuropain", Neuropain.M4$ForPPC, Lag.Covs[ , 7], 4)
 				Neuropain.M4[[length(Neuropain.M4) + 1]] = PPC.Neuropain.4
 				names(Neuropain.M4)[length(Neuropain.M4)] = "PPC.Neuropain.4"
-				if (!exists("PPC.Neuropain.1")) { PPC.Neuropain.1 = ppc(observations, "Neuropain", Covs = NULL, 1) 
+				if (!exists("PPC.Neuropain.1")) { PPC.Neuropain.1 = ppc(observations, "Neuropain", Neuropain.M1$ForPPC, Covs = NULL, 1) 
 					Neuropain.M1[[length(Neuropain.M1) + 1]] = PPC.Neuropain.1
 					names(Neuropain.M1)[length(Neuropain.M1)] = "PPC.Neuropain.1"
 				}
@@ -1858,7 +1858,7 @@ wrap <- function(data, metadata) {
 				PPC.Neuropain.4.1 = ppc(observations, "Neuropain", Neuropain.M4.1$ForPPC, cbind(Lag.Covs[ , 7], observations$Time2), 4.1)
 				Neuropain.M1[[length(Neuropain.M4.1) + 1]] = PPC.Neuropain.4.1
 				names(Neuropain.M4.1)[length(Neuropain.M4.1)] = "PPC.Neuropain.4.1"
-				if (!exists("PPC.Neuropain.2")) { PPC.Neuropain.2 = ppc(observations, "Neuropain", observations$Time2, 2) 
+				if (!exists("PPC.Neuropain.2")) { PPC.Neuropain.2 = ppc(observations, "Neuropain", Neuropain.M2$ForPPC, observations$Time2, 2) 
 					Neuropain.M2[[length(Neuropain.M2) + 1]] = PPC.Neuropain.2
 					names(Neuropain.M2)[length(Neuropain.M2)] = "PPC.Neuropain.2"
 				}
@@ -1876,7 +1876,7 @@ wrap <- function(data, metadata) {
 				PPC.Neuropain.4.2 = ppc(observations, "Neuropain", Neuropain.M4.2$ForPPC, cbind(Lag.Covs[ , 7], Block.Covs), 4.2)
 				Neuropain.M4.2[[length(Neuropain.M1) + 1]] = PPC.Neuropain.4.2
 			names(Neuropain.M4.2)[length(Neuropain.M4.2)] = "PPC.Neuropain.4.2"
-				if (!exists("PPC.Neuropain.3")) { PPC.Neuropain.3 = ppc(observations, "Neuropain", Block.Covs, 3) 
+				if (!exists("PPC.Neuropain.3")) { PPC.Neuropain.3 = ppc(observations, "Neuropain", Neuropain.M3$ForPPC, Block.Covs, 3) 
 					Neuropain.M3[[length(Neuropain.M3) + 1]] = PPC.Neuropain.3
 					names(Neuropain.M3)[length(Neuropain.M3)] = "PPC.Neuropain.3"
 				}
@@ -1902,7 +1902,7 @@ wrap <- function(data, metadata) {
 				PPC.Neuropain.5.1 = ppc(observations, "Neuropain", Neuropain.M5.1$ForPPC, cbind(observations$car.A, observations$car.B), 5.1)
 				Neuropain.M5.1[[length(Neuropain.M5.1) + 1]] = PPC.Neuropain.5.1
 				names(Neuropain.M5.1)[length(Neuropain.M5.1)] = "PPC.Neuropain.5.1"
-				if (!exists("PPC.Neuropain.1")) { PPC.Neuropain.1 = ppc(observations, "Neuropain", Covs = NULL, 1) 
+				if (!exists("PPC.Neuropain.1")) { PPC.Neuropain.1 = ppc(observations, "Neuropain", Neuropain.M1$ForPPC, Covs = NULL, 1) 
 					Neuropain.M1[[length(Neuropain.M1) + 1]] = PPC.Neuropain.1
 					names(Neuropain.M1)[length(Neuropain.M1)] = "PPC.Neuropain.1"
 				}
@@ -1929,7 +1929,7 @@ wrap <- function(data, metadata) {
 				PPC.Neuropain.5.2 = ppc(observations, "Neuropain", Neuropain.M5.2$ForPPC, cbind(observations$Time2, observations$car.A, observations$car.B), 5.2)
 				Neuropain.M5.2[[length(Neuropain.M5.2) + 1]] = PPC.Neuropain.5.2
 				names(Neuropain.M5.2)[length(Neuropain.M5.2)] = "PPC.Neuropain.5.2"
-				if (!exists("PPC.Neuropain.2")) { PPC.Neuropain.2 = ppc(observations, "Neuropain", observations$Time2, 2) 
+				if (!exists("PPC.Neuropain.2")) { PPC.Neuropain.2 = ppc(observations, "Neuropain", Neuropain.M2$ForPPC, observations$Time2, 2) 
 					Neuropain.M2[[length(Neuropain.M2) + 1]] = PPC.Neuropain.2
 					names(Neuropain.M2)[length(Neuropain.M2)] = "PPC.Neuropain.2"
 				}
@@ -1958,7 +1958,7 @@ wrap <- function(data, metadata) {
 				PPC.Neuropain.5.3 = ppc(observations, "Neuropain", Neuropain.M5.3$ForPPC, cbind(Block.Covs, observations$car.A, observations$car.B), 5.3)
 				Neuropain.M5.3[[length(Neuropain.M5.3) + 1]] = PPC.Neuropain.5.3
 				names(Neuropain.M5.3)[length(Neuropain.M5.3)] = "PPC.Neuropain.5.3"
-				if (!exists("PPC.Neuropain.3")) { PPC.Neuropain.3 = ppc(observations, "Neuropain", Block.Covs, 3) 
+				if (!exists("PPC.Neuropain.3")) { PPC.Neuropain.3 = ppc(observations, "Neuropain", Neuropain.M3$ForPPC, Block.Covs, 3) 
 					Neuropain.M3[[length(Neuropain.M3) + 1]] = PPC.Neuropain.3
 					names(Neuropain.M3)[length(Neuropain.M3)] = "PPC.Neuropain.3"
 				}
@@ -1987,7 +1987,7 @@ wrap <- function(data, metadata) {
 				PPC.Neuropain.5.4 = ppc(observations, "Neuropain", Neuropain.M5.4$ForPPC, cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4)
 				Neuropain.M5.4[[length(Neuropain.M5.4) + 1]] = PPC.Neuropain.5.4
 				names(Neuropain.M5.4)[length(Neuropain.M5.4)] = "PPC.Neuropain.5.4"
-				if (!exists("PPC.Neuropain.4")) { PPC.Neuropain.4 = ppc(observations, "Neuropain", Lag.Covs[ , 7], 4) 
+				if (!exists("PPC.Neuropain.4")) { PPC.Neuropain.4 = ppc(observations, "Neuropain", Neuropain.M4$ForPPC, Lag.Covs[ , 7], 4) 
 					Neuropain.M4[[length(Neuropain.M4) + 1]] = PPC.Neuropain.4
 					names(Neuropain.M4)[length(Neuropain.M4)] = "PPC.Neuropain.4"
 				}
@@ -2018,7 +2018,7 @@ wrap <- function(data, metadata) {
 					observations$car.B), 5.41)
 				Neuropain.M5.41[[length(Neuropain.M5.41) + 1]] = PPC.Neuropain.5.41
 				names(Neuropain.M5.41)[length(Neuropain.M5.41)] = "PPC.Neuropain.5.41"
-				if (!exists("PPC.Neuropain.4.1")) { PPC.Neuropain.4.1 = ppc(observations, "Neuropain", cbind(Lag.Covs[ , 7], observations$Time2), 4.1) 
+				if (!exists("PPC.Neuropain.4.1")) { PPC.Neuropain.4.1 = ppc(observations, "Neuropain", Neuropain.M4.1$ForPPC, cbind(Lag.Covs[ , 7], observations$Time2), 4.1) 
 					Neuropain.M4.1[[length(Neuropain.M4.1) + 1]] = PPC.Neuropain.4.1
 					names(Neuropain.M4.1)[length(Neuropain.M4.1)] = "PPC.Neuropain.4.1"
 				}
@@ -2049,7 +2049,7 @@ wrap <- function(data, metadata) {
 					observations$car.B), 5.42)
 				Neuropain.M5.42[[length(Neuropain.M5.42) + 1]] = PPC.Neuropain.5.42
 				names(Neuropain.M5.42)[length(Neuropain.M5.42)] = "PPC.Neuropain.5.42"
-				if (!exists("PPC.Neuropain.4.2")) { PPC.Neuropain.4.2 = ppc(observations, "Neuropain", cbind(Lag.Covs[ , 7], Block.Covs), 4.2) 
+				if (!exists("PPC.Neuropain.4.2")) { PPC.Neuropain.4.2 = ppc(observations, "Neuropain", Neuropain.M4.2$ForPPC, cbind(Lag.Covs[ , 7], Block.Covs), 4.2) 
 					Neuropain.M4.2[[length(Neuropain.M4.2) + 1]] = PPC.Neuropain.4.2
 					names(Neuropain.M4.2)[length(Neuropain.M4.2)] = "PPC.Neuropain.4.2"
 				}
