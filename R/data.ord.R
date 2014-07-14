@@ -5,8 +5,10 @@ data.ord <- function (Y, Covs, ncat, prior, Treat, mod.id)
 		lower.dc = prior$lower.dc, upper.dc = prior$upper.dc,
 		lower.c1 = prior$lower.c1, upper.c1 = prior$upper.c1)
     if (!is.null(Covs)) {
-		inData[[1 + length(inData)]] = Covs
-        names(inData)[[length(inData)]] = "x"
+		if (mod.id != 4) {
+			inData[[1 + length(inData)]] = Covs
+			names(inData)[[length(inData)]] = "x"
+		}
         inData[[1 + length(inData)]] = prior$mean.slope
         names(inData)[[length(inData)]] = "mean.slope"
         inData[[1 + length(inData)]] = prior$prec.slope
@@ -14,7 +16,8 @@ data.ord <- function (Y, Covs, ncat, prior, Treat, mod.id)
     }
 	
 	if (mod.id == 2 || mod.id == 4.1) { tm = ncol(inData$x)
-	} else if (mod.id == 5.2 || mod.id == 5.41) { tm = 1 }
+	} else if (mod.id == 5.2) { tm = 1 
+	} else if (mod.id == 5.41) { tm = 2 }
 	
 	if (mod.id %in% c(2, 4.1, 5.2, 5.41)) {
 		x = inData$x[ , tm]
