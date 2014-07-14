@@ -66,7 +66,7 @@ wrap <- function(data, metadata) {
 		names(Pain.M2)[length(Pain.M2)] = "PPC.Pain.2"
 		} else if (BM == 2 && exists("PPC.Pain.2")) { Cur.PPC = PPC.Pain.2 }
 		
-		if (sum(PPC.Pain.3$Summary) > Cur.PPC$Summary) {
+		if (sum(PPC.Pain.3$Summary) > sum(Cur.PPC$Summary)) {
 			BM = 3
 			Cur.DIC = Pain.M3$DIC
 		}
@@ -359,7 +359,7 @@ wrap <- function(data, metadata) {
 		names(Fatigue.M2)[length(Fatigue.M2)] = "PPC.Fatigue.2"
 		} else if (BM == 2 && exists("PPC.Fatigue.2")) { Cur.PPC = PPC.Fatigue.2 }
 		
-		if (sum(PPC.Fatigue.3$Summary) > Cur.PPC$Summary) {
+		if (sum(PPC.Fatigue.3$Summary) > sum(Cur.PPC$Summary)) {
 			BM = 3
 			Cur.DIC = Fatigue.M3$DIC
 		}
@@ -652,7 +652,7 @@ wrap <- function(data, metadata) {
 		names(Drowsy.M2)[length(Drowsy.M2)] = "PPC.Drowsy.2"
 		} else if (BM == 2 && exists("PPC.Drowsy.2")) { Cur.PPC = PPC.Drowsy.2 }
 		
-		if (sum(PPC.Drowsy.3$Summary) > Cur.PPC$Summary) {
+		if (sum(PPC.Drowsy.3$Summary) > sum(Cur.PPC$Summary)) {
 			BM = 3
 			Cur.DIC = Drowsy.M3$DIC
 		}
@@ -945,7 +945,7 @@ wrap <- function(data, metadata) {
 		names(Sleep.M2)[length(Sleep.M2)] = "PPC.Sleep.2"
 		} else if (BM == 2 && exists("PPC.Sleep.2")) { Cur.PPC = PPC.Sleep.2 }
 		
-		if (sum(PPC.Sleep.3$Summary) > Cur.PPC$Summary) {
+		if (sum(PPC.Sleep.3$Summary) > sum(Cur.PPC$Summary)) {
 			BM = 3
 			Cur.DIC = Sleep.M3$DIC
 		}
@@ -1238,7 +1238,7 @@ wrap <- function(data, metadata) {
 		names(Thinking.M2)[length(Thinking.M2)] = "PPC.Thinking.2"
 		} else if (BM == 2 && exists("PPC.Thinking.2")) { Cur.PPC = PPC.Thinking.2 }
 		
-		if (sum(PPC.Thinking.3$Summary) > Cur.PPC$Summary) {
+		if (sum(PPC.Thinking.3$Summary) > sum(Cur.PPC$Summary)) {
 			BM = 3
 			Cur.DIC = Thinking.M3$DIC
 		}
@@ -1531,7 +1531,7 @@ wrap <- function(data, metadata) {
 		names(Constipation.M2)[length(Constipation.M2)] = "PPC.Constipation.2"
 		} else if (BM == 2 && exists("PPC.Constipation.2")) { Cur.PPC = PPC.Constipation.2 }
 		
-		if (sum(PPC.Constipation.3$Summary) > Cur.PPC$Summary) {
+		if (sum(PPC.Constipation.3$Summary) > sum(Cur.PPC$Summary)) {
 			BM = 3
 			Cur.DIC = Constipation.M3$DIC
 		}
@@ -1825,7 +1825,7 @@ wrap <- function(data, metadata) {
 			names(Neuropain.M2)[length(Neuropain.M2)] = "PPC.Neuropain.2"
 			} else if (BM == 2 && exists("PPC.Neuropain.2")) { Cur.PPC = PPC.Neuropain.2 }
 			
-			if (sum(PPC.Neuropain.3$Summary) > Cur.PPC$Summary) {
+			if (sum(PPC.Neuropain.3$Summary) > sum(Cur.PPC$Summary)) {
 				BM = 3
 				Cur.DIC = Neuropain.M3$DIC
 			}
