@@ -3,15 +3,18 @@ data.norm <- function (Y, Covs, prior, Treat, mod.id)
     inData = list(Treat = Treat, Y = Y, mean.alpha = prior$mean.alpha, prec.alpha = prior$prec.alpha, 
 		mean.beta = prior$mean.beta, prec.beta = prior$prec.beta, prec.1 = prior$prec.1, prec.2 = prior$prec.2)
     if (!is.null(Covs)) {
-		inData[[1 + length(inData)]] = Covs
-        names(inData)[[length(inData)]] = "x"
+		if (mod.id != 4) {
+			inData[[1 + length(inData)]] = Covs
+			names(inData)[[length(inData)]] = "x"
+		}
         inData[[1 + length(inData)]] = prior$mean.slope
         names(inData)[[length(inData)]] = "mean.slope"
         inData[[1 + length(inData)]] = prior$prec.slope
         names(inData)[[length(inData)]] = "prec.slope"
 		
 		if (mod.id == 2 || mod.id == 4.1) { tm = ncol(inData$x)
-		} else if (mod.id == 5.2 || mod.id == 5.41) { tm = 1 }
+		} else if (mod.id == 5.2) { tm = 1 
+		} else if (mod.id == 5.41) { tm = 2 }
 		
 		if (mod.id %in% c(2, 4.1, 5.2, 5.41)) {
 			x = inData$x[ , tm]
