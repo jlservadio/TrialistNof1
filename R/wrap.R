@@ -1022,7 +1022,7 @@ wrap <- function(data, metadata) {
 			PPC.Sleep.5.1 = ppc(observations, "Sleep", Sleep.M5.1$ForPPC, cbind(observations$car.A, observations$car.B), 5.1)
 			Sleep.M5.1[[length(Sleep.M5.1) + 1]] = PPC.Sleep.5.1
 			names(Sleep.M5.1)[length(Sleep.M5.1)] = "PPC.Sleep.5.1"
-			if (!exists("PPC.Sleep.1")) { PPC.Sleep.1 = ppc(observations, "Sleep", Covs = NULL, 1) 
+			if (!exists("PPC.Sleep.1")) { PPC.Sleep.1 = ppc(observations, "Sleep", Sleep.M1$ForPPC, Covs = NULL, 1) 
 				Sleep.M1[[length(Sleep.M1) + 1]] = PPC.Sleep.1
 				names(Sleep.M1)[length(Sleep.M1)] = "PPC.Sleep.1"
 			}
@@ -1049,7 +1049,7 @@ wrap <- function(data, metadata) {
 			PPC.Sleep.5.2 = ppc(observations, "Sleep", Sleep.M5.2$ForPPC, cbind(observations$Time2, observations$car.A, observations$car.B), 5.2)
 			Sleep.M5.2[[length(Sleep.M5.2) + 1]] = PPC.Sleep.5.2
 			names(Sleep.M5.2)[length(Sleep.M5.2)] = "PPC.Sleep.5.2"
-			if (!exists("PPC.Sleep.2")) { PPC.Sleep.2 = ppc(observations, "Sleep", observations$Time2, 2) 
+			if (!exists("PPC.Sleep.2")) { PPC.Sleep.2 = ppc(observations, "Sleep", Sleep.M2$ForPPC, observations$Time2, 2) 
 				Sleep.M2[[length(Sleep.M2) + 1]] = PPC.Sleep.2
 				names(Sleep.M2)[length(Sleep.M2)] = "PPC.Sleep.2"
 			}
@@ -1078,7 +1078,7 @@ wrap <- function(data, metadata) {
 			PPC.Sleep.5.3 = ppc(observations, "Sleep", Sleep.M5.3$ForPPC, cbind(Block.Covs, observations$car.A, observations$car.B), 5.3)
 			Sleep.M5.3[[length(Sleep.M5.3) + 1]] = PPC.Sleep.5.3
 			names(Sleep.M5.3)[length(Sleep.M5.3)] = "PPC.Sleep.5.3"
-			if (!exists("PPC.Sleep.3")) { PPC.Sleep.3 = ppc(observations, "Sleep", Block.Covs, 3) 
+			if (!exists("PPC.Sleep.3")) { PPC.Sleep.3 = ppc(observations, "Sleep", Sleep.M3$ForPPC, Block.Covs, 3) 
 				Sleep.M3[[length(Sleep.M3) + 1]] = PPC.Sleep.3
 				names(Sleep.M3)[length(Sleep.M3)] = "PPC.Sleep.3"
 			}
@@ -1107,7 +1107,7 @@ wrap <- function(data, metadata) {
 			PPC.Sleep.5.4 = ppc(observations, "Sleep", Sleep.M5.4$ForPPC, cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4)
 			Sleep.M5.4[[length(Sleep.M5.4) + 1]] = PPC.Sleep.5.4
 			names(Sleep.M5.4)[length(Sleep.M5.4)] = "PPC.Sleep.5.4"
-			if (!exists("PPC.Sleep.4")) { PPC.Sleep.4 = ppc(observations, "Sleep", Lag.Covs[ , 4], 4) 
+			if (!exists("PPC.Sleep.4")) { PPC.Sleep.4 = ppc(observations, "Sleep", Sleep.M4$ForPPC, Lag.Covs[ , 4], 4) 
 				Sleep.M4[[length(Sleep.M4) + 1]] = PPC.Sleep.4
 				names(Sleep.M4)[length(Sleep.M4)] = "PPC.Sleep.4"
 			}
@@ -1138,7 +1138,7 @@ wrap <- function(data, metadata) {
 				observations$car.B), 5.41)
 			Sleep.M5.41[[length(Sleep.M5.41) + 1]] = PPC.Sleep.5.41
 			names(Sleep.M5.41)[length(Sleep.M5.41)] = "PPC.Sleep.5.41"
-			if (!exists("PPC.Sleep.4.1")) { PPC.Sleep.4.1 = ppc(observations, "Sleep", cbind(Lag.Covs[ , 4], observations$Time2), 4.1) 
+			if (!exists("PPC.Sleep.4.1")) { PPC.Sleep.4.1 = ppc(observations, "Sleep", Sleep.M4.1$ForPPC, cbind(Lag.Covs[ , 4], observations$Time2), 4.1) 
 				Sleep.M4.1[[length(Sleep.M4.1) + 1]] = PPC.Sleep.4.1
 				names(Sleep.M4.1)[length(Sleep.M4.1)] = "PPC.Sleep.4.1"
 			}
@@ -1169,7 +1169,7 @@ wrap <- function(data, metadata) {
 				observations$car.B), 5.42)
 			Sleep.M5.42[[length(Sleep.M5.42) + 1]] = PPC.Sleep.5.42
 			names(Sleep.M5.42)[length(Sleep.M5.42)] = "PPC.Sleep.5.42"
-			if (!exists("PPC.Sleep.4.2")) { PPC.Sleep.4.2 = ppc(observations, "Sleep", cbind(Lag.Covs[ , 4], Block.Covs), 4.2) 
+			if (!exists("PPC.Sleep.4.2")) { PPC.Sleep.4.2 = ppc(observations, "Sleep", Sleep.M4.2$ForPPC, cbind(Lag.Covs[ , 4], Block.Covs), 4.2) 
 				Sleep.M4.2[[length(Sleep.M4.2) + 1]] = PPC.Sleep.4.2
 				names(Sleep.M4.2)[length(Sleep.M4.2)] = "PPC.Sleep.4.2"
 			}
