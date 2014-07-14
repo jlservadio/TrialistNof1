@@ -258,3 +258,4 @@ cleanData = function(data, metadata) {
 	out = list(observations, Block.Covs, Lag.Covs, No_Neuropain, meta.data, insufficient_data)
 	return(out)
 }
+
