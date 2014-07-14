@@ -128,6 +128,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 				logit(Q[i, r]) <- beta*Treat[i] - c[r] + slope*logit(Q[i - 1, r])
 			}
 		}
+		
+		for (r in 1:ncat) {
+			p[1, r] <- p[2, r]
+		}
+		
 		for (i in 2:(ncat-1)) {
 			dc[i] ~ dunif(lower.dc, upper.dc)
 		}
@@ -159,6 +164,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 			}
 			x[i] ~ dunif(j[i], l[i])
 		}
+		
+		for (r in 1:ncat) {
+			p[1, r] <- p[2, r]
+		}
+		
 		for (i in 2:(ncat-1)) {
 			dc[i] ~ dunif(lower.dc, upper.dc)
 		}
@@ -190,6 +200,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 				logit(Q[i, r]) <- beta*Treat[i] - c[r] + slope1*logit(Q[i - 1, r]) + slope2*x1[i]
 			}
 		}
+		
+		for (r in 1:ncat) {
+			p[1, r] <- p[2, r]
+		}
+		
 		for (i in 2:(ncat-1)) {
 			dc[i] ~ dunif(lower.dc, upper.dc)
 		}
@@ -221,6 +236,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 				logit(Q[i, r]) <- beta*Treat[i] - c[r] + slope1*logit(Q[i - 1, r]) + slope2*x1[i] + slope3*x2[i]
 			}
 		}
+		
+		for (r in 1:ncat) {
+			p[1, r] <- p[2, r]
+		}
+		
 		for (i in 2:(ncat-1)) {
 			dc[i] ~ dunif(lower.dc, upper.dc)
 		}
@@ -253,6 +273,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 				logit(Q[i, r]) <- beta*Treat[i] - c[r] + slope1*logit(Q[i - 1, r]) + slope2*x1[i] + slope3*x2[i] + slope4*x3[i]
 			}
 		}
+		
+		for (r in 1:ncat) {
+			p[1, r] <- p[2, r]
+		}
+		
 		for (i in 2:(ncat-1)) {
 			dc[i] ~ dunif(lower.dc, upper.dc)
 		}
@@ -409,6 +434,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 				logit(Q[i, r]) <- beta*Treat[i] - c[r] + slope1*logit(Q[i - 1, r]) + slope2*z1[i] + slope3*z2[i]
 			}
 		}
+		
+		for (r in 1:ncat) {
+			p[1, r] <- p[2, r]
+		}
+		
 		for (i in 2:(ncat-1)) {
 			dc[i] ~ dunif(lower.dc, upper.dc)
 		}
@@ -475,6 +505,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 				logit(Q[i, r]) <- beta*Treat[i] - c[r] + slope1*logit(Q[i - 1, r]) + slope2*x1[i] + slope3*z1[i] + slope4*z2[i]
 			}
 		}
+		
+		for (r in 1:ncat) {
+			p[1, r] <- p[2, r]
+		}
+		
 		for (i in 2:(ncat-1)) {
 			dc[i] ~ dunif(lower.dc, upper.dc)
 		}
@@ -508,6 +543,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 				logit(Q[i, r]) <- beta*Treat[i] - c[r] + slope1*logit(Q[i - 1, r]) + slope2*x1[i] + slope3*x2[i] + slope4*z1[i] + slope5*z2[i]
 			}
 		}
+		
+		for (r in 1:ncat) {
+			p[1, r] <- p[2, r]
+		}
+		
 		for (i in 2:(ncat-1)) {
 			dc[i] ~ dunif(lower.dc, upper.dc)
 		}
@@ -539,9 +579,15 @@ model.ord <- function (Covs, prior, path, mod.id)
 			}
 			p[i,ncat] <- Q[i,(ncat-1)]
 			for (r in 2:(ncat-1)) {
-				logit(Q[i, r]) <- beta*Treat[i] - c[r] + slope1*logit(Q[i - 1, r]) + slope2*x1[i] + slope3*x2[i] + slope4*x3[i] + slope5*z1[i] + slope6*z2[i]
+				logit(Q[i, r]) <- beta*Treat[i] - c[r] + slope1*logit(Q[i - 1, r]) + slope2*x1[i] + slope3*x2[i] + slope4*x3[i] + 
+					slope5*z1[i] + slope6*z2[i]
 			}
 		}
+		
+		for (r in 1:ncat) {
+			p[1, r] <- p[2, r]
+		}
+		
 		for (i in 2:(ncat-1)) {
 			dc[i] ~ dunif(lower.dc, upper.dc)
 		}
