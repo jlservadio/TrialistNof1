@@ -1,6 +1,6 @@
-ppc <- function(observations, ForPPC, Covs, Outcome, mod.id) {
+ppc <- function(observations, Outcome, ForPPC, Covs, mod.id) {
 
-	cat(" *")
+	cat(mod.id, " *")
 	flush.console()
 
 	if (Outcome == "Pain") { index = 1
@@ -60,180 +60,268 @@ ppc <- function(observations, ForPPC, Covs, Outcome, mod.id) {
 		while (sum(is.na(Covs)) != 0) {
 			for (i in 2:nrow(Covs)) {
 				if (is.na(Covs[i, 1]) && !is.na(Covs[i-1, 1])) {
-					Covs[i, 1] = round(mean(ForPPC[[index]][[1]]) + mean(ForPPC[[index]][[2]]) * observations$Treat2[i] + 
-					mean(ForPPC[[index]][[4]][ , , 1]) * Covs[i-1, 1])
+					Covs[i, 1] = round(mean(ForPPC[["alpha"]]) + mean(ForPPC[["beta"]]) * observations$Treat2[i] + 
+					mean(ForPPC[["Slope"]][ , , 1]) * Covs[i-1, 1])
 				}
 			}
 		}
 	}
 	
-	SimY0 = SimY = matrix(NA, nrow(observations), length(ForPPC[[index]][[1]]))
+	intercept = matrix(1, nrow = nrow(observations), ncol = 1)
+	
+	SimY0 = SimY = matrix(NA, nrow(observations), length(ForPPC[["beta"]]))
 		
 		if (index == 1 || index == 7) {
-			if (mod.id == 4.1 || mod.id == 4.2 || mod.id == 5.2 || mod.id == 5.4 || mod.id == 5.1) {
-				slope1 = as.numeric(ForPPC[[index]][[4]][ , , 1])
-				slope2 = as.numeric(ForPPC[[index]][[4]][ , , 2])
-				for (i in 1:ncol(SimY)) {
-					SimY0[ , i] = ForPPC[[index]][[1]][i] +
-						ForPPC[[index]][[2]][i] * observations$Treat2 +
-						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2]
-				}
+			if (mod.id %in% c(4.1, 4.2, 5.2, 5.4, 5.1)) {
+				slope1 = as.numeric(ForPPC[["Slope"]][ , , 1])
+				slope2 = as.numeric(ForPPC[["Slope"]][ , , 2])
+				
+				SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
+					as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
+					Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2))
+				
+#				for (i in 1:ncol(SimY)) {
+#					SimY0[ , i] = ForPPC[["alpha"]][i] +
+#						ForPPC[["beta"]][i] * observations$Treat2 +
+#						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2]
+#				}
+				
+				
 			} else if (mod.id == 5.41 || mod.id == 5.42) {
-				slope1 = as.numeric(ForPPC[[index]][[4]][ , , 1])
-				slope2 = as.numeric(ForPPC[[index]][[4]][ , , 2])
-				slope3 = as.numeric(ForPPC[[index]][[4]][ , , 3])
-				for (i in 1:ncol(SimY)) {
-					SimY0[ , i] = ForPPC[[index]][[1]][i] + 
-						ForPPC[[index]][[2]][i] * observations$Treat2 +
-						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] +
-						slope3[i] * Covs[ , 3]
-				}
+				slope1 = as.numeric(ForPPC[["Slope"]][ , , 1])
+				slope2 = as.numeric(ForPPC[["Slope"]][ , , 2])
+				slope3 = as.numeric(ForPPC[["Slope"]][ , , 3])
+				
+				SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
+					as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
+					Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2)) + 
+					Covs[ , 3] %*% t(as.matrix(slope3))
+				
+#				for (i in 1:ncol(SimY)) {
+#					SimY0[ , i] = ForPPC[["alpha"]][i] + 
+#						ForPPC[["beta"]][i] * observations$Treat2 +
+#						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] +
+#						slope3[i] * Covs[ , 3]
+#				}
+				
+				
 			} else if (mod.id == 3) {
 				if (ncol(Covs) == 1) {
-					for (i in 1:ncol(SimY)) {
-						SimY0[ , i] = ForPPC[[index]][[1]][i] + 
-						ForPPC[[index]][[2]][i] * observations$Treat2 +
-						ForPPC[[index]][[4]][i] * as.numeric(Covs)
-					}
+				
+					SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
+						as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
+						Covs %*% t(as.matrix(slope))
+				
+#					for (i in 1:ncol(SimY)) {
+#						SimY0[ , i] = ForPPC[["alpha"]][i] + 
+#						ForPPC[["beta"]][i] * observations$Treat2 +
+#						ForPPC[["Slope"]][i] * as.numeric(Covs)
+#					}
 				} else if (ncol(Covs) == 2) {
-					slope1 = as.numeric(ForPPC[[index]][[4]][ , , 1])
-					slope2 = as.numeric(ForPPC[[index]][[4]][ , , 2])
-					for (i in 1:ncol(SimY)) {
-						SimY0[ , i] = ForPPC[[index]][[1]][i] + 
-						ForPPC[[index]][[2]][i] * observations$Treat2 + 
-						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2]
-					}
+					slope1 = as.numeric(ForPPC[["Slope"]][ , , 1])
+					slope2 = as.numeric(ForPPC[["Slope"]][ , , 2])
+					
+					SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
+						as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
+						Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2))
+					
+#					for (i in 1:ncol(SimY)) {
+#						SimY0[ , i] = ForPPC[["alpha"]][i] + 
+#						ForPPC[["beta"]][i] * observations$Treat2 + 
+#						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2]
+#					}
 				} else if (ncol(Covs) == 3) {
-					slope1 = as.numeric(ForPPC[[index]][[4]][ , , 1])
-					slope2 = as.numeric(ForPPC[[index]][[4]][ , , 2])
-					slope3 = as.numeric(ForPPC[[index]][[4]][ , , 3])
-					for (i in 1:ncol(SimY)) {
-						SimY0[ , i] = ForPPC[[index]][[1]][i] + 
-						ForPPC[[index]][[2]][i] * observations$Treat2 + 
-						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] + 
-						slope3[i] * Covs[ , 3]
-					}
+					slope1 = as.numeric(ForPPC[["Slope"]][ , , 1])
+					slope2 = as.numeric(ForPPC[["Slope"]][ , , 2])
+					slope3 = as.numeric(ForPPC[["Slope"]][ , , 3])
+					
+					SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
+						as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
+						Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2)) + 
+						Covs[ , 3] %*% t(as.matrix(slope3))
+					
+#					for (i in 1:ncol(SimY)) {
+#						SimY0[ , i] = ForPPC[["alpha"]][i] + 
+#						ForPPC[["beta"]][i] * observations$Treat2 + 
+#						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] + 
+#						slope3[i] * Covs[ , 3]
+#					}
 				}	
 			} else if (mod.id == 5.3) {
 				if (ncol(Covs) == 3) {
-					slope1 = as.numeric(ForPPC[[index]][[4]][ , , 1])
-					slope2 = as.numeric(ForPPC[[index]][[4]][ , , 2])
-					for (i in 1:ncol(SimY)) {
-						SimY0[ , i] = ForPPC[[index]][[1]][i] + 
-						ForPPC[[index]][[2]][i] * observations$Treat2 + 
-						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2]
-					}
+					slope1 = as.numeric(ForPPC[["Slope"]][ , , 1])
+					slope2 = as.numeric(ForPPC[["Slope"]][ , , 2])
+					slope3 = as.numeric(ForPPC[["Slope"]][ , , 3])
+					
+					SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
+						as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
+						Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2)) + 
+						Covs[ , 3] %*% t(as.matrix(slope3))
+					
+#					for (i in 1:ncol(SimY)) {
+#						SimY0[ , i] = ForPPC[["alpha"]][i] + 
+#						ForPPC[["beta"]][i] * observations$Treat2 + 
+#						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2]
+#					}
 				} else if (ncol(Covs) == 4) {
-					slope1 = as.numeric(ForPPC[[index]][[4]][ , , 1])
-					slope2 = as.numeric(ForPPC[[index]][[4]][ , , 2])
-					slope3 = as.numeric(ForPPC[[index]][[4]][ , , 3])
-					for (i in 1:ncol(SimY)) {
-						SimY0[ , i] = ForPPC[[index]][[1]][i] + 
-						ForPPC[[index]][[2]][i] * observations$Treat2 + 
-						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] + 
-						slope3[i] * Covs[ , 3]
-					}
+					slope1 = as.numeric(ForPPC[["Slope"]][ , , 1])
+					slope2 = as.numeric(ForPPC[["Slope"]][ , , 2])
+					slope3 = as.numeric(ForPPC[["Slope"]][ , , 3])
+					slope4 = as.numeric(ForPPC[["Slope"]][ , , 4])
+					
+					SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
+						as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
+						Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2)) + 
+						Covs[ , 3] %*% t(as.matrix(slope3)) + Covs[ , 4] %*% t(as.matrix(slope4))
+					
+#					for (i in 1:ncol(SimY)) {
+#						SimY0[ , i] = ForPPC[["alpha"]][i] + 
+#						ForPPC[["beta"]][i] * observations$Treat2 + 
+#						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] + 
+#						slope3[i] * Covs[ , 3]
+#					}
 				} else if (ncol(Covs) == 5) {
-					slope1 = as.numeric(ForPPC[[index]][[4]][ , , 1])
-					slope2 = as.numeric(ForPPC[[index]][[4]][ , , 2])
-					slope3 = as.numeric(ForPPC[[index]][[4]][ , , 3])
-					slope4 = as.numeric(ForPPC[[index]][[4]][ , , 4])
-					for (i in 1:ncol(SimY)) {
-						SimY0[ , i] = ForPPC[[index]][[1]][i] + 
-						ForPPC[[index]][[2]][i] * observations$Treat2 + 
-						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] + 
-						slope3[i] * Covs[ , 3] + slope4[i] * Covs[ , 4]
-					}
+					slope1 = as.numeric(ForPPC[["Slope"]][ , , 1])
+					slope2 = as.numeric(ForPPC[["Slope"]][ , , 2])
+					slope3 = as.numeric(ForPPC[["Slope"]][ , , 3])
+					slope4 = as.numeric(ForPPC[["Slope"]][ , , 4])
+					slope5 = as.numeric(ForPPC[["Slope"]][ , , 5])
+					
+					SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
+						as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
+						Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2)) + 
+						Covs[ , 3] %*% t(as.matrix(slope3)) + Covs[ , 4] %*% t(as.matrix(slope4)) + 
+						Covs[ , 5] %*% t(as.matrix(slope5))
+					
+#					for (i in 1:ncol(SimY)) {
+#						SimY0[ , i] = ForPPC[["alpha"]][i] + 
+#						ForPPC[["beta"]][i] * observations$Treat2 + 
+#						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] + 
+#						slope3[i] * Covs[ , 3] + slope4[i] * Covs[ , 4]
+#					}
 				}
 			} else if (mod.id == 5.42) {
 				if (ncol(Covs) == 4) {
-					slope1 = as.numeric(ForPPC[[index]][[4]][ , , 1])
-					slope2 = as.numeric(ForPPC[[index]][[4]][ , , 2])
-					slope3 = as.numeric(ForPPC[[index]][[4]][ , , 3])
-					slope4 = as.numeric(ForPPC[[index]][[4]][ , , 4])
-					for (i in 1:ncol(SimY)) {
-						SimY0[ , i] = ForPPC[[index]][[1]][i] + 
-						ForPPC[[index]][[2]][i] * observations$Treat2 + 
-						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] + 
-						slope3[i] * Covs[ , 3] + slope4[i] * Covs[ , 4]
-					}
+					slope1 = as.numeric(ForPPC[["Slope"]][ , , 1])
+					slope2 = as.numeric(ForPPC[["Slope"]][ , , 2])
+					slope3 = as.numeric(ForPPC[["Slope"]][ , , 3])
+					slope4 = as.numeric(ForPPC[["Slope"]][ , , 4])
+					
+					SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
+						as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
+						Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2)) + 
+						Covs[ , 3] %*% t(as.matrix(slope3)) + Covs[ , 4] %*% t(as.matrix(slope4))
+					
+#					for (i in 1:ncol(SimY)) {
+#						SimY0[ , i] = ForPPC[["alpha"]][i] + 
+#						ForPPC[["beta"]][i] * observations$Treat2 + 
+#						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] + 
+#						slope3[i] * Covs[ , 3] + slope4[i] * Covs[ , 4]
+#					}
 				} else if (ncol(Covs) == 5) {
-					slope1 = as.numeric(ForPPC[[index]][[4]][ , , 1])
-					slope2 = as.numeric(ForPPC[[index]][[4]][ , , 2])
-					slope3 = as.numeric(ForPPC[[index]][[4]][ , , 3])
-					slope4 = as.numeric(ForPPC[[index]][[4]][ , , 4])
-					slope5 = as.numeric(ForPPC[[index]][[4]][ , , 5])
-					for (i in 1:ncol(SimY)) {
-						SimY0[ , i] = ForPPC[[index]][[1]][i] + 
-						ForPPC[[index]][[2]][i] * observations$Treat2 + 
-						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] + 
-						slope3[i] * Covs[ , 3] + slope4[i] * Covs[ , 4] + 
-						slope5[i] * Covs[ , 5]
-					}
+					slope1 = as.numeric(ForPPC[["Slope"]][ , , 1])
+					slope2 = as.numeric(ForPPC[["Slope"]][ , , 2])
+					slope3 = as.numeric(ForPPC[["Slope"]][ , , 3])
+					slope4 = as.numeric(ForPPC[["Slope"]][ , , 4])
+					slope5 = as.numeric(ForPPC[["Slope"]][ , , 5])
+					
+					SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
+						as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
+						Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2)) + 
+						Covs[ , 3] %*% t(as.matrix(slope3)) + Covs[ , 4] %*% t(as.matrix(slope4)) + 
+						Covs[ , 5] %*% t(as.matrix(slope5))
+					
+#					for (i in 1:ncol(SimY)) {
+#						SimY0[ , i] = ForPPC[["alpha"]][i] + 
+#						ForPPC[["beta"]][i] * observations$Treat2 + 
+#						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] + 
+#						slope3[i] * Covs[ , 3] + slope4[i] * Covs[ , 4] + 
+#						slope5[i] * Covs[ , 5]
+#					}
 				} else if (ncol(Covs) == 6) {
-					slope1 = as.numeric(ForPPC[[index]][[4]][ , , 1])
-					slope2 = as.numeric(ForPPC[[index]][[4]][ , , 2])
-					slope3 = as.numeric(ForPPC[[index]][[4]][ , , 3])
-					slope4 = as.numeric(ForPPC[[index]][[4]][ , , 4])
-					slope5 = as.numeric(ForPPC[[index]][[4]][ , , 5])
-					slope6 = as.numeric(ForPPC[[index]][[4]][ , , 6])
-					for (i in 1:ncol(SimY)) {
-						SimY0[ , i] = ForPPC[[index]][[1]][i] + 
-						ForPPC[[index]][[2]][i] * observations$Treat2 + 
-						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] + 
-						slope3[i] * Covs[ , 3] + slope4[i] * Covs[ , 4] + 
-						slope5[i] * Covs[ , 5] + slope6[i] * Covs[ , 6]
-					}
+					slope1 = as.numeric(ForPPC[["Slope"]][ , , 1])
+					slope2 = as.numeric(ForPPC[["Slope"]][ , , 2])
+					slope3 = as.numeric(ForPPC[["Slope"]][ , , 3])
+					slope4 = as.numeric(ForPPC[["Slope"]][ , , 4])
+					slope5 = as.numeric(ForPPC[["Slope"]][ , , 5])
+					slope6 = as.numeric(ForPPC[["Slope"]][ , , 6])
+					
+					SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
+						as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
+						Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2)) + 
+						Covs[ , 3] %*% t(as.matrix(slope3)) + Covs[ , 4] %*% t(as.matrix(slope4)) + 
+						Covs[ , 5] %*% t(as.matrix(slope5)) + Covs[ , 6] %*% t(as.matrix(slope6))
+					
+#					for (i in 1:ncol(SimY)) {
+#						SimY0[ , i] = ForPPC[["alpha"]][i] + 
+#						ForPPC[["beta"]][i] * observations$Treat2 + 
+#						slope1[i] * Covs[ , 1] + slope2[i] * Covs[ , 2] + 
+#						slope3[i] * Covs[ , 3] + slope4[i] * Covs[ , 4] + 
+#						slope5[i] * Covs[ , 5] + slope6[i] * Covs[ , 6]
+#					}
 				}
 			} else {
 				if (is.null(Covs)) {
 					Covs = rep(0, length(observations$Treat2))
-					ForPPC[[index]][[4]] = rep(0, length(ForPPC[[index]][[1]]))
+					ForPPC[["Slope"]] = rep(0, length(ForPPC[["alpha"]]))
 				}
-				for (i in 1:ncol(SimY)) {
-					SimY0[ , i] = ForPPC[[index]][[1]][i] + 
-						ForPPC[[index]][[2]][i] * observations$Treat2 + 
-						ForPPC[[index]][[4]][i] * Covs
-				}
+				
+				SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
+					as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]]))
+				
+#				for (i in 1:ncol(SimY)) {
+#					SimY0[ , i] = ForPPC[["alpha"]][i] + 
+#						ForPPC[["beta"]][i] * observations$Treat2 + 
+#						ForPPC[["Slope"]][i] * Covs
+#				}
 			}
 		} else if (index > 1 && index < 7){
 			if (is.null(Covs)) {
 				Covs = rep(0, length(observations$Treat2))
-				ForPPC[[index]][[2]] = rep(0, length(ForPPC[[index]][[1]]))
+				ForPPC[["Slope"]] = rep(0, length(ForPPC[["beta"]]))
 			}
 
 			for (i in 1:ncol(SimY0)) {
 				for (j in 1:nrow(SimY0)) {
-					SimY0[j, i] = sample(1:ncol(ForPPC[[index]][[4]][1, , ]), 1, prob = 
-						abs(ForPPC[[index]][[4]][i, j, ]))
+					SimY0[j, i] = sample(1:ncol(ForPPC[["p"]][1, , ]), 1, prob = 
+						abs(ForPPC[["p"]][i, j, ]))
 				}
 			}
 		}	
 	
 	if (index == 1 || index == 7) {
-		for (i in 1:nrow(SimY0)) {
-			for (j in 1:ncol(SimY0)) {
-				SimY[i, j] = rnorm(1, SimY0[i, j], ForPPC[[index]][[3]][j])
-			}
+	
+		for (j in 1:ncol(SimY0)) {
+			SimY[ , j] = rnorm(SimY0[ , j], ForPPC[["Sd"]][j])
 		}
+	
+#		for (i in 1:nrow(SimY0)) {
+#			for (j in 1:ncol(SimY0)) {
+#				SimY[i, j] = rnorm(1, SimY0[i, j], ForPPC[["Sd"]][j])
+#			}
+#		}		
 	} else {
-		for (i in 1:nrow(SimY0)) {
-			for (j in 1:ncol(SimY0)) {
-				SimY[i, j] = rnorm(1, SimY0[i, j], sd(SimY0[ , j]))
-			}
+	
+		for (j in 1:ncol(SimY0)) {
+			SimY[ , j] = rnorm(SimY0[ , j], sd(SimY0[ , j]))
 		}
+	
+#		for (i in 1:nrow(SimY0)) {
+#			for (j in 1:ncol(SimY0)) {
+#				SimY[i, j] = rnorm(1, SimY0[i, j], sd(SimY0[ , j]))
+#			}
+#		}
 	}
 	
 	SimY = round(SimY)
 	
+	cat("+")
+	flush.console()
 
 	#######
 	# PPC's
 	#######
-	
-	cat("+")
-	flush.console()
-	
+
 	# Goodness of fit Chi-Square
 	
 	test0 = SimY - SimY0 / SimY0
@@ -265,7 +353,7 @@ ppc <- function(observations, ForPPC, Covs, Outcome, mod.id) {
 	min.lessthan = min.lessthan/length(test)
 	min.test = cbind(min.greaterthan, min.lessthan)
 	rownames(min.test) = "min.test"
-	
+		
 	# Maximum
 	
 	test = colMaxs(SimY, na.rm = TRUE)
@@ -487,10 +575,7 @@ ppc <- function(observations, ForPPC, Covs, Outcome, mod.id) {
 	
 		a = a + 1
 	}
-	
-	cat("+")
-	flush.console()
-	
+
 	SimY2 = obs2 = NULL
 	for (i in 1:length(Treat.bounds)) {
 		if (Treat.bounds[i] == 1) { 
@@ -627,6 +712,9 @@ ppc <- function(observations, ForPPC, Covs, Outcome, mod.id) {
 	max.cons.same.test = cbind(max.cons.same.greaterthan, max.cons.same.lessthan)
 	rownames(max.cons.same.test) = "max.cons.same.test"
 	
+	cat("+")
+	flush.console()
+	
 	# Maximum variance within cycle
 	
 	per.starts = rep(NA, 1)
@@ -680,33 +768,21 @@ ppc <- function(observations, ForPPC, Covs, Outcome, mod.id) {
 	if (index > 1 && index < 7) { ncats = 5 }
 	if (index == 3) { ncats = 6 }
 	
-	obs.tab = matrix(0, nrow = length(per.starts)-1, ncol = ncats)
-	for (i in 1:nrow(obs.tab)) {
-		for (j in per.starts[i]:(per.starts[i+1]-1)) {
-			for (k in 1:ncats) {
-				if (!is.na(observations[[index+2]][j]) && observations[[index+2]][j] == k) { 
-					obs.tab[i, k] = obs.tab[i, k] + 1 }
-			}
-		}
+	obs.zero.per = rep(NA, length(per.starts) - 1)
+	for (i in (1:(length(per.starts) - 1))) {
+		obs.zero.per[i] = ncats - dim(table(observations[[index+2]][per.starts[i]:(per.starts[i+1]-1)]))
 	}
-	obs.zero = sum(obs.tab == 0)
-	
-	cat("+")
-	flush.console()
+	obs.zero = sum(obs.zero.per)
 	
 	test = rep(0, ncol(SimY))
-	for (n in 1:length(test)) {
-		if (n == 8500) { cat("+")
+	for (j in 1:length(test)) {
+		if (j == 12000) { cat("+")
 			flush.console() }
-		for (i in 1:nrow(obs.tab)) {
-			for (j in per.starts[i]:(per.starts[i+1]-1)) {
-				for (k in 1:ncats) {
-					if (!is.na(observations[[index+2]][j]) && observations[[index+2]][j] == k) { 
-						obs.tab[i, k] = obs.tab[i, k] + 1 }
-				}
-			}
+		zero.per = rep(NA, length(obs.zero.per))
+		for (i in (1:(length(per.starts) - 1))) {
+			zero.per[i] = ncats - dim(table(SimY[per.starts[i]:(per.starts[i+1]-1), j]))
 		}
-	test[n] = sum(obs.tab == 0)
+		test[j] = sum(zero.per)
 	}
 	
 	out.cat.zero.greaterthan = out.cat.zero.lessthan = 0
@@ -717,9 +793,6 @@ ppc <- function(observations, ForPPC, Covs, Outcome, mod.id) {
 	out.cat.zero.greaterthan = out.cat.zero.greaterthan / length(test)
 	out.cat.zero.lessthan = out.cat.zero.lessthan / length(test)
 
-
-	out.cat.zero.greaterthan = out.cat.zero.lessthan = 0
-	
 	out.cat.zero.test = cbind(out.cat.zero.greaterthan, out.cat.zero.lessthan)
 	rownames(out.cat.zero.test) = "out.cat.zero.test"
 	
@@ -775,6 +848,8 @@ ppc <- function(observations, ForPPC, Covs, Outcome, mod.id) {
 	# Compiling Output
 	##################
 	
+	cat("\n")
+	
 	tests = rbind(Goodness.of.fit, min.test, max.test, mean.test, max.change.test, max.dtd.change.test, inc.test, 
 		dec.test, same.test, treat.diff.test, range.test, last.test, max.cons.inc.test, max.cons.dec.test, 
 		max.cons.same.test, max.vars.test, min.vars.test, out.cat.zero.test, A.lt.B.test)
@@ -782,11 +857,12 @@ ppc <- function(observations, ForPPC, Covs, Outcome, mod.id) {
 	
 	summary = tests[ , 1]
 	for (i in 1:length(summary)) {
+		summary[i] = 1
 		if (tests[i, 1] < 0.01 || tests[i, 1] > 0.99 || tests[i, 2] < 0.01 || tests[i, 2] > 0.99) { summary[i] = 0 }
 	}
 	summary = as.matrix(summary)
 	
-	out = list("SimY" = SimY, "tests" = tests, "summary" = summary)
+	out = list("SimY" = SimY, "tests" = tests, "Summary" = summary)
 		
 	return(out)
 	
