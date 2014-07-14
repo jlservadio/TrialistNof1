@@ -7,11 +7,16 @@ inits.norm <- function (Y, x, Treat, varprior, ntreat = 2)
     } else {
 		slope <- se.slope <- rep(NA, dim(as.matrix(x))[2]) # no.treat x no.x
         fit <- summary(lm(Y ~ Treat + x))
-        slope <- coef(fit)[2+seq(dim(x)[2]),1]
-        if (!is.nan(fit$fstat[1])) {
-            se.slope <- coef(fit)[2+seq(dim(x)[2]),2]
-        } else {
-			se.slope <- rep(1,length(se.slope))
+		slope <- tryCatch({coef(fit)[2+seq(dim(x)[2]), 1]}, error=function(cond){ caught <- rep(0, length(slope)) })
+		
+		if (sum(slope) != 0) {
+			if (!is.nan(fit$fstat[1])) {
+				se.slope <- coef(fit)[2+seq(dim(x)[2]),2]
+			} else {
+				se.slope <- rep(1,length(se.slope))
+			}
+		} else {
+			se.slope <- rep(1, length(se.slope))
 		}
     }
 
@@ -58,12 +63,13 @@ inits.norm <- function (Y, x, Treat, varprior, ntreat = 2)
         inits.3[[1 + length(inits.3)]] = prec.3
         names(inits.3)[[length(inits.3)]] = "prec"
     } else if (varprior[[1]] == "Sd" & !is.null(x)) {
-        inits.1[[1 + length(inits.1)]] = 0.5/sqrt(prec.1)
-        names(inits.1)[[length(inits.1)]] = "Sd"
-        inits.2[[1 + length(inits.2)]] = 0.5/sqrt(prec.2)
-        names(inits.2)[[length(inits.2)]] = "Sd"
-        inits.3[[1 + length(inits.3)]] = 0.5/sqrt(prec.3)
-        names(inits.3)[[length(inits.3)]] = "Sd"
+	#This loop deals with Sd									#
+        inits.1[[1 + length(inits.1)]] = 0.5/sqrt(prec.1)		#
+        names(inits.1)[[length(inits.1)]] = "Sd"				#
+        inits.2[[1 + length(inits.2)]] = 0.5/sqrt(prec.2)		#
+        names(inits.2)[[length(inits.2)]] = "Sd"				#
+        inits.3[[1 + length(inits.3)]] = 0.5/sqrt(prec.3)		#
+        names(inits.3)[[length(inits.3)]] = "Sd"				#
     } else if (varprior[[1]] == "var") {
         inits.1[[1 + length(inits.1)]] = 1/prec.1
         names(inits.1)[[length(inits.1)]] = "Var"
