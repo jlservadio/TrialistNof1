@@ -9,6 +9,29 @@ run.ord <- function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv
         Covs = as.matrix(Covs)
     prior = prior.ord(Covs, betaprior, dcprior, c1prior, slopeprior = list("norm", 0, 0.1))
     inInits = inits.ord(Y, Covs, Treat, ncat)
+	
+	if (length(inInits[[1]]$slope) >= 2) {
+		for (i in 1:nChains) {
+			inInits[[i]]$slope1 = inInits[[i]]$slope[1]
+			inInits[[i]]$slope2 = inInits[[i]]$slope[2]
+		}
+	}
+	if (length(inInits[[1]]$slope) >= 3) {
+		for (i in 1:nChains) { inInits[[i]]$slope3 = inInits[[i]]$slope[3] }
+	}
+	if (length(inInits[[1]]$slope) >= 4) {
+		for (i in 1:nChains) { inInits[[i]]$slope4 = inInits[[i]]$slope[4] }
+	}
+	if (length(inInits[[1]]$slope) >= 5) {
+		for (i in 1:nChains) { inInits[[i]]$slope5 = inInits[[i]]$slope[5] }
+	}
+	if (length(inInits[[1]]$slope) >= 6) {
+		for (i in 1:nChains) { inInits[[i]]$slope6 = inInits[[i]]$slope[6] }
+	}
+	
+	if (length(inInits[[1]]$slope) >= 2) {
+		for (i in 1:nChains) { inInits[[i]]$slope = NULL }
+	}
 		
     inData <- data.ord(Y, Covs, ncat, prior, Treat, mod.id)
 	if (mod.id == 2) { inData$x = as.numeric(inData$x) 
@@ -22,6 +45,7 @@ run.ord <- function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv
 			inData$x2 = as.numeric(inData$x[ , 2])
 			inData$x3 = as.numeric(inData$x[ , 3])
 		}
+		inData$x = NULL
 	} else if (mod.id == 4.1) { inData$x = inData$x[ , 2] 
 	} else if (mod.id == 4.2) {
 		if (ncol(Covs) == 2) {
@@ -34,6 +58,7 @@ run.ord <- function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv
 			inData$x2 = as.numeric(inData$x[ , 3])
 			inData$x3 = as.numeric(inData$x[ , 4])
 		}
+		inData$x = NULL
 	} else if (mod.id == 5.1) {
 		inData$z1 = as.numeric(inData$x[ , 1])
 		inData$z2 = as.numeric(inData$x[ , 2])
