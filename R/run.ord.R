@@ -108,8 +108,6 @@ run.ord <- function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv
 			inData$x3 = as.numeric(inData$x[ , 4])
 		}
 	}
-	
-	if (ncat == 6) { inData$v = c(0.1, 0.15, 0.25, 0.25, 0.15, 0.1) }
 		
     model.ord(Covs, prior, path, mod.id)
     pars.to.save <- c("beta","or","c","p")
