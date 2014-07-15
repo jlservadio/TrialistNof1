@@ -47,7 +47,14 @@ data.ord <- function (Y, Covs, ncat, prior, Treat, mod.id)
 	}
 	
 	if (mod.id %in% c(4, 4.1, 4.2, 5.4, 5.41, 5.42)) {
-		v = c(0.1, 0.2, 0.4, 0.2, 0.1)
+	
+		v = rep(0, ncat)
+		for (i in 1:length(Y)) {
+			if (!is.na(Y[i])) {
+				v[Y[i]] = v[Y[i]] + 1
+			}
+		}
+		v = v / sum(v)
 			
 		inData[[length(inData) + 1]] = v
 		names(inData)[[length(inData)]] = "v"
