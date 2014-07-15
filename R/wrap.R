@@ -2983,6 +2983,7 @@ wrap <- function(data, metadata) {
 	
 	out[[length(out) + 1]] = Results
 	names(out)[length(out)] = "Results"
+	out$Results = cbind(out$Results, t(out$meta.data$Best.Model))
 	
 	return(out)
 }
