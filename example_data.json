@@ -5,7 +5,9 @@
         "trial_start_timestamp":"2014-02-01T12:00:00.000-08:00",
         "regimen_duration":7,
         "number_of_cycles":4,
-        "cycle_ab_pairs":"AB,AB"
+        "trial_start_date":"2013-09-01",
+        "trial_end_date":"2013-10-26",
+        "cycle_ab_pairs":"BA,BA,BA,BA"
     },   
     "data": [
         {
