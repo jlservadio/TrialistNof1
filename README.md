@@ -23,5 +23,5 @@ To call the DPU locally in R using the example dataset included in the repo:
 To call this DPU remotely the client needs to perform a HTTP POST request as exemplified with curl:
 
     curl -H "Content-Type: application/json" --data @example_data.json \ 
-    https://pilots.ohmage.org/ocpu/github/jservadio/TrialistNof1/R/wrap/json
+    https://ocpu.omh.io/ocpu/github/jservadio/TrialistNof1/R/wrap/json
     
