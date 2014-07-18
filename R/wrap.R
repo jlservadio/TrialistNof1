@@ -2959,28 +2959,7 @@ wrap <- function(data, metadata) {
 	
 	meta.data[[length(meta.data) + 1]] = Best.Model
 	names(meta.data)[length(meta.data)] = "Best.Model"
-	
-	out[[length(out) + 1]] = Pain.Info
-	names(out)[length(out)] = "Pain.Info"
-	out[[length(out) + 1]] = Fatigue.Info
-	names(out)[length(out)] = "Fatigue.Info"
-	out[[length(out) + 1]] = Drowsy.Info
-	names(out)[length(out)] = "Drowsy.Info"
-	out[[length(out) + 1]] = Sleep.Info
-	names(out)[length(out)] = "Sleep.Info"
-	out[[length(out) + 1]] = Thinking.Info
-	names(out)[length(out)] = "Thinking.Info"
-	out[[length(out) + 1]] = Constipation.Info
-	names(out)[length(out)] = "Constipation.Info"
-	
-	if (!No_Neuropain) {
-		out[[length(out) + 1]] = Neuropain.Info
-		names(out)[length(out)] = "Neuropain.Info"
-	}
-	
-	out[[length(out) + 1]] = meta.data
-	names(out)[length(out)] = "meta.data"
-	
+
 	out[[length(out) + 1]] = Results
 	names(out)[length(out)] = "Results"
 	out$Results = cbind(out$Results, t(out$meta.data$Best.Model))
