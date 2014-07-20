@@ -104,7 +104,7 @@ wrap <- function(data, metadata) {
 		} else if (Pain.M4.1$Sigs[1, 2] == FALSE && Pain.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Pain.4.1 = ppc(observations, "Pain", Pain.M4.1$ForPPC, cbind(Lag.Covs[ , 1], observations$Time2), 4.1)
-			Pain.M1[[length(Pain.M4.1) + 1]] = PPC.Pain.4.1
+			Pain.M4.1[[length(Pain.M4.1) + 1]] = PPC.Pain.4.1
 			names(Pain.M4.1)[length(Pain.M4.1)] = "PPC.Pain.4.1"
 			if (is.null(PPC.Pain.2)) { PPC.Pain.2 = ppc(observations, "Pain", Pain.M2$ForPPC, observations$Time2, 2) 
 				Pain.M2[[length(Pain.M2) + 1]] = PPC.Pain.2
@@ -397,7 +397,7 @@ wrap <- function(data, metadata) {
 		} else if (Fatigue.M4.1$Sigs[1, 2] == FALSE && Fatigue.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Fatigue.4.1 = ppc(observations, "Fatigue", Fatigue.M4.1$ForPPC, cbind(Lag.Covs[ , 2], observations$Time2), 4.1)
-			Fatigue.M1[[length(Fatigue.M4.1) + 1]] = PPC.Fatigue.4.1
+			Fatigue.M4.1[[length(Fatigue.M4.1) + 1]] = PPC.Fatigue.4.1
 			names(Fatigue.M4.1)[length(Fatigue.M4.1)] = "PPC.Fatigue.4.1"
 			if (is.null(PPC.Fatigue.2)) { PPC.Fatigue.2 = ppc(observations, "Fatigue", Fatigue.M2$ForPPC, observations$Time2, 2) 
 				Fatigue.M2[[length(Fatigue.M2) + 1]] = PPC.Fatigue.2
@@ -690,7 +690,7 @@ wrap <- function(data, metadata) {
 		} else if (Drowsy.M4.1$Sigs[1, 2] == FALSE && Drowsy.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Drowsy.4.1 = ppc(observations, "Drowsy", Drowsy.M4.1$ForPPC, cbind(Lag.Covs[ , 3], observations$Time2), 4.1)
-			Drowsy.M1[[length(Drowsy.M4.1) + 1]] = PPC.Drowsy.4.1
+			Drowsy.M4.1[[length(Drowsy.M4.1) + 1]] = PPC.Drowsy.4.1
 			names(Drowsy.M4.1)[length(Drowsy.M4.1)] = "PPC.Drowsy.4.1"
 			if (is.null(PPC.Drowsy.2)) { PPC.Drowsy.2 = ppc(observations, "Drowsy", Drowsy.M2$ForPPC, observations$Time2, 2) 
 				Drowsy.M2[[length(Drowsy.M2) + 1]] = PPC.Drowsy.2
@@ -983,7 +983,7 @@ wrap <- function(data, metadata) {
 		} else if (Sleep.M4.1$Sigs[1, 2] == FALSE && Sleep.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Sleep.4.1 = ppc(observations, "Sleep", Sleep.M4.1$ForPPC, cbind(Lag.Covs[ , 4], observations$Time2), 4.1)
-			Sleep.M1[[length(Sleep.M4.1) + 1]] = PPC.Sleep.4.1
+			Sleep.M4.1[[length(Sleep.M4.1) + 1]] = PPC.Sleep.4.1
 			names(Sleep.M4.1)[length(Sleep.M4.1)] = "PPC.Sleep.4.1"
 			if (is.null(PPC.Sleep.2)) { PPC.Sleep.2 = ppc(observations, "Sleep", Sleep.M2$ForPPC, observations$Time2, 2) 
 				Sleep.M2[[length(Sleep.M2) + 1]] = PPC.Sleep.2
@@ -1276,7 +1276,7 @@ wrap <- function(data, metadata) {
 		} else if (Thinking.M4.1$Sigs[1, 2] == FALSE && Thinking.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Thinking.4.1 = ppc(observations, "Thinking", Thinking.M4.1$ForPPC, cbind(Lag.Covs[ , 5], observations$Time2), 4.1)
-			Thinking.M1[[length(Thinking.M4.1) + 1]] = PPC.Thinking.4.1
+			Thinking.M4.1[[length(Thinking.M4.1) + 1]] = PPC.Thinking.4.1
 			names(Thinking.M4.1)[length(Thinking.M4.1)] = "PPC.Thinking.4.1"
 			if (is.null(PPC.Thinking.2)) { PPC.Thinking.2 = ppc(observations, "Thinking", Thinking.M2$ForPPC, observations$Time2, 2) 
 				Thinking.M2[[length(Thinking.M2) + 1]] = PPC.Thinking.2
@@ -1569,7 +1569,7 @@ wrap <- function(data, metadata) {
 		} else if (Constipation.M4.1$Sigs[1, 2] == FALSE && Constipation.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Constipation.4.1 = ppc(observations, "Constipation", Constipation.M4.1$ForPPC, cbind(Lag.Covs[ , 6], observations$Time2), 4.1)
-			Constipation.M1[[length(Constipation.M4.1) + 1]] = PPC.Constipation.4.1
+			Constipation.M4.1[[length(Constipation.M4.1) + 1]] = PPC.Constipation.4.1
 			names(Constipation.M4.1)[length(Constipation.M4.1)] = "PPC.Constipation.4.1"
 			if (is.null(PPC.Constipation.2)) { PPC.Constipation.2 = ppc(observations, "Constipation", Constipation.M2$ForPPC, observations$Time2, 2) 
 				Constipation.M2[[length(Constipation.M2) + 1]] = PPC.Constipation.2
@@ -1863,7 +1863,7 @@ wrap <- function(data, metadata) {
 			} else if (Neuropain.M4.1$Sigs[1, 2] == FALSE && Neuropain.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 			} else {
 				PPC.Neuropain.4.1 = ppc(observations, "Neuropain", Neuropain.M4.1$ForPPC, cbind(Lag.Covs[ , 7], observations$Time2), 4.1)
-				Neuropain.M1[[length(Neuropain.M4.1) + 1]] = PPC.Neuropain.4.1
+				Neuropain.M4.1[[length(Neuropain.M4.1) + 1]] = PPC.Neuropain.4.1
 				names(Neuropain.M4.1)[length(Neuropain.M4.1)] = "PPC.Neuropain.4.1"
 				if (is.null(PPC.Neuropain.2)) { PPC.Neuropain.2 = ppc(observations, "Neuropain", Neuropain.M2$ForPPC, observations$Time2, 2) 
 					Neuropain.M2[[length(Neuropain.M2) + 1]] = PPC.Neuropain.2
