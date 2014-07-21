@@ -78,7 +78,7 @@ ppc <- function(observations, Outcome, ForPPC, Covs, mod.id) {
 				
 				SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
 					as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
-					Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2))
+					Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2))	
 			} else if (mod.id == 5.41 || mod.id == 5.42) {
 				slope1 = as.numeric(ForPPC[["Slope"]][ , , 1])
 				slope2 = as.numeric(ForPPC[["Slope"]][ , , 2])
@@ -87,7 +87,7 @@ ppc <- function(observations, Outcome, ForPPC, Covs, mod.id) {
 				SimY0 = intercept %*% t(as.matrix(ForPPC[["alpha"]])) + 
 					as.matrix(observations$Treat2) %*% t(as.matrix(ForPPC[["beta"]])) + 
 					Covs[ , 1] %*% t(as.matrix(slope1)) + Covs[ , 2] %*% t(as.matrix(slope2)) + 
-					Covs[ , 3] %*% t(as.matrix(slope3))
+					Covs[ , 3] %*% t(as.matrix(slope3))	
 			} else if (mod.id == 3) {
 				if (ncol(Covs) == 1) {
 					slope = ForPPC[["Slope"]]
@@ -208,7 +208,7 @@ ppc <- function(observations, Outcome, ForPPC, Covs, mod.id) {
 	
 		for (j in 1:ncol(SimY0)) {
 			SimY[ , j] = rnorm(SimY0[ , j], ForPPC[["Sd"]][j])
-		}
+		}	
 	} else {
 	
 		for (j in 1:ncol(SimY0)) {
@@ -532,7 +532,6 @@ ppc <- function(observations, Outcome, ForPPC, Covs, mod.id) {
 		rownames(treat.diff.test) = "treat.diff.test"
 	}
 	
-	
 	# Range of Outcomes
 	
 	test = colMaxs(SimY, na.rm = TRUE) - colMins(SimY, na.rm = TRUE)
@@ -615,9 +614,6 @@ ppc <- function(observations, Outcome, ForPPC, Covs, mod.id) {
 	max.cons.same.test = cbind(max.cons.same.greaterthan, max.cons.same.lessthan)
 	rownames(max.cons.same.test) = "max.cons.same.test"
 	
-	cat("+")
-	flush.console()
-	
 	# Maximum variance within cycle
 	
 	per.starts = rep(NA, 1)
@@ -679,8 +675,10 @@ ppc <- function(observations, Outcome, ForPPC, Covs, mod.id) {
 	
 	test = rep(0, ncol(SimY))
 	for (j in 1:length(test)) {
-		if (j == 12000) { cat("+")
-			flush.console() }
+		if (j == 3000) { 
+			cat("+")
+			flush.console() 
+		}
 		zero.per = rep(NA, length(obs.zero.per))
 		for (i in (1:(length(per.starts) - 1))) {
 			zero.per[i] = ncats - dim(table(SimY[per.starts[i]:(per.starts[i+1]-1), j]))
@@ -726,9 +724,16 @@ ppc <- function(observations, Outcome, ForPPC, Covs, mod.id) {
 			SimY.B = SimY.B[-i, ]
 		}
 	}
+
 	
 	test = rep(0, ncol(SimY))
 	for (i in 1:length(test)) {
+	
+		if (i == 3250) {	
+			cat("+")
+			flush.console()
+		}
+	
 		for (j in 1:nrow(SimY.A)) {
 			for (k in 1:nrow(SimY.B)) {
 				if (SimY.A[j, i] < SimY.B[k, i]) { test[i] = test[i] + 1 }
@@ -765,7 +770,7 @@ ppc <- function(observations, Outcome, ForPPC, Covs, mod.id) {
 	}
 	summary = as.matrix(summary)
 	
-	out = list("SimY" = SimY, "tests" = tests, "Summary" = summary)
+	out = list("tests" = tests, "Summary" = summary)
 		
 	return(out)
 	
