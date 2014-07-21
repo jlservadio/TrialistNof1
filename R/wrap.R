@@ -31,9 +31,6 @@ wrap <- function(data, metadata) {
 	Pain.M4.1 = evaluate(observations, Outcome = "Pain", Covs = cbind(Lag.Covs, observations$Time2), mod.id = 4.1, No_Neuropain)
 	Pain.M4.2 = evaluate(observations, Outcome = "Pain", Covs = cbind(Lag.Covs, Block.Covs), mod.id = 4.2, No_Neuropain)
 	
-	Pain.Info = list(Pain.M1, Pain.M2, Pain.M3, Pain.M4, Pain.M4.1, Pain.M4.2)
-	names(Pain.Info) = c("Pain.M1", "Pain.M2", "Pain.M3", "Pain.M4", "Pain.M4.1", "Pain.M4.2")
-	
 	BM = 1
 	Cur.DIC = Pain.M1$DIC
 	
@@ -104,7 +101,7 @@ wrap <- function(data, metadata) {
 		} else if (Pain.M4.1$Sigs[1, 2] == FALSE && Pain.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Pain.4.1 = ppc(observations, "Pain", Pain.M4.1$ForPPC, cbind(Lag.Covs[ , 1], observations$Time2), 4.1)
-			Pain.M4.1[[length(Pain.M4.1) + 1]] = PPC.Pain.4.1
+			Pain.M1[[length(Pain.M4.1) + 1]] = PPC.Pain.4.1
 			names(Pain.M4.1)[length(Pain.M4.1)] = "PPC.Pain.4.1"
 			if (is.null(PPC.Pain.2)) { PPC.Pain.2 = ppc(observations, "Pain", Pain.M2$ForPPC, observations$Time2, 2) 
 				Pain.M2[[length(Pain.M2) + 1]] = PPC.Pain.2
@@ -137,13 +134,9 @@ wrap <- function(data, metadata) {
 	
 	if (BM == 1) {
 		Pain.M5.1 = evaluate(observations, "Pain", cbind(observations$car.A, observations$car.B), 5.1, No_Neuropain)
-		Pain.Info[[length(Pain.Info) + 1]] = Pain.M5.1
-		names(Pain.Info)[length(Pain.Info)] = "Pain.M5.1"
 		if ((Pain.M5.1$Sigs[1, 2] == TRUE || Pain.M5.1$Sigs[1, 3] == TRUE) && Pain.M5.1$DIC < Pain.M1$DIC - 3) {
 			BM = 5.1
 			Pain.M1c = evaluate(observations.car, "Pain", Covs = NULL, 1, No_Neuropain)
-			Pain.Info[[length(Pain.Info) + 1]] = Pain.M1c
-			names(Pain.Info)[length(Pain.Info)] = "Pain.M1c"
 			Cur.DIC = Pain.M1c$DIC
 		} else if ((Pain.M5.1$Sigs[1, 2] == FALSE || Pain.M5.1$Sigs[1, 3] == FALSE) && Pain.M5.1$DIC >= Pain.M1$DIC - 3) { BM = BM		
 		} else {
@@ -157,20 +150,14 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Pain.5.1$Summary) > sum(PPC.Pain.1$Summary)) {
 				BM = 5.1
 				Pain.M1c = evaluate(observations.car, "Pain", Covs = NULL, 1, No_Neuropain)
-				Pain.Info[[length(Pain.Info) + 1]] = Pain.M1c
-				names(Pain.Info)[length(Pain.Info)] = "Pain.M1c"
 				Cur.DIC = Pain.M1c$DIC
 			}
 		}
 	} else if (BM == 2) {
 		Pain.M5.2 = evaluate(observations, "Pain", cbind(observations$Time2, observations$car.A, observations$car.B), 5.2, No_Neuropain)
-		Pain.Info[[length(Pain.Info) + 1]] = Pain.M5.2
-		names(Pain.Info)[length(Pain.Info)] = "Pain.M5.2"
 		if ((Pain.M5.2$Sigs[1, 3] == TRUE || Pain.M5.2$Sigs[1, 4] == TRUE) && Pain.M5.2$DIC < Pain.M2$DIC - 3) {
 			BM = 5.2
 			Pain.M2c = evaluate(observations.car, "Pain", observations$Time2, 2, No_Neuropain)
-			Pain.Info[[length(Pain.Info) + 1]] = Pain.M2c
-			names(Pain.Info)[length(Pain.Info)] = "Pain.M2c"
 			Cur.DIC = Pain.M2c$DIC
 		} else if ((Pain.M5.2$Sigs[1, 3] == FALSE || Pain.M5.2$Sigs[1, 4] == FALSE) && Pain.M5.2$DIC >= Pain.M2$DIC - 3) { BM = BM		
 		} else {
@@ -184,21 +171,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Pain.5.2$Summary) > sum(PPC.Pain.2$Summary)) {
 				BM = 5.2
 				Pain.M2c = evaluate(observations.car, "Pain", observations$Time2, 2, No_Neuropain)
-				Pain.Info[[length(Pain.Info) + 1]] = Pain.M2c
-				names(Pain.Info)[length(Pain.Info)] = "Pain.M2c"
 				Cur.DIC = Pain.M2c$DIC
 			}
 		}
 	} else if (BM == 3) {
 		Pain.M5.3 = evaluate(observations, "Pain", cbind(Block.Covs, observations$car.A, observations$car.B), 5.3, No_Neuropain)
-		Pain.Info[[length(Pain.Info) + 1]] = Pain.M5.3
-		names(Pain.Info)[length(Pain.Info)] = "Pain.M5.3"
 		if ((Pain.M5.3$Sigs[1, ncol(Pain.M5.3$Sigs)-1] == TRUE || Pain.M5.3$Sigs[1, ncol(Pain.M5.3$Sigs)] == TRUE) && 
 			Pain.M5.3$DIC < Pain.M3$DIC - 3) {
 			BM = 5.3
 			Pain.M3c = evaluate(observations.car, "Pain", Block.Covs, 3, No_Neuropain)
-			Pain.Info[[length(Pain.Info) + 1]] = Pain.M3c
-			names(Pain.Info)[length(Pain.Info)] = "Pain.M3c"
 			Cur.DIC = Pain.M3c$DIC
 		} else if ((Pain.M5.3$Sigs[1, ncol(Pain.M5.3$Sigs)-1] == FALSE || Pain.M5.3$Sigs[1, ncol(Pain.M5.3$Sigs)] == FALSE) && 
 			Pain.M5.3$DIC >= Pain.M3$DIC - 3) { BM = BM		
@@ -213,21 +194,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Pain.5.3$Summary) > sum(PPC.Pain.3$Summary)) {
 				BM = 5.3
 				Pain.M3c = evaluate(observations.car, "Pain", Block.Covs, 3, No_Neuropain)
-				Pain.Info[[length(Pain.Info) + 1]] = Pain.M3c
-				names(Pain.Info)[length(Pain.Info)] = "Pain.M3c"
 				Cur.DIC = Pain.M3c$DIC
 			}
 		}
 	} else if (BM == 4) {
 		Pain.M5.4 = evaluate(observations, "Pain", cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4, No_Neuropain)
-		Pain.Info[[length(Pain.Info) + 1]] = Pain.M5.4
-		names(Pain.Info)[length(Pain.Info)] = "Pain.M5.4"
 		if ((Pain.M5.4$Sigs[1, ncol(Pain.M5.4$Sigs)-1] == TRUE || Pain.M5.4$Sigs[1, ncol(Pain.M5.4$Sigs)] == TRUE) && 
 			Pain.M5.4$DIC < Pain.M4$DIC - 3) {
 			BM = 5.4
 			Pain.M4c = evaluate(observations.car, "Pain", Lag.Covs, 4, No_Neuropain)
-			Pain.Info[[length(Pain.Info) + 1]] = Pain.M4c
-			names(Pain.Info)[length(Pain.Info)] = "Pain.M4c"
 			Cur.DIC = Pain.M4c$DIC
 		} else if ((Pain.M5.4$Sigs[1, ncol(Pain.M5.4$Sigs)-1] == FALSE && Pain.M5.4$Sigs[1, ncol(Pain.M5.4$Sigs)] == FALSE) && 
 			Pain.M5.4$DIC >= Pain.M4$DIC - 3) { BM = BM		
@@ -242,22 +217,16 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Pain.5.4$Summary) > sum(PPC.Pain.4$Summary)) {
 				BM = 5.4
 				Pain.M4c = evaluate(observations.car, "Pain", Lag.Covs, 4, No_Neuropain)
-				Pain.Info[[length(Pain.Info) + 1]] = Pain.M4c
-				names(Pain.Info)[length(Pain.Info)] = "Pain.M4c"
 				Cur.DIC = Pain.M4c$DIC
 			}
 		}
 	} else if (BM == 4.1) {
 		Pain.M5.41 = evaluate(observations, "Pain", cbind(Lag.Covs, observations$Time2, observations$car.A, observations$car.B), 
 			5.41, No_Neuropain)
-		Pain.Info[[length(Pain.Info) + 1]] = Pain.M5.41
-		names(Pain.Info)[length(Pain.Info)] = "Pain.M5.41"
 		if ((Pain.M5.41$Sigs[1, ncol(Pain.M5.41$Sigs)-1] == TRUE || Pain.M5.41$Sigs[1, ncol(Pain.M5.41$Sigs)] == TRUE) && 
 			Pain.M5.41$DIC < Pain.M4.1$DIC - 3) {
 			BM = 5.41
 			Pain.M4.1c = evaluate(observations.car, "Pain", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-			Pain.Info[[length(Pain.Info) + 1]] = Pain.M4.1c
-			names(Pain.Info)[length(Pain.Info)] = "Pain.M4.1c"
 			Cur.DIC = Pain.M4.1c$DIC
 		} else if ((Pain.M5.41$Sigs[1, ncol(Pain.M5.41$Sigs)-1] == FALSE && Pain.M5.41$Sigs[1, ncol(Pain.M5.41$Sigs)] == FALSE) && 
 			Pain.M5.41$DIC >= Pain.M4.1$DIC - 3) { BM = BM		
@@ -273,22 +242,16 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Pain.5.41$Summary) > sum(PPC.Pain.4.1$Summary)) {
 				BM = 5.41
 				Pain.M4.1c = evaluate(observations.car, "Pain", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-				Pain.Info[[length(Pain.Info) + 1]] = Pain.M4.1c
-				names(Pain.Info)[length(Pain.Info)] = "Pain.M4.1c"
 				Cur.DIC = Pain.M4.1c$DIC
 			}
 		}
 	} else if (BM == 4.2) {
 		Pain.M5.42 = evaluate(observations, "Pain", cbind(Lag.Covs, Block.Covs, observations$car.A, observations$car.B), 
 			5.42, No_Neuropain)
-		Pain.Info[[length(Pain.Info) + 1]] = Pain.M5.42
-		names(Pain.Info)[length(Pain.Info)] = "Pain.M5.42"
 		if ((Pain.M5.42$Sigs[1, ncol(Pain.M5.42$Sigs)-1] == TRUE || Pain.M5.42$Sigs[1, ncol(Pain.M5.42$Sigs)] == TRUE) && 
 			Pain.M5.42$DIC < Pain.M4.2$DIC - 3) {
 			BM = 5.42
 			Pain.M4.2c = evaluate(observations.car, "Pain", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-			Pain.Info[[length(Pain.Info) + 1]] = Pain.M4.2c
-			names(Pain.Info)[length(Pain.Info)] = "Pain.M4.2c"
 			Cur.DIC = Pain.M4.2c$DIC
 		} else if ((Pain.M5.42$Sigs[1, ncol(Pain.M5.42$Sigs)-1] == FALSE && Pain.M5.42$Sigs[1, ncol(Pain.M5.42$Sigs)] == FALSE) && 
 			Pain.M5.42$DIC >= Pain.M4.2$DIC - 3) { BM = BM		
@@ -304,14 +267,14 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Pain.5.42$Summary) > sum(PPC.Pain.4.2$Summary)) {
 				BM = 5.42
 				Pain.M4.2c = evaluate(observations.car, "Pain", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-				Pain.Info[[length(Pain.Info) + 1]] = Pain.M4.2c
-				names(Pain.Info)[length(Pain.Info)] = "Pain.M4.2c"
 				Cur.DIC = Pain.M4.2c$DIC
 			}
 		}
 	}
 	
 	Best.Model = BM
+	
+	Pain.M1$ForPPC = Pain.M2$ForPPC = Pain.M3$ForPPC = Pain.M4$ForPPC = Pain.M4.1$ForPPC = Pain.M4.2$ForPPC = NULL
 	
 	######################
 	# Analysis for Fatigue
@@ -323,9 +286,6 @@ wrap <- function(data, metadata) {
 	Fatigue.M4 = evaluate(observations, Outcome = "Fatigue", Covs = Lag.Covs, mod.id = 4, No_Neuropain)
 	Fatigue.M4.1 = evaluate(observations, Outcome = "Fatigue", Covs = cbind(Lag.Covs, observations$Time2), mod.id = 4.1, No_Neuropain)
 	Fatigue.M4.2 = evaluate(observations, Outcome = "Fatigue", Covs = cbind(Lag.Covs, Block.Covs), mod.id = 4.2, No_Neuropain)
-	
-	Fatigue.Info = list(Fatigue.M1, Fatigue.M2, Fatigue.M3, Fatigue.M4, Fatigue.M4.1, Fatigue.M4.2)
-	names(Fatigue.Info) = c("Fatigue.M1", "Fatigue.M2", "Fatigue.M3", "Fatigue.M4", "Fatigue.M4.1", "Fatigue.M4.2")
 	
 	BM = 1
 	Cur.DIC = Fatigue.M1$DIC
@@ -397,7 +357,7 @@ wrap <- function(data, metadata) {
 		} else if (Fatigue.M4.1$Sigs[1, 2] == FALSE && Fatigue.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Fatigue.4.1 = ppc(observations, "Fatigue", Fatigue.M4.1$ForPPC, cbind(Lag.Covs[ , 2], observations$Time2), 4.1)
-			Fatigue.M4.1[[length(Fatigue.M4.1) + 1]] = PPC.Fatigue.4.1
+			Fatigue.M1[[length(Fatigue.M4.1) + 1]] = PPC.Fatigue.4.1
 			names(Fatigue.M4.1)[length(Fatigue.M4.1)] = "PPC.Fatigue.4.1"
 			if (is.null(PPC.Fatigue.2)) { PPC.Fatigue.2 = ppc(observations, "Fatigue", Fatigue.M2$ForPPC, observations$Time2, 2) 
 				Fatigue.M2[[length(Fatigue.M2) + 1]] = PPC.Fatigue.2
@@ -430,13 +390,9 @@ wrap <- function(data, metadata) {
 	
 	if (BM == 1) {
 		Fatigue.M5.1 = evaluate(observations, "Fatigue", cbind(observations$car.A, observations$car.B), 5.1, No_Neuropain)
-		Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M5.1
-		names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M5.1"
 		if ((Fatigue.M5.1$Sigs[1, 2] == TRUE || Fatigue.M5.1$Sigs[1, 3] == TRUE) && Fatigue.M5.1$DIC < Fatigue.M1$DIC - 3) {
 			BM = 5.1
 			Fatigue.M1c = evaluate(observations.car, "Fatigue", Covs = NULL, 1, No_Neuropain)
-			Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M1c
-			names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M1c"
 			Cur.DIC = Fatigue.M1c$DIC
 		} else if ((Fatigue.M5.1$Sigs[1, 2] == FALSE || Fatigue.M5.1$Sigs[1, 3] == FALSE) && Fatigue.M5.1$DIC >= Fatigue.M1$DIC - 3) { BM = BM		
 		} else {
@@ -450,20 +406,14 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Fatigue.5.1$Summary) > sum(PPC.Fatigue.1$Summary)) {
 				BM = 5.1
 				Fatigue.M1c = evaluate(observations.car, "Fatigue", Covs = NULL, 1, No_Neuropain)
-				Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M1c
-				names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M1c"
 				Cur.DIC = Fatigue.M1c$DIC
 			}
 		}
 	} else if (BM == 2) {
 		Fatigue.M5.2 = evaluate(observations, "Fatigue", cbind(observations$Time2, observations$car.A, observations$car.B), 5.2, No_Neuropain)
-		Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M5.2
-		names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M5.2"
 		if ((Fatigue.M5.2$Sigs[1, 3] == TRUE || Fatigue.M5.2$Sigs[1, 4] == TRUE) && Fatigue.M5.2$DIC < Fatigue.M2$DIC - 3) {
 			BM = 5.2
 			Fatigue.M2c = evaluate(observations.car, "Fatigue", observations$Time2, 2, No_Neuropain)
-			Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M2c
-			names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M2c"
 			Cur.DIC = Fatigue.M2c$DIC
 		} else if ((Fatigue.M5.2$Sigs[1, 3] == FALSE || Fatigue.M5.2$Sigs[1, 4] == FALSE) && Fatigue.M5.2$DIC >= Fatigue.M2$DIC - 3) { BM = BM		
 		} else {
@@ -477,21 +427,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Fatigue.5.2$Summary) > sum(PPC.Fatigue.2$Summary)) {
 				BM = 5.2
 				Fatigue.M2c = evaluate(observations.car, "Fatigue", observations$Time2, 2, No_Neuropain)
-				Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M2c
-				names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M2c"
 				Cur.DIC = Fatigue.M2c$DIC
 			}
 		}
 	} else if (BM == 3) {
 		Fatigue.M5.3 = evaluate(observations, "Fatigue", cbind(Block.Covs, observations$car.A, observations$car.B), 5.3, No_Neuropain)
-		Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M5.3
-		names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M5.3"
 		if ((Fatigue.M5.3$Sigs[1, ncol(Fatigue.M5.3$Sigs)-1] == TRUE || Fatigue.M5.3$Sigs[1, ncol(Fatigue.M5.3$Sigs)] == TRUE) && 
 			Fatigue.M5.3$DIC < Fatigue.M3$DIC - 3) {
 			BM = 5.3
 			Fatigue.M3c = evaluate(observations.car, "Fatigue", Block.Covs, 3, No_Neuropain)
-			Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M3c
-			names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M3c"
 			Cur.DIC = Fatigue.M3c$DIC
 		} else if ((Fatigue.M5.3$Sigs[1, ncol(Fatigue.M5.3$Sigs)-1] == FALSE || Fatigue.M5.3$Sigs[1, ncol(Fatigue.M5.3$Sigs)] == FALSE) && 
 			Fatigue.M5.3$DIC >= Fatigue.M3$DIC - 3) { BM = BM		
@@ -506,21 +450,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Fatigue.5.3$Summary) > sum(PPC.Fatigue.3$Summary)) {
 				BM = 5.3
 				Fatigue.M3c = evaluate(observations.car, "Fatigue", Block.Covs, 3, No_Neuropain)
-				Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M3c
-				names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M3c"
 				Cur.DIC = Fatigue.M3c$DIC
 			}
 		}
 	} else if (BM == 4) {
 		Fatigue.M5.4 = evaluate(observations, "Fatigue", cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4, No_Neuropain)
-		Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M5.4
-		names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M5.4"
 		if ((Fatigue.M5.4$Sigs[1, ncol(Fatigue.M5.4$Sigs)-1] == TRUE || Fatigue.M5.4$Sigs[1, ncol(Fatigue.M5.4$Sigs)] == TRUE) && 
 			Fatigue.M5.4$DIC < Fatigue.M4$DIC - 3) {
 			BM = 5.4
 			Fatigue.M4c = evaluate(observations.car, "Fatigue", Lag.Covs, 4, No_Neuropain)
-			Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M4c
-			names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M4c"
 			Cur.DIC = Fatigue.M4c$DIC
 		} else if ((Fatigue.M5.4$Sigs[1, ncol(Fatigue.M5.4$Sigs)-1] == FALSE && Fatigue.M5.4$Sigs[1, ncol(Fatigue.M5.4$Sigs)] == FALSE) && 
 			Fatigue.M5.4$DIC >= Fatigue.M4$DIC - 3) { BM = BM		
@@ -535,22 +473,16 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Fatigue.5.4$Summary) > sum(PPC.Fatigue.4$Summary)) {
 				BM = 5.4
 				Fatigue.M4c = evaluate(observations.car, "Fatigue", Lag.Covs, 4, No_Neuropain)
-				Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M4c
-				names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M4c"
 				Cur.DIC = Fatigue.M4c$DIC
 			}
 		}
 	} else if (BM == 4.1) {
 		Fatigue.M5.41 = evaluate(observations, "Fatigue", cbind(Lag.Covs, observations$Time2, observations$car.A, observations$car.B), 
 			5.41, No_Neuropain)
-		Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M5.41
-		names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M5.41"
 		if ((Fatigue.M5.41$Sigs[1, ncol(Fatigue.M5.41$Sigs)-1] == TRUE || Fatigue.M5.41$Sigs[1, ncol(Fatigue.M5.41$Sigs)] == TRUE) && 
 			Fatigue.M5.41$DIC < Fatigue.M4.1$DIC - 3) {
 			BM = 5.41
 			Fatigue.M4.1c = evaluate(observations.car, "Fatigue", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-			Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M4.1c
-			names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M4.1c"
 			Cur.DIC = Fatigue.M4.1c$DIC
 		} else if ((Fatigue.M5.41$Sigs[1, ncol(Fatigue.M5.41$Sigs)-1] == FALSE && Fatigue.M5.41$Sigs[1, ncol(Fatigue.M5.41$Sigs)] == FALSE) && 
 			Fatigue.M5.41$DIC >= Fatigue.M4.1$DIC - 3) { BM = BM		
@@ -566,22 +498,16 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Fatigue.5.41$Summary) > sum(PPC.Fatigue.4.1$Summary)) {
 				BM = 5.41
 				Fatigue.M4.1c = evaluate(observations.car, "Fatigue", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-				Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M4.1c
-				names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M4.1c"
 				Cur.DIC = Fatigue.M4.1c$DIC
 			}
 		}
 	} else if (BM == 4.2) {
 		Fatigue.M5.42 = evaluate(observations, "Fatigue", cbind(Lag.Covs, Block.Covs, observations$car.A, observations$car.B), 
 			5.42, No_Neuropain)
-		Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M5.42
-		names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M5.42"
 		if ((Fatigue.M5.42$Sigs[1, ncol(Fatigue.M5.42$Sigs)-1] == TRUE || Fatigue.M5.42$Sigs[1, ncol(Fatigue.M5.42$Sigs)] == TRUE) && 
 			Fatigue.M5.42$DIC < Fatigue.M4.2$DIC - 3) {
 			BM = 5.42
 			Fatigue.M4.2c = evaluate(observations.car, "Fatigue", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-			Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M4.2c
-			names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M4.2c"
 			Cur.DIC = Fatigue.M4.2c$DIC
 		} else if ((Fatigue.M5.42$Sigs[1, ncol(Fatigue.M5.42$Sigs)-1] == FALSE && Fatigue.M5.42$Sigs[1, ncol(Fatigue.M5.42$Sigs)] == FALSE) && 
 			Fatigue.M5.42$DIC >= Fatigue.M4.2$DIC - 3) { BM = BM		
@@ -597,14 +523,14 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Fatigue.5.42$Summary) > sum(PPC.Fatigue.4.2$Summary)) {
 				BM = 5.42
 				Fatigue.M4.2c = evaluate(observations.car, "Fatigue", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-				Fatigue.Info[[length(Fatigue.Info) + 1]] = Fatigue.M4.2c
-				names(Fatigue.Info)[length(Fatigue.Info)] = "Fatigue.M4.2c"
 				Cur.DIC = Fatigue.M4.2c$DIC
 			}
 		}
 	}
 	
 	Best.Model = cbind(Best.Model, BM)
+	
+	Fatigue.M1$ForPPC = Fatigue.M2$ForPPC = Fatigue.M3$ForPPC = Fatigue.M4$ForPPC = Fatigue.M4.1$ForPPC = Fatigue.M4.2$ForPPC = NULL
 	
 	#####################
 	# Analysis for Drowsy
@@ -616,9 +542,6 @@ wrap <- function(data, metadata) {
 	Drowsy.M4 = evaluate(observations, Outcome = "Drowsy", Covs = Lag.Covs, mod.id = 4, No_Neuropain)
 	Drowsy.M4.1 = evaluate(observations, Outcome = "Drowsy", Covs = cbind(Lag.Covs, observations$Time2), mod.id = 4.1, No_Neuropain)
 	Drowsy.M4.2 = evaluate(observations, Outcome = "Drowsy", Covs = cbind(Lag.Covs, Block.Covs), mod.id = 4.2, No_Neuropain)
-	
-	Drowsy.Info = list(Drowsy.M1, Drowsy.M2, Drowsy.M3, Drowsy.M4, Drowsy.M4.1, Drowsy.M4.2)
-	names(Drowsy.Info) = c("Drowsy.M1", "Drowsy.M2", "Drowsy.M3", "Drowsy.M4", "Drowsy.M4.1", "Drowsy.M4.2")
 	
 	BM = 1
 	Cur.DIC = Drowsy.M1$DIC
@@ -690,7 +613,7 @@ wrap <- function(data, metadata) {
 		} else if (Drowsy.M4.1$Sigs[1, 2] == FALSE && Drowsy.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Drowsy.4.1 = ppc(observations, "Drowsy", Drowsy.M4.1$ForPPC, cbind(Lag.Covs[ , 3], observations$Time2), 4.1)
-			Drowsy.M4.1[[length(Drowsy.M4.1) + 1]] = PPC.Drowsy.4.1
+			Drowsy.M1[[length(Drowsy.M4.1) + 1]] = PPC.Drowsy.4.1
 			names(Drowsy.M4.1)[length(Drowsy.M4.1)] = "PPC.Drowsy.4.1"
 			if (is.null(PPC.Drowsy.2)) { PPC.Drowsy.2 = ppc(observations, "Drowsy", Drowsy.M2$ForPPC, observations$Time2, 2) 
 				Drowsy.M2[[length(Drowsy.M2) + 1]] = PPC.Drowsy.2
@@ -723,13 +646,9 @@ wrap <- function(data, metadata) {
 	
 	if (BM == 1) {
 		Drowsy.M5.1 = evaluate(observations, "Drowsy", cbind(observations$car.A, observations$car.B), 5.1, No_Neuropain)
-		Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M5.1
-		names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M5.1"
 		if ((Drowsy.M5.1$Sigs[1, 2] == TRUE || Drowsy.M5.1$Sigs[1, 3] == TRUE) && Drowsy.M5.1$DIC < Drowsy.M1$DIC - 3) {
 			BM = 5.1
 			Drowsy.M1c = evaluate(observations.car, "Drowsy", Covs = NULL, 1, No_Neuropain)
-			Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M1c
-			names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M1c"
 			Cur.DIC = Drowsy.M1c$DIC
 		} else if ((Drowsy.M5.1$Sigs[1, 2] == FALSE || Drowsy.M5.1$Sigs[1, 3] == FALSE) && Drowsy.M5.1$DIC >= Drowsy.M1$DIC - 3) { BM = BM		
 		} else {
@@ -743,20 +662,14 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Drowsy.5.1$Summary) > sum(PPC.Drowsy.1$Summary)) {
 				BM = 5.1
 				Drowsy.M1c = evaluate(observations.car, "Drowsy", Covs = NULL, 1, No_Neuropain)
-				Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M1c
-				names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M1c"
 				Cur.DIC = Drowsy.M1c$DIC
 			}
 		}
 	} else if (BM == 2) {
 		Drowsy.M5.2 = evaluate(observations, "Drowsy", cbind(observations$Time2, observations$car.A, observations$car.B), 5.2, No_Neuropain)
-		Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M5.2
-		names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M5.2"
 		if ((Drowsy.M5.2$Sigs[1, 3] == TRUE || Drowsy.M5.2$Sigs[1, 4] == TRUE) && Drowsy.M5.2$DIC < Drowsy.M2$DIC - 3) {
 			BM = 5.2
 			Drowsy.M2c = evaluate(observations.car, "Drowsy", observations$Time2, 2, No_Neuropain)
-			Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M2c
-			names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M2c"
 			Cur.DIC = Drowsy.M2c$DIC
 		} else if ((Drowsy.M5.2$Sigs[1, 3] == FALSE || Drowsy.M5.2$Sigs[1, 4] == FALSE) && Drowsy.M5.2$DIC >= Drowsy.M2$DIC - 3) { BM = BM		
 		} else {
@@ -770,21 +683,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Drowsy.5.2$Summary) > sum(PPC.Drowsy.2$Summary)) {
 				BM = 5.2
 				Drowsy.M2c = evaluate(observations.car, "Drowsy", observations$Time2, 2, No_Neuropain)
-				Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M2c
-				names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M2c"
 				Cur.DIC = Drowsy.M2c$DIC
 			}
 		}
 	} else if (BM == 3) {
 		Drowsy.M5.3 = evaluate(observations, "Drowsy", cbind(Block.Covs, observations$car.A, observations$car.B), 5.3, No_Neuropain)
-		Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M5.3
-		names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M5.3"
 		if ((Drowsy.M5.3$Sigs[1, ncol(Drowsy.M5.3$Sigs)-1] == TRUE || Drowsy.M5.3$Sigs[1, ncol(Drowsy.M5.3$Sigs)] == TRUE) && 
 			Drowsy.M5.3$DIC < Drowsy.M3$DIC - 3) {
 			BM = 5.3
 			Drowsy.M3c = evaluate(observations.car, "Drowsy", Block.Covs, 3, No_Neuropain)
-			Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M3c
-			names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M3c"
 			Cur.DIC = Drowsy.M3c$DIC
 		} else if ((Drowsy.M5.3$Sigs[1, ncol(Drowsy.M5.3$Sigs)-1] == FALSE || Drowsy.M5.3$Sigs[1, ncol(Drowsy.M5.3$Sigs)] == FALSE) && 
 			Drowsy.M5.3$DIC >= Drowsy.M3$DIC - 3) { BM = BM		
@@ -799,21 +706,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Drowsy.5.3$Summary) > sum(PPC.Drowsy.3$Summary)) {
 				BM = 5.3
 				Drowsy.M3c = evaluate(observations.car, "Drowsy", Block.Covs, 3, No_Neuropain)
-				Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M3c
-				names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M3c"
 				Cur.DIC = Drowsy.M3c$DIC
 			}
 		}
 	} else if (BM == 4) {
 		Drowsy.M5.4 = evaluate(observations, "Drowsy", cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4, No_Neuropain)
-		Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M5.4
-		names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M5.4"
 		if ((Drowsy.M5.4$Sigs[1, ncol(Drowsy.M5.4$Sigs)-1] == TRUE || Drowsy.M5.4$Sigs[1, ncol(Drowsy.M5.4$Sigs)] == TRUE) && 
 			Drowsy.M5.4$DIC < Drowsy.M4$DIC - 3) {
 			BM = 5.4
 			Drowsy.M4c = evaluate(observations.car, "Drowsy", Lag.Covs, 4, No_Neuropain)
-			Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M4c
-			names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M4c"
 			Cur.DIC = Drowsy.M4c$DIC
 		} else if ((Drowsy.M5.4$Sigs[1, ncol(Drowsy.M5.4$Sigs)-1] == FALSE && Drowsy.M5.4$Sigs[1, ncol(Drowsy.M5.4$Sigs)] == FALSE) && 
 			Drowsy.M5.4$DIC >= Drowsy.M4$DIC - 3) { BM = BM		
@@ -828,22 +729,16 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Drowsy.5.4$Summary) > sum(PPC.Drowsy.4$Summary)) {
 				BM = 5.4
 				Drowsy.M4c = evaluate(observations.car, "Drowsy", Lag.Covs, 4, No_Neuropain)
-				Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M4c
-				names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M4c"
 				Cur.DIC = Drowsy.M4c$DIC
 			}
 		}
 	} else if (BM == 4.1) {
 		Drowsy.M5.41 = evaluate(observations, "Drowsy", cbind(Lag.Covs, observations$Time2, observations$car.A, observations$car.B), 
 			5.41, No_Neuropain)
-		Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M5.41
-		names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M5.41"
 		if ((Drowsy.M5.41$Sigs[1, ncol(Drowsy.M5.41$Sigs)-1] == TRUE || Drowsy.M5.41$Sigs[1, ncol(Drowsy.M5.41$Sigs)] == TRUE) && 
 			Drowsy.M5.41$DIC < Drowsy.M4.1$DIC - 3) {
 			BM = 5.41
 			Drowsy.M4.1c = evaluate(observations.car, "Drowsy", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-			Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M4.1c
-			names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M4.1c"
 			Cur.DIC = Drowsy.M4.1c$DIC
 		} else if ((Drowsy.M5.41$Sigs[1, ncol(Drowsy.M5.41$Sigs)-1] == FALSE && Drowsy.M5.41$Sigs[1, ncol(Drowsy.M5.41$Sigs)] == FALSE) && 
 			Drowsy.M5.41$DIC >= Drowsy.M4.1$DIC - 3) { BM = BM		
@@ -859,22 +754,16 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Drowsy.5.41$Summary) > sum(PPC.Drowsy.4.1$Summary)) {
 				BM = 5.41
 				Drowsy.M4.1c = evaluate(observations.car, "Drowsy", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-				Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M4.1c
-				names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M4.1c"
 				Cur.DIC = Drowsy.M4.1c$DIC
 			}
 		}
 	} else if (BM == 4.2) {
 		Drowsy.M5.42 = evaluate(observations, "Drowsy", cbind(Lag.Covs, Block.Covs, observations$car.A, observations$car.B), 
 			5.42, No_Neuropain)
-		Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M5.42
-		names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M5.42"
 		if ((Drowsy.M5.42$Sigs[1, ncol(Drowsy.M5.42$Sigs)-1] == TRUE || Drowsy.M5.42$Sigs[1, ncol(Drowsy.M5.42$Sigs)] == TRUE) && 
 			Drowsy.M5.42$DIC < Drowsy.M4.2$DIC - 3) {
 			BM = 5.42
 			Drowsy.M4.2c = evaluate(observations.car, "Drowsy", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-			Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M4.2c
-			names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M4.2c"
 			Cur.DIC = Drowsy.M4.2c$DIC
 		} else if ((Drowsy.M5.42$Sigs[1, ncol(Drowsy.M5.42$Sigs)-1] == FALSE && Drowsy.M5.42$Sigs[1, ncol(Drowsy.M5.42$Sigs)] == FALSE) && 
 			Drowsy.M5.42$DIC >= Drowsy.M4.2$DIC - 3) { BM = BM		
@@ -890,14 +779,14 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Drowsy.5.42$Summary) > sum(PPC.Drowsy.4.2$Summary)) {
 				BM = 5.42
 				Drowsy.M4.2c = evaluate(observations.car, "Drowsy", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-				Drowsy.Info[[length(Drowsy.Info) + 1]] = Drowsy.M4.2c
-				names(Drowsy.Info)[length(Drowsy.Info)] = "Drowsy.M4.2c"
 				Cur.DIC = Drowsy.M4.2c$DIC
 			}
 		}
 	}
 	
 	Best.Model = cbind(Best.Model, BM)
+	
+	Drowsy.M1$ForPPC = Drowsy.M2$ForPPC = Drowsy.M3$ForPPC = Drowsy.M4$ForPPC = Drowsy.M4.1$ForPPC = Drowsy.M4.2$ForPPC = NULL
 		
 	####################
 	# Analysis for Sleep
@@ -909,9 +798,6 @@ wrap <- function(data, metadata) {
 	Sleep.M4 = evaluate(observations, Outcome = "Sleep", Covs = Lag.Covs, mod.id = 4, No_Neuropain)
 	Sleep.M4.1 = evaluate(observations, Outcome = "Sleep", Covs = cbind(Lag.Covs, observations$Time2), mod.id = 4.1, No_Neuropain)
 	Sleep.M4.2 = evaluate(observations, Outcome = "Sleep", Covs = cbind(Lag.Covs, Block.Covs), mod.id = 4.2, No_Neuropain)
-	
-	Sleep.Info = list(Sleep.M1, Sleep.M2, Sleep.M3, Sleep.M4, Sleep.M4.1, Sleep.M4.2)
-	names(Sleep.Info) = c("Sleep.M1", "Sleep.M2", "Sleep.M3", "Sleep.M4", "Sleep.M4.1", "Sleep.M4.2")
 	
 	BM = 1
 	Cur.DIC = Sleep.M1$DIC
@@ -983,7 +869,7 @@ wrap <- function(data, metadata) {
 		} else if (Sleep.M4.1$Sigs[1, 2] == FALSE && Sleep.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Sleep.4.1 = ppc(observations, "Sleep", Sleep.M4.1$ForPPC, cbind(Lag.Covs[ , 4], observations$Time2), 4.1)
-			Sleep.M4.1[[length(Sleep.M4.1) + 1]] = PPC.Sleep.4.1
+			Sleep.M1[[length(Sleep.M4.1) + 1]] = PPC.Sleep.4.1
 			names(Sleep.M4.1)[length(Sleep.M4.1)] = "PPC.Sleep.4.1"
 			if (is.null(PPC.Sleep.2)) { PPC.Sleep.2 = ppc(observations, "Sleep", Sleep.M2$ForPPC, observations$Time2, 2) 
 				Sleep.M2[[length(Sleep.M2) + 1]] = PPC.Sleep.2
@@ -1016,13 +902,9 @@ wrap <- function(data, metadata) {
 	
 	if (BM == 1) {
 		Sleep.M5.1 = evaluate(observations, "Sleep", cbind(observations$car.A, observations$car.B), 5.1, No_Neuropain)
-		Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M5.1
-		names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M5.1"
 		if ((Sleep.M5.1$Sigs[1, 2] == TRUE || Sleep.M5.1$Sigs[1, 3] == TRUE) && Sleep.M5.1$DIC < Sleep.M1$DIC - 3) {
 			BM = 5.1
 			Sleep.M1c = evaluate(observations.car, "Sleep", Covs = NULL, 1, No_Neuropain)
-			Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M1c
-			names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M1c"
 			Cur.DIC = Sleep.M1c$DIC
 		} else if ((Sleep.M5.1$Sigs[1, 2] == FALSE || Sleep.M5.1$Sigs[1, 3] == FALSE) && Sleep.M5.1$DIC >= Sleep.M1$DIC - 3) { BM = BM		
 		} else {
@@ -1036,20 +918,14 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Sleep.5.1$Summary) > sum(PPC.Sleep.1$Summary)) {
 				BM = 5.1
 				Sleep.M1c = evaluate(observations.car, "Sleep", Covs = NULL, 1, No_Neuropain)
-				Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M1c
-				names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M1c"
 				Cur.DIC = Sleep.M1c$DIC
 			}
 		}
 	} else if (BM == 2) {
 		Sleep.M5.2 = evaluate(observations, "Sleep", cbind(observations$Time2, observations$car.A, observations$car.B), 5.2, No_Neuropain)
-		Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M5.2
-		names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M5.2"
 		if ((Sleep.M5.2$Sigs[1, 3] == TRUE || Sleep.M5.2$Sigs[1, 4] == TRUE) && Sleep.M5.2$DIC < Sleep.M2$DIC - 3) {
 			BM = 5.2
 			Sleep.M2c = evaluate(observations.car, "Sleep", observations$Time2, 2, No_Neuropain)
-			Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M2c
-			names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M2c"
 			Cur.DIC = Sleep.M2c$DIC
 		} else if ((Sleep.M5.2$Sigs[1, 3] == FALSE || Sleep.M5.2$Sigs[1, 4] == FALSE) && Sleep.M5.2$DIC >= Sleep.M2$DIC - 3) { BM = BM		
 		} else {
@@ -1063,21 +939,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Sleep.5.2$Summary) > sum(PPC.Sleep.2$Summary)) {
 				BM = 5.2
 				Sleep.M2c = evaluate(observations.car, "Sleep", observations$Time2, 2, No_Neuropain)
-				Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M2c
-				names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M2c"
 				Cur.DIC = Sleep.M2c$DIC
 			}
 		}
 	} else if (BM == 3) {
 		Sleep.M5.3 = evaluate(observations, "Sleep", cbind(Block.Covs, observations$car.A, observations$car.B), 5.3, No_Neuropain)
-		Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M5.3
-		names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M5.3"
 		if ((Sleep.M5.3$Sigs[1, ncol(Sleep.M5.3$Sigs)-1] == TRUE || Sleep.M5.3$Sigs[1, ncol(Sleep.M5.3$Sigs)] == TRUE) && 
 			Sleep.M5.3$DIC < Sleep.M3$DIC - 3) {
 			BM = 5.3
 			Sleep.M3c = evaluate(observations.car, "Sleep", Block.Covs, 3, No_Neuropain)
-			Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M3c
-			names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M3c"
 			Cur.DIC = Sleep.M3c$DIC
 		} else if ((Sleep.M5.3$Sigs[1, ncol(Sleep.M5.3$Sigs)-1] == FALSE || Sleep.M5.3$Sigs[1, ncol(Sleep.M5.3$Sigs)] == FALSE) && 
 			Sleep.M5.3$DIC >= Sleep.M3$DIC - 3) { BM = BM		
@@ -1092,21 +962,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Sleep.5.3$Summary) > sum(PPC.Sleep.3$Summary)) {
 				BM = 5.3
 				Sleep.M3c = evaluate(observations.car, "Sleep", Block.Covs, 3, No_Neuropain)
-				Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M3c
-				names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M3c"
 				Cur.DIC = Sleep.M3c$DIC
 			}
 		}
 	} else if (BM == 4) {
 		Sleep.M5.4 = evaluate(observations, "Sleep", cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4, No_Neuropain)
-		Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M5.4
-		names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M5.4"
 		if ((Sleep.M5.4$Sigs[1, ncol(Sleep.M5.4$Sigs)-1] == TRUE || Sleep.M5.4$Sigs[1, ncol(Sleep.M5.4$Sigs)] == TRUE) && 
 			Sleep.M5.4$DIC < Sleep.M4$DIC - 3) {
 			BM = 5.4
 			Sleep.M4c = evaluate(observations.car, "Sleep", Lag.Covs, 4, No_Neuropain)
-			Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M4c
-			names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M4c"
 			Cur.DIC = Sleep.M4c$DIC
 		} else if ((Sleep.M5.4$Sigs[1, ncol(Sleep.M5.4$Sigs)-1] == FALSE && Sleep.M5.4$Sigs[1, ncol(Sleep.M5.4$Sigs)] == FALSE) && 
 			Sleep.M5.4$DIC >= Sleep.M4$DIC - 3) { BM = BM		
@@ -1121,22 +985,16 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Sleep.5.4$Summary) > sum(PPC.Sleep.4$Summary)) {
 				BM = 5.4
 				Sleep.M4c = evaluate(observations.car, "Sleep", Lag.Covs, 4, No_Neuropain)
-				Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M4c
-				names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M4c"
 				Cur.DIC = Sleep.M4c$DIC
 			}
 		}
 	} else if (BM == 4.1) {
 		Sleep.M5.41 = evaluate(observations, "Sleep", cbind(Lag.Covs, observations$Time2, observations$car.A, observations$car.B), 
 			5.41, No_Neuropain)
-		Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M5.41
-		names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M5.41"
 		if ((Sleep.M5.41$Sigs[1, ncol(Sleep.M5.41$Sigs)-1] == TRUE || Sleep.M5.41$Sigs[1, ncol(Sleep.M5.41$Sigs)] == TRUE) && 
 			Sleep.M5.41$DIC < Sleep.M4.1$DIC - 3) {
 			BM = 5.41
 			Sleep.M4.1c = evaluate(observations.car, "Sleep", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-			Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M4.1c
-			names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M4.1c"
 			Cur.DIC = Sleep.M4.1c$DIC
 		} else if ((Sleep.M5.41$Sigs[1, ncol(Sleep.M5.41$Sigs)-1] == FALSE && Sleep.M5.41$Sigs[1, ncol(Sleep.M5.41$Sigs)] == FALSE) && 
 			Sleep.M5.41$DIC >= Sleep.M4.1$DIC - 3) { BM = BM		
@@ -1152,22 +1010,16 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Sleep.5.41$Summary) > sum(PPC.Sleep.4.1$Summary)) {
 				BM = 5.41
 				Sleep.M4.1c = evaluate(observations.car, "Sleep", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-				Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M4.1c
-				names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M4.1c"
 				Cur.DIC = Sleep.M4.1c$DIC
 			}
 		}
 	} else if (BM == 4.2) {
 		Sleep.M5.42 = evaluate(observations, "Sleep", cbind(Lag.Covs, Block.Covs, observations$car.A, observations$car.B), 
 			5.42, No_Neuropain)
-		Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M5.42
-		names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M5.42"
 		if ((Sleep.M5.42$Sigs[1, ncol(Sleep.M5.42$Sigs)-1] == TRUE || Sleep.M5.42$Sigs[1, ncol(Sleep.M5.42$Sigs)] == TRUE) && 
 			Sleep.M5.42$DIC < Sleep.M4.2$DIC - 3) {
 			BM = 5.42
 			Sleep.M4.2c = evaluate(observations.car, "Sleep", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-			Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M4.2c
-			names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M4.2c"
 			Cur.DIC = Sleep.M4.2c$DIC
 		} else if ((Sleep.M5.42$Sigs[1, ncol(Sleep.M5.42$Sigs)-1] == FALSE && Sleep.M5.42$Sigs[1, ncol(Sleep.M5.42$Sigs)] == FALSE) && 
 			Sleep.M5.42$DIC >= Sleep.M4.2$DIC - 3) { BM = BM		
@@ -1183,14 +1035,14 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Sleep.5.42$Summary) > sum(PPC.Sleep.4.2$Summary)) {
 				BM = 5.42
 				Sleep.M4.2c = evaluate(observations.car, "Sleep", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-				Sleep.Info[[length(Sleep.Info) + 1]] = Sleep.M4.2c
-				names(Sleep.Info)[length(Sleep.Info)] = "Sleep.M4.2c"
 				Cur.DIC = Sleep.M4.2c$DIC
 			}
 		}
 	}
 	
 	Best.Model = cbind(Best.Model, BM)
+	
+	Sleep.M1$ForPPC = Sleep.M2$ForPPC = Sleep.M3$ForPPC = Sleep.M4$ForPPC = Sleep.M4.1$ForPPC = Sleep.M4.2$ForPPC = NULL
 	
 	#######################
 	# Analysis for Thinking
@@ -1202,9 +1054,6 @@ wrap <- function(data, metadata) {
 	Thinking.M4 = evaluate(observations, Outcome = "Thinking", Covs = Lag.Covs, mod.id = 4, No_Neuropain)
 	Thinking.M4.1 = evaluate(observations, Outcome = "Thinking", Covs = cbind(Lag.Covs, observations$Time2), mod.id = 4.1, No_Neuropain)
 	Thinking.M4.2 = evaluate(observations, Outcome = "Thinking", Covs = cbind(Lag.Covs, Block.Covs), mod.id = 4.2, No_Neuropain)
-	
-	Thinking.Info = list(Thinking.M1, Thinking.M2, Thinking.M3, Thinking.M4, Thinking.M4.1, Thinking.M4.2)
-	names(Thinking.Info) = c("Thinking.M1", "Thinking.M2", "Thinking.M3", "Thinking.M4", "Thinking.M4.1", "Thinking.M4.2")
 	
 	BM = 1
 	Cur.DIC = Thinking.M1$DIC
@@ -1276,7 +1125,7 @@ wrap <- function(data, metadata) {
 		} else if (Thinking.M4.1$Sigs[1, 2] == FALSE && Thinking.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Thinking.4.1 = ppc(observations, "Thinking", Thinking.M4.1$ForPPC, cbind(Lag.Covs[ , 5], observations$Time2), 4.1)
-			Thinking.M4.1[[length(Thinking.M4.1) + 1]] = PPC.Thinking.4.1
+			Thinking.M1[[length(Thinking.M4.1) + 1]] = PPC.Thinking.4.1
 			names(Thinking.M4.1)[length(Thinking.M4.1)] = "PPC.Thinking.4.1"
 			if (is.null(PPC.Thinking.2)) { PPC.Thinking.2 = ppc(observations, "Thinking", Thinking.M2$ForPPC, observations$Time2, 2) 
 				Thinking.M2[[length(Thinking.M2) + 1]] = PPC.Thinking.2
@@ -1309,13 +1158,9 @@ wrap <- function(data, metadata) {
 	
 	if (BM == 1) {
 		Thinking.M5.1 = evaluate(observations, "Thinking", cbind(observations$car.A, observations$car.B), 5.1, No_Neuropain)
-		Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M5.1
-		names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M5.1"
 		if ((Thinking.M5.1$Sigs[1, 2] == TRUE || Thinking.M5.1$Sigs[1, 3] == TRUE) && Thinking.M5.1$DIC < Thinking.M1$DIC - 3) {
 			BM = 5.1
 			Thinking.M1c = evaluate(observations.car, "Thinking", Covs = NULL, 1, No_Neuropain)
-			Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M1c
-			names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M1c"
 			Cur.DIC = Thinking.M1c$DIC
 		} else if ((Thinking.M5.1$Sigs[1, 2] == FALSE || Thinking.M5.1$Sigs[1, 3] == FALSE) && Thinking.M5.1$DIC >= Thinking.M1$DIC - 3) { BM = BM		
 		} else {
@@ -1329,20 +1174,14 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Thinking.5.1$Summary) > sum(PPC.Thinking.1$Summary)) {
 				BM = 5.1
 				Thinking.M1c = evaluate(observations.car, "Thinking", Covs = NULL, 1, No_Neuropain)
-				Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M1c
-				names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M1c"
 				Cur.DIC = Thinking.M1c$DIC
 			}
 		}
 	} else if (BM == 2) {
 		Thinking.M5.2 = evaluate(observations, "Thinking", cbind(observations$Time2, observations$car.A, observations$car.B), 5.2, No_Neuropain)
-		Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M5.2
-		names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M5.2"
 		if ((Thinking.M5.2$Sigs[1, 3] == TRUE || Thinking.M5.2$Sigs[1, 4] == TRUE) && Thinking.M5.2$DIC < Thinking.M2$DIC - 3) {
 			BM = 5.2
 			Thinking.M2c = evaluate(observations.car, "Thinking", observations$Time2, 2, No_Neuropain)
-			Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M2c
-			names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M2c"
 			Cur.DIC = Thinking.M2c$DIC
 		} else if ((Thinking.M5.2$Sigs[1, 3] == FALSE || Thinking.M5.2$Sigs[1, 4] == FALSE) && Thinking.M5.2$DIC >= Thinking.M2$DIC - 3) { BM = BM		
 		} else {
@@ -1356,21 +1195,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Thinking.5.2$Summary) > sum(PPC.Thinking.2$Summary)) {
 				BM = 5.2
 				Thinking.M2c = evaluate(observations.car, "Thinking", observations$Time2, 2, No_Neuropain)
-				Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M2c
-				names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M2c"
 				Cur.DIC = Thinking.M2c$DIC
 			}
 		}
 	} else if (BM == 3) {
 		Thinking.M5.3 = evaluate(observations, "Thinking", cbind(Block.Covs, observations$car.A, observations$car.B), 5.3, No_Neuropain)
-		Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M5.3
-		names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M5.3"
 		if ((Thinking.M5.3$Sigs[1, ncol(Thinking.M5.3$Sigs)-1] == TRUE || Thinking.M5.3$Sigs[1, ncol(Thinking.M5.3$Sigs)] == TRUE) && 
 			Thinking.M5.3$DIC < Thinking.M3$DIC - 3) {
 			BM = 5.3
 			Thinking.M3c = evaluate(observations.car, "Thinking", Block.Covs, 3, No_Neuropain)
-			Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M3c
-			names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M3c"
 			Cur.DIC = Thinking.M3c$DIC
 		} else if ((Thinking.M5.3$Sigs[1, ncol(Thinking.M5.3$Sigs)-1] == FALSE || Thinking.M5.3$Sigs[1, ncol(Thinking.M5.3$Sigs)] == FALSE) && 
 			Thinking.M5.3$DIC >= Thinking.M3$DIC - 3) { BM = BM		
@@ -1385,21 +1218,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Thinking.5.3$Summary) > sum(PPC.Thinking.3$Summary)) {
 				BM = 5.3
 				Thinking.M3c = evaluate(observations.car, "Thinking", Block.Covs, 3, No_Neuropain)
-				Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M3c
-				names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M3c"
 				Cur.DIC = Thinking.M3c$DIC
 			}
 		}
 	} else if (BM == 4) {
 		Thinking.M5.4 = evaluate(observations, "Thinking", cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4, No_Neuropain)
-		Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M5.4
-		names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M5.4"
 		if ((Thinking.M5.4$Sigs[1, ncol(Thinking.M5.4$Sigs)-1] == TRUE || Thinking.M5.4$Sigs[1, ncol(Thinking.M5.4$Sigs)] == TRUE) && 
 			Thinking.M5.4$DIC < Thinking.M4$DIC - 3) {
 			BM = 5.4
 			Thinking.M4c = evaluate(observations.car, "Thinking", Lag.Covs, 4, No_Neuropain)
-			Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M4c
-			names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M4c"
 			Cur.DIC = Thinking.M4c$DIC
 		} else if ((Thinking.M5.4$Sigs[1, ncol(Thinking.M5.4$Sigs)-1] == FALSE && Thinking.M5.4$Sigs[1, ncol(Thinking.M5.4$Sigs)] == FALSE) && 
 			Thinking.M5.4$DIC >= Thinking.M4$DIC - 3) { BM = BM		
@@ -1414,22 +1241,16 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Thinking.5.4$Summary) > sum(PPC.Thinking.4$Summary)) {
 				BM = 5.4
 				Thinking.M4c = evaluate(observations.car, "Thinking", Lag.Covs, 4, No_Neuropain)
-				Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M4c
-				names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M4c"
 				Cur.DIC = Thinking.M4c$DIC
 			}
 		}
 	} else if (BM == 4.1) {
 		Thinking.M5.41 = evaluate(observations, "Thinking", cbind(Lag.Covs, observations$Time2, observations$car.A, observations$car.B), 
 			5.41, No_Neuropain)
-		Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M5.41
-		names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M5.41"
 		if ((Thinking.M5.41$Sigs[1, ncol(Thinking.M5.41$Sigs)-1] == TRUE || Thinking.M5.41$Sigs[1, ncol(Thinking.M5.41$Sigs)] == TRUE) && 
 			Thinking.M5.41$DIC < Thinking.M4.1$DIC - 3) {
 			BM = 5.41
 			Thinking.M4.1c = evaluate(observations.car, "Thinking", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-			Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M4.1c
-			names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M4.1c"
 			Cur.DIC = Thinking.M4.1c$DIC
 		} else if ((Thinking.M5.41$Sigs[1, ncol(Thinking.M5.41$Sigs)-1] == FALSE && Thinking.M5.41$Sigs[1, ncol(Thinking.M5.41$Sigs)] == FALSE) && 
 			Thinking.M5.41$DIC >= Thinking.M4.1$DIC - 3) { BM = BM		
@@ -1445,22 +1266,16 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Thinking.5.41$Summary) > sum(PPC.Thinking.4.1$Summary)) {
 				BM = 5.41
 				Thinking.M4.1c = evaluate(observations.car, "Thinking", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-				Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M4.1c
-				names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M4.1c"
 				Cur.DIC = Thinking.M4.1c$DIC
 			}
 		}
 	} else if (BM == 4.2) {
 		Thinking.M5.42 = evaluate(observations, "Thinking", cbind(Lag.Covs, Block.Covs, observations$car.A, observations$car.B), 
 			5.42, No_Neuropain)
-		Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M5.42
-		names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M5.42"
 		if ((Thinking.M5.42$Sigs[1, ncol(Thinking.M5.42$Sigs)-1] == TRUE || Thinking.M5.42$Sigs[1, ncol(Thinking.M5.42$Sigs)] == TRUE) && 
 			Thinking.M5.42$DIC < Thinking.M4.2$DIC - 3) {
 			BM = 5.42
 			Thinking.M4.2c = evaluate(observations.car, "Thinking", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-			Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M4.2c
-			names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M4.2c"
 			Cur.DIC = Thinking.M4.2c$DIC
 		} else if ((Thinking.M5.42$Sigs[1, ncol(Thinking.M5.42$Sigs)-1] == FALSE && Thinking.M5.42$Sigs[1, ncol(Thinking.M5.42$Sigs)] == FALSE) && 
 			Thinking.M5.42$DIC >= Thinking.M4.2$DIC - 3) { BM = BM		
@@ -1476,14 +1291,14 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Thinking.5.42$Summary) > sum(PPC.Thinking.4.2$Summary)) {
 				BM = 5.42
 				Thinking.M4.2c = evaluate(observations.car, "Thinking", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-				Thinking.Info[[length(Thinking.Info) + 1]] = Thinking.M4.2c
-				names(Thinking.Info)[length(Thinking.Info)] = "Thinking.M4.2c"
 				Cur.DIC = Thinking.M4.2c$DIC
 			}
 		}
 	}
 	
 	Best.Model = cbind(Best.Model, BM)
+	
+	Thinking.M1$ForPPC = Thinking.M2$ForPPC = Thinking.M3$ForPPC = Thinking.M4$ForPPC = Thinking.M4.1$ForPPC = Thinking.M4.2$ForPPC = NULL
 	
 	###########################
 	# Analysis for Constipation
@@ -1495,9 +1310,6 @@ wrap <- function(data, metadata) {
 	Constipation.M4 = evaluate(observations, Outcome = "Constipation", Covs = Lag.Covs, mod.id = 4, No_Neuropain)
 	Constipation.M4.1 = evaluate(observations, Outcome = "Constipation", Covs = cbind(Lag.Covs, observations$Time2), mod.id = 4.1, No_Neuropain)
 	Constipation.M4.2 = evaluate(observations, Outcome = "Constipation", Covs = cbind(Lag.Covs, Block.Covs), mod.id = 4.2, No_Neuropain)
-	
-	Constipation.Info = list(Constipation.M1, Constipation.M2, Constipation.M3, Constipation.M4, Constipation.M4.1, Constipation.M4.2)
-	names(Constipation.Info) = c("Constipation.M1", "Constipation.M2", "Constipation.M3", "Constipation.M4", "Constipation.M4.1", "Constipation.M4.2")
 	
 	BM = 1
 	Cur.DIC = Constipation.M1$DIC
@@ -1569,7 +1381,7 @@ wrap <- function(data, metadata) {
 		} else if (Constipation.M4.1$Sigs[1, 2] == FALSE && Constipation.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Constipation.4.1 = ppc(observations, "Constipation", Constipation.M4.1$ForPPC, cbind(Lag.Covs[ , 6], observations$Time2), 4.1)
-			Constipation.M4.1[[length(Constipation.M4.1) + 1]] = PPC.Constipation.4.1
+			Constipation.M1[[length(Constipation.M4.1) + 1]] = PPC.Constipation.4.1
 			names(Constipation.M4.1)[length(Constipation.M4.1)] = "PPC.Constipation.4.1"
 			if (is.null(PPC.Constipation.2)) { PPC.Constipation.2 = ppc(observations, "Constipation", Constipation.M2$ForPPC, observations$Time2, 2) 
 				Constipation.M2[[length(Constipation.M2) + 1]] = PPC.Constipation.2
@@ -1602,13 +1414,9 @@ wrap <- function(data, metadata) {
 	
 	if (BM == 1) {
 		Constipation.M5.1 = evaluate(observations, "Constipation", cbind(observations$car.A, observations$car.B), 5.1, No_Neuropain)
-		Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M5.1
-		names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M5.1"
 		if ((Constipation.M5.1$Sigs[1, 2] == TRUE || Constipation.M5.1$Sigs[1, 3] == TRUE) && Constipation.M5.1$DIC < Constipation.M1$DIC - 3) {
 			BM = 5.1
 			Constipation.M1c = evaluate(observations.car, "Constipation", Covs = NULL, 1, No_Neuropain)
-			Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M1c
-			names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M1c"
 			Cur.DIC = Constipation.M1c$DIC
 		} else if ((Constipation.M5.1$Sigs[1, 2] == FALSE || Constipation.M5.1$Sigs[1, 3] == FALSE) && Constipation.M5.1$DIC >= Constipation.M1$DIC - 3) { BM = BM		
 		} else {
@@ -1622,20 +1430,14 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Constipation.5.1$Summary) > sum(PPC.Constipation.1$Summary)) {
 				BM = 5.1
 				Constipation.M1c = evaluate(observations.car, "Constipation", Covs = NULL, 1, No_Neuropain)
-				Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M1c
-				names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M1c"
 				Cur.DIC = Constipation.M1c$DIC
 			}
 		}
 	} else if (BM == 2) {
 		Constipation.M5.2 = evaluate(observations, "Constipation", cbind(observations$Time2, observations$car.A, observations$car.B), 5.2, No_Neuropain)
-		Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M5.2
-		names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M5.2"
 		if ((Constipation.M5.2$Sigs[1, 3] == TRUE || Constipation.M5.2$Sigs[1, 4] == TRUE) && Constipation.M5.2$DIC < Constipation.M2$DIC - 3) {
 			BM = 5.2
 			Constipation.M2c = evaluate(observations.car, "Constipation", observations$Time2, 2, No_Neuropain)
-			Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M2c
-			names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M2c"
 			Cur.DIC = Constipation.M2c$DIC
 		} else if ((Constipation.M5.2$Sigs[1, 3] == FALSE || Constipation.M5.2$Sigs[1, 4] == FALSE) && Constipation.M5.2$DIC >= Constipation.M2$DIC - 3) { BM = BM		
 		} else {
@@ -1649,21 +1451,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Constipation.5.2$Summary) > sum(PPC.Constipation.2$Summary)) {
 				BM = 5.2
 				Constipation.M2c = evaluate(observations.car, "Constipation", observations$Time2, 2, No_Neuropain)
-				Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M2c
-				names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M2c"
 				Cur.DIC = Constipation.M2c$DIC
 			}
 		}
 	} else if (BM == 3) {
 		Constipation.M5.3 = evaluate(observations, "Constipation", cbind(Block.Covs, observations$car.A, observations$car.B), 5.3, No_Neuropain)
-		Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M5.3
-		names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M5.3"
 		if ((Constipation.M5.3$Sigs[1, ncol(Constipation.M5.3$Sigs)-1] == TRUE || Constipation.M5.3$Sigs[1, ncol(Constipation.M5.3$Sigs)] == TRUE) && 
 			Constipation.M5.3$DIC < Constipation.M3$DIC - 3) {
 			BM = 5.3
 			Constipation.M3c = evaluate(observations.car, "Constipation", Block.Covs, 3, No_Neuropain)
-			Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M3c
-			names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M3c"
 			Cur.DIC = Constipation.M3c$DIC
 		} else if ((Constipation.M5.3$Sigs[1, ncol(Constipation.M5.3$Sigs)-1] == FALSE || Constipation.M5.3$Sigs[1, ncol(Constipation.M5.3$Sigs)] == FALSE) && 
 			Constipation.M5.3$DIC >= Constipation.M3$DIC - 3) { BM = BM		
@@ -1678,21 +1474,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Constipation.5.3$Summary) > sum(PPC.Constipation.3$Summary)) {
 				BM = 5.3
 				Constipation.M3c = evaluate(observations.car, "Constipation", Block.Covs, 3, No_Neuropain)
-				Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M3c
-				names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M3c"
 				Cur.DIC = Constipation.M3c$DIC
 			}
 		}
 	} else if (BM == 4) {
 		Constipation.M5.4 = evaluate(observations, "Constipation", cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4, No_Neuropain)
-		Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M5.4
-		names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M5.4"
 		if ((Constipation.M5.4$Sigs[1, ncol(Constipation.M5.4$Sigs)-1] == TRUE || Constipation.M5.4$Sigs[1, ncol(Constipation.M5.4$Sigs)] == TRUE) && 
 			Constipation.M5.4$DIC < Constipation.M4$DIC - 3) {
 			BM = 5.4
 			Constipation.M4c = evaluate(observations.car, "Constipation", Lag.Covs, 4, No_Neuropain)
-			Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M4c
-			names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M4c"
 			Cur.DIC = Constipation.M4c$DIC
 		} else if ((Constipation.M5.4$Sigs[1, ncol(Constipation.M5.4$Sigs)-1] == FALSE && Constipation.M5.4$Sigs[1, ncol(Constipation.M5.4$Sigs)] == FALSE) && 
 			Constipation.M5.4$DIC >= Constipation.M4$DIC - 3) { BM = BM		
@@ -1707,22 +1497,16 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Constipation.5.4$Summary) > sum(PPC.Constipation.4$Summary)) {
 				BM = 5.4
 				Constipation.M4c = evaluate(observations.car, "Constipation", Lag.Covs, 4, No_Neuropain)
-				Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M4c
-				names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M4c"
 				Cur.DIC = Constipation.M4c$DIC
 			}
 		}
 	} else if (BM == 4.1) {
 		Constipation.M5.41 = evaluate(observations, "Constipation", cbind(Lag.Covs, observations$Time2, observations$car.A, observations$car.B), 
 			5.41, No_Neuropain)
-		Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M5.41
-		names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M5.41"
 		if ((Constipation.M5.41$Sigs[1, ncol(Constipation.M5.41$Sigs)-1] == TRUE || Constipation.M5.41$Sigs[1, ncol(Constipation.M5.41$Sigs)] == TRUE) && 
 			Constipation.M5.41$DIC < Constipation.M4.1$DIC - 3) {
 			BM = 5.41
 			Constipation.M4.1c = evaluate(observations.car, "Constipation", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-			Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M4.1c
-			names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M4.1c"
 			Cur.DIC = Constipation.M4.1c$DIC
 		} else if ((Constipation.M5.41$Sigs[1, ncol(Constipation.M5.41$Sigs)-1] == FALSE && Constipation.M5.41$Sigs[1, ncol(Constipation.M5.41$Sigs)] == FALSE) && 
 			Constipation.M5.41$DIC >= Constipation.M4.1$DIC - 3) { BM = BM		
@@ -1738,22 +1522,16 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Constipation.5.41$Summary) > sum(PPC.Constipation.4.1$Summary)) {
 				BM = 5.41
 				Constipation.M4.1c = evaluate(observations.car, "Constipation", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-				Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M4.1c
-				names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M4.1c"
 				Cur.DIC = Constipation.M4.1c$DIC
 			}
 		}
 	} else if (BM == 4.2) {
 		Constipation.M5.42 = evaluate(observations, "Constipation", cbind(Lag.Covs, Block.Covs, observations$car.A, observations$car.B), 
 			5.42, No_Neuropain)
-		Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M5.42
-		names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M5.42"
 		if ((Constipation.M5.42$Sigs[1, ncol(Constipation.M5.42$Sigs)-1] == TRUE || Constipation.M5.42$Sigs[1, ncol(Constipation.M5.42$Sigs)] == TRUE) && 
 			Constipation.M5.42$DIC < Constipation.M4.2$DIC - 3) {
 			BM = 5.42
 			Constipation.M4.2c = evaluate(observations.car, "Constipation", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-			Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M4.2c
-			names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M4.2c"
 			Cur.DIC = Constipation.M4.2c$DIC
 		} else if ((Constipation.M5.42$Sigs[1, ncol(Constipation.M5.42$Sigs)-1] == FALSE && Constipation.M5.42$Sigs[1, ncol(Constipation.M5.42$Sigs)] == FALSE) && 
 			Constipation.M5.42$DIC >= Constipation.M4.2$DIC - 3) { BM = BM		
@@ -1769,14 +1547,15 @@ wrap <- function(data, metadata) {
 			if (sum(PPC.Constipation.5.42$Summary) > sum(PPC.Constipation.4.2$Summary)) {
 				BM = 5.42
 				Constipation.M4.2c = evaluate(observations.car, "Constipation", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-				Constipation.Info[[length(Constipation.Info) + 1]] = Constipation.M4.2c
-				names(Constipation.Info)[length(Constipation.Info)] = "Constipation.M4.2c"
 				Cur.DIC = Constipation.M4.2c$DIC
 			}
 		}
 	}
 	
 	Best.Model = cbind(Best.Model, BM)
+	
+	Constipation.M1$ForPPC = Constipation.M2$ForPPC = Constipation.M3$ForPPC = Constipation.M4$ForPPC = Constipation.M4.1$ForPPC = 
+	Constipation.M4.2$ForPPC = NULL
 	
 	########################
 	# Analysis for Neuropain
@@ -1789,9 +1568,6 @@ wrap <- function(data, metadata) {
 		Neuropain.M4 = evaluate(observations, Outcome = "Neuropain", Covs = Lag.Covs, mod.id = 4, No_Neuropain)
 		Neuropain.M4.1 = evaluate(observations, Outcome = "Neuropain", Covs = cbind(Lag.Covs, observations$Time2), mod.id = 4.1, No_Neuropain)
 		Neuropain.M4.2 = evaluate(observations, Outcome = "Neuropain", Covs = cbind(Lag.Covs, Block.Covs), mod.id = 4.2, No_Neuropain)
-		
-		Neuropain.Info = list(Neuropain.M1, Neuropain.M2, Neuropain.M3, Neuropain.M4, Neuropain.M4.1, Neuropain.M4.2)
-		names(Neuropain.Info) = c("Neuropain.M1", "Neuropain.M2", "Neuropain.M3", "Neuropain.M4", "Neuropain.M4.1", "Neuropain.M4.2")
 		
 		BM = 1
 		Cur.DIC = Neuropain.M1$DIC
@@ -1863,7 +1639,7 @@ wrap <- function(data, metadata) {
 			} else if (Neuropain.M4.1$Sigs[1, 2] == FALSE && Neuropain.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 			} else {
 				PPC.Neuropain.4.1 = ppc(observations, "Neuropain", Neuropain.M4.1$ForPPC, cbind(Lag.Covs[ , 7], observations$Time2), 4.1)
-				Neuropain.M4.1[[length(Neuropain.M4.1) + 1]] = PPC.Neuropain.4.1
+				Neuropain.M1[[length(Neuropain.M4.1) + 1]] = PPC.Neuropain.4.1
 				names(Neuropain.M4.1)[length(Neuropain.M4.1)] = "PPC.Neuropain.4.1"
 				if (is.null(PPC.Neuropain.2)) { PPC.Neuropain.2 = ppc(observations, "Neuropain", Neuropain.M2$ForPPC, observations$Time2, 2) 
 					Neuropain.M2[[length(Neuropain.M2) + 1]] = PPC.Neuropain.2
@@ -1896,13 +1672,9 @@ wrap <- function(data, metadata) {
 		
 		if (BM == 1) {
 			Neuropain.M5.1 = evaluate(observations, "Neuropain", cbind(observations$car.A, observations$car.B), 5.1, No_Neuropain)
-			Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M5.1
-			names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M5.1"
 			if ((Neuropain.M5.1$Sigs[1, 2] == TRUE || Neuropain.M5.1$Sigs[1, 3] == TRUE) && Neuropain.M5.1$DIC < Neuropain.M1$DIC - 3) {
 				BM = 5.1
 				Neuropain.M1c = evaluate(observations.car, "Neuropain", Covs = NULL, 1, No_Neuropain)
-				Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M1c
-				names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M1c"
 				Cur.DIC = Neuropain.M1c$DIC
 			} else if ((Neuropain.M5.1$Sigs[1, 2] == FALSE || Neuropain.M5.1$Sigs[1, 3] == FALSE) && Neuropain.M5.1$DIC >= Neuropain.M1$DIC - 3) { BM = BM		
 			} else {
@@ -1916,20 +1688,14 @@ wrap <- function(data, metadata) {
 				if (sum(PPC.Neuropain.5.1$Summary) > sum(PPC.Neuropain.1$Summary)) {
 					BM = 5.1
 					Neuropain.M1c = evaluate(observations.car, "Neuropain", Covs = NULL, 1, No_Neuropain)
-					Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M1c
-					names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M1c"
 					Cur.DIC = Neuropain.M1c$DIC
 				}
 			}
 		} else if (BM == 2) {
 			Neuropain.M5.2 = evaluate(observations, "Neuropain", cbind(observations$Time2, observations$car.A, observations$car.B), 5.2, No_Neuropain)
-			Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M5.2
-			names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M5.2"
 			if ((Neuropain.M5.2$Sigs[1, 3] == TRUE || Neuropain.M5.2$Sigs[1, 4] == TRUE) && Neuropain.M5.2$DIC < Neuropain.M2$DIC - 3) {
 				BM = 5.2
 				Neuropain.M2c = evaluate(observations.car, "Neuropain", observations$Time2, 2, No_Neuropain)
-				Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M2c
-				names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M2c"
 				Cur.DIC = Neuropain.M2c$DIC
 			} else if ((Neuropain.M5.2$Sigs[1, 3] == FALSE || Neuropain.M5.2$Sigs[1, 4] == FALSE) && Neuropain.M5.2$DIC >= Neuropain.M2$DIC - 3) { BM = BM		
 			} else {
@@ -1943,21 +1709,15 @@ wrap <- function(data, metadata) {
 				if (sum(PPC.Neuropain.5.2$Summary) > sum(PPC.Neuropain.2$Summary)) {
 					BM = 5.2
 					Neuropain.M2c = evaluate(observations.car, "Neuropain", observations$Time2, 2, No_Neuropain)
-					Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M2c
-					names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M2c"
 					Cur.DIC = Neuropain.M2c$DIC
 				}
 			}
 		} else if (BM == 3) {
 			Neuropain.M5.3 = evaluate(observations, "Neuropain", cbind(Block.Covs, observations$car.A, observations$car.B), 5.3, No_Neuropain)
-			Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M5.3
-			names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M5.3"
 			if ((Neuropain.M5.3$Sigs[1, ncol(Neuropain.M5.3$Sigs)-1] == TRUE || Neuropain.M5.3$Sigs[1, ncol(Neuropain.M5.3$Sigs)] == TRUE) && 
 				Neuropain.M5.3$DIC < Neuropain.M3$DIC - 3) {
 				BM = 5.3
 				Neuropain.M3c = evaluate(observations.car, "Neuropain", Block.Covs, 3, No_Neuropain)
-				Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M3c
-				names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M3c"
 				Cur.DIC = Neuropain.M3c$DIC
 			} else if ((Neuropain.M5.3$Sigs[1, ncol(Neuropain.M5.3$Sigs)-1] == FALSE || Neuropain.M5.3$Sigs[1, ncol(Neuropain.M5.3$Sigs)] == FALSE) && 
 				Neuropain.M5.3$DIC >= Neuropain.M3$DIC - 3) { BM = BM		
@@ -1972,21 +1732,15 @@ wrap <- function(data, metadata) {
 				if (sum(PPC.Neuropain.5.3$Summary) > sum(PPC.Neuropain.3$Summary)) {
 					BM = 5.3
 					Neuropain.M3c = evaluate(observations.car, "Neuropain", Block.Covs, 3, No_Neuropain)
-					Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M3c
-					names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M3c"
 					Cur.DIC = Neuropain.M3c$DIC
 				}
 			}
 		} else if (BM == 4) {
 			Neuropain.M5.4 = evaluate(observations, "Neuropain", cbind(Lag.Covs, observations$car.A, observations$car.B), 5.4, No_Neuropain)
-			Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M5.4
-			names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M5.4"
 			if ((Neuropain.M5.4$Sigs[1, ncol(Neuropain.M5.4$Sigs)-1] == TRUE || Neuropain.M5.4$Sigs[1, ncol(Neuropain.M5.4$Sigs)] == TRUE) && 
 				Neuropain.M5.4$DIC < Neuropain.M4$DIC - 3) {
 				BM = 5.4
 				Neuropain.M4c = evaluate(observations.car, "Neuropain", Lag.Covs, 4, No_Neuropain)
-				Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M4c
-				names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M4c"
 				Cur.DIC = Neuropain.M4c$DIC
 			} else if ((Neuropain.M5.4$Sigs[1, ncol(Neuropain.M5.4$Sigs)-1] == FALSE && Neuropain.M5.4$Sigs[1, ncol(Neuropain.M5.4$Sigs)] == FALSE) && 
 				Neuropain.M5.4$DIC >= Neuropain.M4$DIC - 3) { BM = BM		
@@ -2001,22 +1755,16 @@ wrap <- function(data, metadata) {
 				if (sum(PPC.Neuropain.5.4$Summary) > sum(PPC.Neuropain.4$Summary)) {
 					BM = 5.4
 					Neuropain.M4c = evaluate(observations.car, "Neuropain", Lag.Covs, 4, No_Neuropain)
-					Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M4c
-					names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M4c"
 					Cur.DIC = Neuropain.M4c$DIC
 				}
 			}
 		} else if (BM == 4.1) {
 			Neuropain.M5.41 = evaluate(observations, "Neuropain", cbind(Lag.Covs, observations$Time2, observations$car.A, observations$car.B), 
 				5.41, No_Neuropain)
-			Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M5.41
-			names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M5.41"
 			if ((Neuropain.M5.41$Sigs[1, ncol(Neuropain.M5.41$Sigs)-1] == TRUE || Neuropain.M5.41$Sigs[1, ncol(Neuropain.M5.41$Sigs)] == TRUE) && 
 				Neuropain.M5.41$DIC < Neuropain.M4.1$DIC - 3) {
 				BM = 5.41
 				Neuropain.M4.1c = evaluate(observations.car, "Neuropain", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-				Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M4.1c
-				names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M4.1c"
 				Cur.DIC = Neuropain.M4.1c$DIC
 			} else if ((Neuropain.M5.41$Sigs[1, ncol(Neuropain.M5.41$Sigs)-1] == FALSE && Neuropain.M5.41$Sigs[1, ncol(Neuropain.M5.41$Sigs)] == FALSE) && 
 				Neuropain.M5.41$DIC >= Neuropain.M4.1$DIC - 3) { BM = BM		
@@ -2032,22 +1780,16 @@ wrap <- function(data, metadata) {
 				if (sum(PPC.Neuropain.5.41$Summary) > sum(PPC.Neuropain.4.1$Summary)) {
 					BM = 5.41
 					Neuropain.M4.1c = evaluate(observations.car, "Neuropain", cbind(Lag.Covs, observations$Time2), 4.1, No_Neuropain)
-					Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M4.1c
-					names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M4.1c"
 					Cur.DIC = Neuropain.M4.1c$DIC
 				}
 			}
 		} else if (BM == 4.2) {
 			Neuropain.M5.42 = evaluate(observations, "Neuropain", cbind(Lag.Covs, Block.Covs, observations$car.A, observations$car.B), 
 				5.42, No_Neuropain)
-			Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M5.42
-			names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M5.42"
 			if ((Neuropain.M5.42$Sigs[1, ncol(Neuropain.M5.42$Sigs)-1] == TRUE || Neuropain.M5.42$Sigs[1, ncol(Neuropain.M5.42$Sigs)] == TRUE) && 
 				Neuropain.M5.42$DIC < Neuropain.M4.2$DIC - 3) {
 				BM = 5.42
 				Neuropain.M4.2c = evaluate(observations.car, "Neuropain", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-				Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M4.2c
-				names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M4.2c"
 				Cur.DIC = Neuropain.M4.2c$DIC
 			} else if ((Neuropain.M5.42$Sigs[1, ncol(Neuropain.M5.42$Sigs)-1] == FALSE && Neuropain.M5.42$Sigs[1, ncol(Neuropain.M5.42$Sigs)] == FALSE) && 
 				Neuropain.M5.42$DIC >= Neuropain.M4.2$DIC - 3) { BM = BM		
@@ -2063,14 +1805,14 @@ wrap <- function(data, metadata) {
 				if (sum(PPC.Neuropain.5.42$Summary) > sum(PPC.Neuropain.4.2$Summary)) {
 					BM = 5.42
 					Neuropain.M4.2c = evaluate(observations.car, "Neuropain", cbind(Lag.Covs, Block.Covs), 4.2, No_Neuropain)
-					Neuropain.Info[[length(Neuropain.Info) + 1]] = Neuropain.M4.2c
-					names(Neuropain.Info)[length(Neuropain.Info)] = "Neuropain.M4.2c"
 					Cur.DIC = Neuropain.M4.2c$DIC
 				}
 			}
 		}
 		
 		Best.Model = cbind(Best.Model, BM)
+		
+		Neuropain.M1$ForPPC = Neuropain.M2$ForPPC = Neuropain.M3$ForPPC = Neuropain.M4$ForPPC = Neuropain.M4.1$ForPPC = Neuropain.M4.2$ForPPC = NULL
 	}
 	
 	##################
@@ -2959,7 +2701,10 @@ wrap <- function(data, metadata) {
 	
 	meta.data[[length(meta.data) + 1]] = Best.Model
 	names(meta.data)[length(meta.data)] = "Best.Model"
-
+	
+	out[[length(out) + 1]] = meta.data
+	names(out)[length(out)] = "meta.data"
+	
 	out[[length(out) + 1]] = Results
 	names(out)[length(out)] = "Results"
 	out$Results = cbind(out$Results, t(out$meta.data$Best.Model))
