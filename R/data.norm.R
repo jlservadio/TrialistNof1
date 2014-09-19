@@ -52,3 +52,4 @@ data.norm <- function (Y, Covs, prior, Treat, mod.id)
     }
     return(inData)
 }
+
