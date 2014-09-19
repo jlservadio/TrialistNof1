@@ -110,7 +110,7 @@ run.norm <- function (Y, Treat, Covs, model, var.model, nChains = 3, conv.limit 
 	}
 	
     model.norm(nobs, Covs, prior, varprior, path, mod.id)
-    pars.to.save <- c("alpha", "beta")
+    pars.to.save <- c("Y", "D", "alpha", "beta")
 	
 	if (is.null(Covs)) { pars.to.save = pars.to.save
 	} else if (ncol(Covs) == 1) {
@@ -125,6 +125,10 @@ run.norm <- function (Y, Treat, Covs, model, var.model, nChains = 3, conv.limit 
 		pars.to.save = c(pars.to.save, "slope1", "slope2", "slope3", "slope4", "slope5")
 	} else if (ncol(Covs) == 6) {
 		pars.to.save = c(pars.to.save, "slope1", "slope2", "slope3", "slope4", "slope5", "slope6")
+	}
+	
+	if (mod.id %in% c(2, 4.1, 5.2, 5.41)) {
+		pars.to.save = c(pars.to.save, "x")
 	}
 	
     pars.to.save = c(pars.to.save, "Sd")
@@ -148,12 +152,25 @@ run.norm <- function (Y, Treat, Covs, model, var.model, nChains = 3, conv.limit 
         slope <- samples[, , slope.vars]
     }
 	
+	D.vars <- grep("D", varnames)
+	Dev1 <- samples[ , , D.vars]
+	Dev = rbind(Dev1[ , 1, ], Dev1[ , 2, ], Dev1[ , 3, ])
+	Y.vars <- grep("Y", varnames)
+	Y.samp <- samples[ , , Y.vars]
+	Time.vars <- grep("x", varnames)
+	Time.samp <- samples[ , , Time.vars]
+	
     if (is.null(Covs)) {
-        out <- list(burn.in, no.runs, Y, alpha, beta, Sd, DIC)
-        names(out) <- c("Burn In", "Number runs per chain", "Y", "alpha", "beta", "Sd", "DIC")
+        out <- list(burn.in, no.runs, Y, alpha, beta, Sd, DIC, Dev, Y.samp)
+        names(out) <- c("Burn In", "Number runs per chain", "Y", "alpha", "beta", "Sd", "DIC", "Dev", "Y.samp")
     } else {
-        out <- list(burn.in, no.runs, Y, alpha, beta, Sd, slope, DIC)
-        names(out) <- c("Burn In", "Number runs per chain", "Y", "alpha", "beta", "Sd", "Slopes", "DIC")
+        out <- list(burn.in, no.runs, Y, alpha, beta, Sd, slope, DIC, Dev, Y.samp)
+        names(out) <- c("Burn In", "Number runs per chain", "Y", "alpha", "beta", "Sd", "Slopes", "DIC", "Dev", "Y.samp")
     }
+	
+	if (mod.id %in% c(2, 4.1, 5.2, 5.41)) {
+		out[[length(out) + 1]] = Time.samp
+		names(out)[length(out)] = "Time.samp"
+	}
     return(out)
 }
