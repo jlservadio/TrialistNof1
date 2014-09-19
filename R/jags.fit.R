@@ -2,13 +2,13 @@ jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains
 	setsize, nruns=5000, Covs) 
 {
 
-    mod = jags.model(model.file, data = inData, inits = inInits, n.chains, n.adapt = 0)
+    mod = jags.model(model.file, data = inData, inits = inInits, n.chains, n.adapt = 0, quiet = TRUE)
 	
 	DIC1 = dic.samples(mod, niters)
 	DIC2 = as.list(DIC1)
-	DIC = sum(DIC2[[1]])
+	DIC = sum(DIC2[[1]])	
     done.adapt = adapt(mod, n.iter = 2 * setsize, end.adaptation = FALSE)
-    while (!done.adapt) done.adapt = adapt(mod, n.iter = 2 * setsize, end.adaptation = FALSE)
+    while (!done.adapt) done.adapt = adapt(mod, n.iter = 2 * setsize, end.adaptation = FALSE, quiet = TRUE)
     samples <- coda.samples(model = mod, variable.names = pars.to.save, n.iter = setsize, thin = 1)
     nsamples = setsize
     varnames <- dimnames(samples[[3]])[[2]]
@@ -78,15 +78,4 @@ jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains
     out <- list(no.to.converge, dim(samples.array)[1], samples.array, DIC)
     names(out) <- c("BurnIn", "No. Runs Per Chain", "Samples", "DIC")
     return(out)
-}
-
-
-treat.diff.change <- function (treat.diff, score.range) 
-{
-    treat.diff.change = treat.diff/score.range
-    treat.diff.change.1 = as.vector(c(quantile(treat.diff.change, 0.025), median(treat.diff.change), 
-		quantile(treat.diff.change, 0.975)))
-    treat.diff.change.2 = as.numeric(table(cut(treat.diff.change, breaks = 
-		c(-1, -0.2, 0, 0.2, 1))))/length(treat.diff.change)
-    return(list(treat.diff.change.1, treat.diff.change.2))
 }
