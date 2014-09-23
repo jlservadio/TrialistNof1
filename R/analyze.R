@@ -240,3 +240,4 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 	return(out)
 	
 } 
+
