@@ -79,3 +79,4 @@ jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains
     names(out) <- c("BurnIn", "No. Runs Per Chain", "Samples", "DIC")
     return(out)
 }
+
