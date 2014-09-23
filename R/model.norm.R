@@ -5,4 +5,3 @@ model.norm <- function (nobs, Covs, prior, varprior, path, mod.id)
     var.hom(prior, varprior, path)
     cat("\n    }", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 }
-
