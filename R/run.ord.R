@@ -168,3 +168,4 @@ run.ord <- function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv
     }
     return(out)
 }
+
