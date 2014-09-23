@@ -219,4 +219,3 @@ evaluate <- function(observations, Outcome, Covs, mod.id, No_Neuropain) {
 	
 	return(out)
 }
-
