@@ -2701,6 +2701,8 @@ wrap <- function(data, metadata) {
 	
 	meta.data[[length(meta.data) + 1]] = Best.Model
 	names(meta.data)[length(meta.data)] = "Best.Model"
+	meta.data[[length(meta.data) + 1]] = "Sept. 23 2014, 17:30"
+	names(meta.data)[length(meta.data)] = "Update Time"
 	
 	out[[length(out) + 1]] = meta.data
 	names(out)[length(out)] = "meta.data"
@@ -2708,9 +2710,6 @@ wrap <- function(data, metadata) {
 	out[[length(out) + 1]] = Results
 	names(out)[length(out)] = "Results"
 	out$Results = cbind(out$Results, t(out$meta.data$Best.Model))
-	
-	out$meta.data[[length(out$meta.data) + 1]] = "9-23-14_17:30"
-	names(out$meta.data)[length(out$meta.data] = "Update"
 	
 	return(out)
 }
