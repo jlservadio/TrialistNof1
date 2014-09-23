@@ -42,4 +42,3 @@ prior.norm <- function (Covs, alphaprior, betaprior, slopeprior, varprior, varpr
     }
     return(out)
 }
-
