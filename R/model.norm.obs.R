@@ -203,3 +203,4 @@ model.norm.obs <- function (nobs, Covs, prior, path, mod.id)
 	}
 	
 }
+
