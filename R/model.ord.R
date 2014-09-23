@@ -646,3 +646,4 @@ model.ord <- function (Covs, prior, path, mod.id)
 	}", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 	
 }
+
