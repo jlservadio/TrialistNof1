@@ -174,3 +174,4 @@ run.norm <- function (Y, Treat, Covs, model, var.model, nChains = 3, conv.limit 
 	}
     return(out)
 }
+
