@@ -56,12 +56,18 @@ ppc <- function(observations, Outcome, ForPPC, Covs, mod.id) {
 	}
 	
 	if (mod.id %in% c(4, 4.1, 4.2, 5.4, 5.41, 5.42) && index %in% c(1, 7)) {
-		if (is.na(Covs[1, 1])) { Covs[1, 1] = rnorm(1, mean(Covs[ , 1], na.rm = TRUE), 2) }
+		if (is.na(Covs[1, 1])) { Covs[1, 1] = round(rnorm(1, mean(Covs[ , 1], na.rm = TRUE), 2)) }
+		for (i in 1:ncol(Covs)) {
+			if (is.na(Covs[1, i])) { Covs[1, i] = round(rnorm(1, mean(Covs[ , i], na.rm = TRUE), 1)) }
+		}
+
 		while (sum(is.na(Covs)) != 0) {
 			for (i in 2:nrow(Covs)) {
-				if (is.na(Covs[i, 1]) && !is.na(Covs[i-1, 1])) {
-					Covs[i, 1] = round(mean(ForPPC[["alpha"]]) + mean(ForPPC[["beta"]]) * observations$Treat2[i] + 
-					mean(ForPPC[["Slope"]][ , , 1]) * Covs[i-1, 1])
+				for (j in 1:ncol(Covs)) {
+					if (is.na(Covs[i, j]) && !is.na(Covs[i-1, j])) {
+						Covs[i, j] = round(mean(ForPPC[["alpha"]]) + mean(ForPPC[["beta"]]) * observations$Treat2[i] + 
+						mean(ForPPC[["Slope"]][ , , 1]) * Covs[i-1, j])
+					}
 				}
 			}
 		}
