@@ -1,4 +1,4 @@
-cleanData <- function(data, metadata) {
+cleanData = function(data, metadata) {
 
 	insufficient_data = FALSE
 
@@ -258,4 +258,3 @@ cleanData <- function(data, metadata) {
 	out = list(observations, Block.Covs, Lag.Covs, No_Neuropain, meta.data, insufficient_data)
 	return(out)
 }
-
