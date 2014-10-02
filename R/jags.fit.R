@@ -2,13 +2,13 @@ jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains
 	setsize, nruns=5000, Covs) 
 {
 
-    mod = jags.model(model.file, data = inData, inits = inInits, n.chains, n.adapt = 0, quiet = TRUE)
+    mod = jags.model(model.file, data = inData, inits = inInits, n.chains, n.adapt = 0)
 	
 	DIC1 = dic.samples(mod, niters)
 	DIC2 = as.list(DIC1)
-	DIC = sum(DIC2[[1]])	
+	DIC = sum(DIC2[[1]])
     done.adapt = adapt(mod, n.iter = 2 * setsize, end.adaptation = FALSE)
-    while (!done.adapt) done.adapt = adapt(mod, n.iter = 2 * setsize, end.adaptation = FALSE, quiet = TRUE)
+    while (!done.adapt) done.adapt = adapt(mod, n.iter = 2 * setsize, end.adaptation = FALSE)
     samples <- coda.samples(model = mod, variable.names = pars.to.save, n.iter = setsize, thin = 1)
     nsamples = setsize
     varnames <- dimnames(samples[[3]])[[2]]
@@ -79,4 +79,3 @@ jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains
     names(out) <- c("BurnIn", "No. Runs Per Chain", "Samples", "DIC")
     return(out)
 }
-
