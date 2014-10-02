@@ -10,6 +10,8 @@ treat.diffs <- function(p, Treat)
 	
 	n.A = dim(expect.score.A)[2]
 	n.B = dim(expect.score.B)[2]
+	
+#	treat.diff = mean.B / n.B - mean.A / n.A
 
 	treat.diff = mean.B - mean.A
 }
