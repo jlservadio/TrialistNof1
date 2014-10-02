@@ -64,4 +64,3 @@ data.ord <- function (Y, Covs, ncat, prior, Treat, mod.id)
 	
     return(inData)
 }
-
