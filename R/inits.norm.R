@@ -82,4 +82,3 @@ inits.norm <- function (Y, x, Treat, varprior, ntreat = 2)
     inInits <- list(inits.1, inits.2, inits.3)
     return(inInits)
 }
-
