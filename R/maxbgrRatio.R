@@ -12,4 +12,3 @@ maxbgrRatio <- function (x)
     max.bgrRatio = max(gelman.diag(list(t1, t2, t3), autoburnin = F)[[1]][, 1])
     return(max.bgrRatio)
 }
-
