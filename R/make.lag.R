@@ -1,4 +1,4 @@
-make.lag = function(observations) {
+make.lag <- function(observations) {
 	Pain2.lag = Fatigue2.lag = Drowsy2.lag = Sleep2.lag = Thinking2.lag = Constipation2.lag = Neuropain2.lag = 
 		rep(NA, nrow(observations))
 		
