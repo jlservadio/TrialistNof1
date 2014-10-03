@@ -55,8 +55,6 @@ data.ord <- function (Y, Covs, ncat, prior, Treat, mod.id)
 			}
 		}
 		v = v / sum(v)
-		
-#		v = c(0.1, 0.2, 0.4, 0.2, 0.1)
 			
 		inData[[length(inData) + 1]] = v
 		names(inData)[[length(inData)]] = "v"
