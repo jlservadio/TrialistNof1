@@ -1,4 +1,4 @@
-cleanData = function(data, metadata) {
+cleanData <- function(data, metadata) {
 
 	insufficient_data = FALSE
 
