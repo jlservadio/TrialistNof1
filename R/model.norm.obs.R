@@ -98,7 +98,7 @@ model.norm.obs <- function (nobs, Covs, prior, path, mod.id)
 	
 	cat("
 	Y[i] ~ dnorm(mu[i],prec)
-
+	D[i] <- -log(prec) + log(2*3.14159265359) + prec*pow(Y[i]-mu[i], 2)
 	}
 	alpha ~ ", prior$Prior.alpha, "
 	beta ~ ", prior$Prior.beta, file = paste(path, "model.txt", sep = ""), append = T, sep = "")
@@ -142,63 +142,63 @@ model.norm.obs <- function (nobs, Covs, prior, path, mod.id)
 		cat("
 		Y[1] ~ dnorm(mu[1], prec)
 		mu[1] <- alpha + beta*Treat[1] + slope*Y0
-
+		D[1] <- -log(prec) + log(2*3.14159265359) + prec*pow(Y[1]-mu[1], 2)
 		Y0 ~ dnorm(v, 2)", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 	} else if (mod.id == 4.1) {
 		cat("
 		Y[1] ~ dnorm(mu[1], prec)
 		mu[1] <- alpha + beta*Treat[1] + slope1*Y0 + slope2*x[1]
-
+		D[1] <- -log(prec) + log(2*3.14159265359) + prec*pow(Y[1]-mu[1], 2)
 		x[1] ~ dunif(j[1], l[1])
 		Y0 ~ dnorm(v, 2)", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 	} else if (mod.id == 4.2 && ncol(Covs) == 2) {
 		cat("
 		Y[1] ~ dnorm(mu[1], prec)
 		mu[1] <- alpha + beta*Treat[1] + slope1*Y0 + slope2*x1[1]
-
+		D[1] <- -log(prec) + log(2*3.14159265359) + prec*pow(Y[1]-mu[1], 2)
 		Y0 ~ dnorm(v, 2)", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 	} else if (mod.id == 4.2 && ncol(Covs) == 3) {
 		cat("
 		Y[1] ~ dnorm(mu[1], prec)
 		mu[1] <- alpha + beta*Treat[1] + slope1*Y0 + slope2*x1[1] + slope3*x2[1]
-
+		D[1] <- -log(prec) + log(2*3.14159265359) + prec*pow(Y[1]-mu[1], 2)
 		Y0 ~ dnorm(v, 2)", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 	} else if (mod.id == 4.2 && ncol(Covs) == 4) {
 		cat("
 		Y[1] ~ dnorm(mu[1], prec)
 		mu[1] <- alpha + beta*Treat[1] + slope1*Y0 + slope2*x1[1] + slope3*x2[1] + slope4*x3[1]
-
+		D[1] <- -log(prec) + log(2*3.14159265359) + prec*pow(Y[1]-mu[1], 2)
 		Y0 ~ dnorm(v, 2)", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 	} else if (mod.id == 5.4) {
 		cat("
 		Y[1] ~ dnorm(mu[1], prec)
 		mu[1] <- alpha + beta*Treat[1] + slope1*Y0 + slope2*z1[1] + slope3*z2[1]
-
+		D[1] <- -log(prec) + log(2*3.14159265359) + prec*pow(Y[1]-mu[1], 2)
 		Y0 ~ dnorm(v, 2)", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 	} else if (mod.id == 5.41) {
 		cat("
 		Y[1] ~ dnorm(mu[1], prec)
-
+		x[1] ~ dunif(j[1], l[1])
 		mu[1] <- alpha + beta*Treat[1] + slope1*Y0 + slope2*x[1] + slope3*z1[1] + slope4*z2[1]
-
+		D[1] <- -log(prec) + log(2*3.14159265359) + prec*pow(Y[1]-mu[1], 2)
 		Y0 ~ dnorm(v, 2)", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 	} else if (mod.id == 5.42 && ncol(Covs) == 4) {
 		cat("
 		Y[1] ~ dnorm(mu[1], prec)
 		mu[1] <- alpha + beta*Treat[1] + slope1*Y0 + slope2*x1[1] + slope3*z1[1] + slope4*z2[1]
-
+		D[1] <- -log(prec) + log(2*3.14159265359) + prec*pow(Y[1]-mu[1], 2)
 		Y0 ~ dnorm(v, 2)", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 	} else if (mod.id == 5.42 && ncol(Covs) == 5) {
 		cat("
 		Y[1] ~ dnorm(mu[1], prec)
 		mu[1] <- alpha + beta*Treat[1] + slope1*Y0 + slope2*x1[1] + slope3*x2[1] + slope4*z1[1] + slope5*z2[1]
-
+		D[1] <- -log(prec) + log(2*3.14159265359) + prec*pow(Y[1]-mu[1], 2)
 		Y0 ~ dnorm(v, 2)", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 	} else if (mod.id == 5.42 && ncol(Covs) == 6) {
 		cat("
 		Y[1] ~ dnorm(mu[1], prec)
 		mu[1] <- alpha + beta*Treat[1] + slope1*Y0 + slope2*x1[1] + slope3*x2[1] + slope4*x3[1] + slope5*z1[1] + slope6*z2[1]
-
+		D[1] <- -log(prec) + log(2*3.14159265359) + prec*pow(Y[1]-mu[1], 2)
 		Y0 ~ dnorm(v, 2)", file = paste(path, "model.txt", sep = ""), append = T, sep = "")
 	}
 	
