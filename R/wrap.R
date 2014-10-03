@@ -1125,7 +1125,7 @@ wrap <- function(data, metadata) {
 		} else if (Thinking.M4.1$Sigs[1, 2] == FALSE && Thinking.M4.1$DIC >= Cur.DIC - 3) { BM = BM
 		} else {
 			PPC.Thinking.4.1 = ppc(observations, "Thinking", Thinking.M4.1$ForPPC, cbind(Lag.Covs[ , 5], observations$Time2), 4.1)
-			Thinking.M1[[length(Thinking.M4.1) + 1]] = PPC.Thinking.4.1
+			Thinking.M4.1[[length(Thinking.M4.1) + 1]] = PPC.Thinking.4.1
 			names(Thinking.M4.1)[length(Thinking.M4.1)] = "PPC.Thinking.4.1"
 			if (is.null(PPC.Thinking.2)) { PPC.Thinking.2 = ppc(observations, "Thinking", Thinking.M2$ForPPC, observations$Time2, 2) 
 				Thinking.M2[[length(Thinking.M2) + 1]] = PPC.Thinking.2
@@ -1827,7 +1827,6 @@ wrap <- function(data, metadata) {
 	
 	graph5_names = c("lower_bound", "lower_bound_regimen", "median_effect", "more_effective_regimen", 
 		"upper_bound", "upper_bound_regimen")
-#	graph6_names = c("P(< -0.2)", "P(-0.2 - 0)", "P(0 - 0.2)", "P(> 0.2)")
 	graph6_names = c("b_clinically_better", "b_marginally_better", "a_marginally_better", "a_clinically_better")
 	
 	if (Best.Model[1] == 1) { 
@@ -2702,8 +2701,8 @@ wrap <- function(data, metadata) {
 	
 	meta.data[[length(meta.data) + 1]] = Best.Model
 	names(meta.data)[length(meta.data)] = "Best.Model"
-	meta.data[[length(meta.data) + 1]] = "Oct3_0937"
-	names(meta.data)[length(meta.data)] = "UpdateTime"
+	meta.data[[length(meta.data) + 1]] = "Oct. 3 2014, 11:30"
+	names(meta.data)[length(meta.data)] = "Update Time"
 	
 	out[[length(out) + 1]] = meta.data
 	names(out)[length(out)] = "meta.data"
@@ -2711,9 +2710,6 @@ wrap <- function(data, metadata) {
 	out[[length(out) + 1]] = Results
 	names(out)[length(out)] = "Results"
 	out$Results = cbind(out$Results, t(out$meta.data$Best.Model))
-	
-	size = object.size(ls())
-	cat(size)
 	
 	return(out)
 }
