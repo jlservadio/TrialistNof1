@@ -2,7 +2,8 @@ inits.ord <- function (Y, x, Treat, ncat)
 {
 	nobs = length(Y)
 	p = rep(NA, ncat)
-	c1 = c2 = c3 = rep(NA, ncat-1)
+	c1 = c2 = c3
+	= rep(NA, ncat-1)
 	for (i in seq(ncat)) {
 		p[i] = sum(Y[!is.na(Y)]==i)/nobs
 		if (!is.na(p[i]) & p[i] == 0) { p[i] = 0.05 }
