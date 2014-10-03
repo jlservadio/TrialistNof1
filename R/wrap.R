@@ -1827,7 +1827,8 @@ wrap <- function(data, metadata) {
 	
 	graph5_names = c("lower_bound", "lower_bound_regimen", "median_effect", "more_effective_regimen", 
 		"upper_bound", "upper_bound_regimen")
-	graph6_names = c("P(< -0.2)", "P(-0.2 - 0)", "P(0 - 0.2)", "P(> 0.2)")
+#	graph6_names = c("P(< -0.2)", "P(-0.2 - 0)", "P(0 - 0.2)", "P(> 0.2)")
+	graph6_names = c("b_clinically_better", "b_marginally_better", "a_marginally_better", "a_clinically_better")
 	
 	if (Best.Model[1] == 1) { 
 		Results = Pain.M1$Results 
