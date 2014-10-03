@@ -1,12 +1,19 @@
 jags.fit <- function (inData, inInits, pars.to.save, model, model.file, n.chains, niters, conv.limit, 
-	setsize, nruns=5000, Covs) 
+	setsize, nruns=5000, Covs, mod.id) 
 {
 
     mod = jags.model(model.file, data = inData, inits = inInits, n.chains, n.adapt = 0)
 	
 	DIC1 = dic.samples(mod, niters)
 	DIC2 = as.list(DIC1)
-	DIC = sum(DIC2[[1]])
+	
+	if (mod.id %in% c(2, 4.1, 5.2, 5.41)) {
+		st = floor(length(DIC2[[1]]) / 2) + 1
+		DIC = sum(DIC2[[1]][st:length(DIC2[[1]])]) + sum(DIC2[[2]][st:length(DIC2[[2]])])
+	} else {
+		DIC = sum(DIC2[[1]]) + sum(DIC2[[2]])	
+	}
+	
     done.adapt = adapt(mod, n.iter = 2 * setsize, end.adaptation = FALSE)
     while (!done.adapt) done.adapt = adapt(mod, n.iter = 2 * setsize, end.adaptation = FALSE)
     samples <- coda.samples(model = mod, variable.names = pars.to.save, n.iter = setsize, thin = 1)
