@@ -63,13 +63,12 @@ inits.norm <- function (Y, x, Treat, varprior, ntreat = 2)
         inits.3[[1 + length(inits.3)]] = prec.3
         names(inits.3)[[length(inits.3)]] = "prec"
     } else if (varprior[[1]] == "Sd" & !is.null(x)) {
-	#This loop deals with Sd									#
-        inits.1[[1 + length(inits.1)]] = 0.5/sqrt(prec.1)		#
-        names(inits.1)[[length(inits.1)]] = "Sd"				#
-        inits.2[[1 + length(inits.2)]] = 0.5/sqrt(prec.2)		#
-        names(inits.2)[[length(inits.2)]] = "Sd"				#
-        inits.3[[1 + length(inits.3)]] = 0.5/sqrt(prec.3)		#
-        names(inits.3)[[length(inits.3)]] = "Sd"				#
+        inits.1[[1 + length(inits.1)]] = 0.5/sqrt(prec.1)
+        names(inits.1)[[length(inits.1)]] = "Sd"
+        inits.2[[1 + length(inits.2)]] = 0.5/sqrt(prec.2)
+        names(inits.2)[[length(inits.2)]] = "Sd"
+        inits.3[[1 + length(inits.3)]] = 0.5/sqrt(prec.3)
+        names(inits.3)[[length(inits.3)]] = "Sd"
     } else if (varprior[[1]] == "var") {
         inits.1[[1 + length(inits.1)]] = 1/prec.1
         names(inits.1)[[length(inits.1)]] = "Var"
