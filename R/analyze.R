@@ -99,8 +99,8 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 		out = list(list(
 			"interval" = structure(as.list(change.interval), names=c("P025", "Median", "P975")),
 			"probs" = structure(as.list(change.probs), names=paste("Proportion",c("< -0.2", "-0.2 - 0", "0 - 0.2", "> 0.2")))
-			), Outcome, mod.id, Pain.urun, Pain.treat.diff.change, Pain.out$alpha, Pain.out$beta, Pain.out$Sd, Pain.out$Slope, Pain.out$DIC)
-		names(out) = c("pain", "Outcome", "mod.id", "Pain.urun", "Pain.treat.diff.change", "alpha", "beta", "Sd", "Slope", "DIC")
+			), Outcome, mod.id, Pain.urun, Pain.treat.diff.change, Pain.out$alpha, Pain.out$beta, Pain.out$Sd, Pain.out$Slope, Pain.out$DIC, Pain.out$Dev)
+		names(out) = c("pain", "Outcome", "mod.id", "Pain.urun", "Pain.treat.diff.change", "alpha", "beta", "Sd", "Slope", "DIC", "Dev")
 	} else if (index == 2) {
 		if (length(Fatigue.out) > 1) {Fatigue.treat.diff = treat.diffs(Fatigue.out[["p"]], Treat)}
 		if (length(Fatigue.out) > 1) {
@@ -202,8 +202,39 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 			"interval" = structure(as.list(change.interval), names=c("P025", "Median", "P975")),
 			"probs" = structure(as.list(change.probs), names=paste("Proportion",c("< -0.2", "-0.2 - 0", "0 - 0.2", "> 0.2")))
 			), Outcome, mod.id, Neuropain.urun, Neuropain.treat.diff.change, Neuropain.out$alpha, Neuropain.out$beta, Neuropain.out$Sd, 
-			Neuropain.out$Slopes, Neuropain.out$DIC)
-		names(out) = c("neuropain", "Outcome", "mod.id", "Neuropain.urun", "Neuropain.treat.diff.change", "alpha", "beta", "Sd", "Slope", "DIC")
+			Neuropain.out$Slopes, Neuropain.out$DIC, Neuropain.out$Dev)
+		names(out) = c("neuropain", "Outcome", "mod.id", "Neuropain.urun", "Neuropain.treat.diff.change", "alpha", "beta", "Sd", "Slope", "DIC", "Dev")
+	}
+	
+	if (index == 1) {
+		out[[length(out) + 1]] = Pain.out$Y.samp
+		names(out)[length(out)] = "Y.samp"
+		if (mod.id %in% c(2, 4.1, 5.2, 5.41)) {
+			out[[length(out) + 1]] = Pain.out$Time.samp
+			names(out)[length(out)] = "Time.samp"
+		}
+	} else if (index == 2) {
+		out[[length(out) + 1]] = Fatigue.out$Y.samp
+		names(out)[length(out)] = "Y.samp"
+	} else if (index == 3) {
+		out[[length(out) + 1]] = Drowsy.out$Y.samp
+		names(out)[length(out)] = "Y.samp"
+	} else if (index == 4) {
+		out[[length(out) + 1]] = Sleep.out$Y.samp
+		names(out)[length(out)] = "Y.samp"
+	} else if (index == 5) {
+		out[[length(out) + 1]] = Thinking.out$Y.samp
+		names(out)[length(out)] = "Y.samp"
+	} else if (index == 6) {
+		out[[length(out) + 1]] = Constipation.out$Y.samp
+		names(out)[length(out)] = "Y.samp"
+	} else if (index == 7) {
+		out[[length(out) + 1]] = Neuropain.out$Y.samp
+		names(out)[length(out)] = "Y.samp"
+		if (mod.id %in% c(2, 4.1, 5.2, 5.41)) {
+			out[[length(out) + 1]] = Neuropain.out$Time.samp
+			names(out)[length(out)] = "Time.samp"
+		}
 	}
 	
 	return(out)
