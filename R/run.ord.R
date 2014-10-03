@@ -112,7 +112,7 @@ run.ord <- function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv
 #	if (ncat == 6) { inData$v = c(0.1, 0.15, 0.25, 0.25, 0.15, 0.1) }
 		
     model.ord(Covs, prior, path, mod.id)
-    pars.to.save <- c("beta","or","c","p")
+    pars.to.save <- c("Y", "beta","or","c","p")
 	
 	if (is.null(Covs)) { pars.to.save = pars.to.save
 	} else if (ncol(Covs) == 1) {
@@ -130,7 +130,7 @@ run.ord <- function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv
 	}
 	
 	jags.out <- jags.fit(inData, inInits, pars.to.save, model, "model.txt", nChains, niters, 
-		conv.limit, setsize, nruns=5000, Covs)
+		conv.limit, setsize, nruns=5000, Covs, mod.id)
 
 	burn.in <- jags.out[[1]]
     no.runs <- jags.out[[2]]
@@ -151,20 +151,20 @@ run.ord <- function (Y, Treat, Covs, ncat, model = "cumlogit", nChains = 3, conv
     p.vars <- grep("p", varnames)
     p <- array(matrix(samples[, , p.vars], c(no.runs * nChains, length(p.vars))), c(no.runs * nChains, nobs, ncat))
 	
-
-
-
+	Y.vars <- grep("Y", varnames)
+	Y.samp <- samples[ , , Y.vars]
+	
     if (!is.null(Covs)) {
         slope.vars <- grep("slope", varnames)
         slope <- samples[, , slope.vars]
     }
     if (is.null(Covs)) {
-        out <- list(burn.in, no.runs, Y, beta, or, c, p, DIC)
-        names(out) <- c("Burn In", "Number runs per chain", "Y", "beta", "or", "c", "p", "DIC")
+        out <- list(burn.in, no.runs, Y, beta, or, c, p, DIC, Y.samp)
+        names(out) <- c("Burn In", "Number runs per chain", "Y", "beta", "or", "c", "p", "DIC", "Y.samp")
     }
     else {
-        out <- list(burn.in, no.runs, Y, beta, or, p, slope, DIC)
-        names(out) <- c("Burn In", "Number runs per chain", "Y", "beta", "or", "p", "Slopes", "DIC")
+        out <- list(burn.in, no.runs, Y, beta, or, p, slope, DIC, Y.samp)
+        names(out) <- c("Burn In", "Number runs per chain", "Y", "beta", "or", "p", "Slopes", "DIC", "Y.samp")
     }
     return(out)
 }
