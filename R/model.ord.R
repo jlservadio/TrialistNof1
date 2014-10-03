@@ -129,11 +129,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 			}
 		}
 		
-
-
-
-		for (r in 1:ncat) {
-			p[1, r] <- p[2, r]
+		p[1, 1] <- 1 - Q[1, 1]
+		p[1, ncat] <- Q[1, (ncat-1)]
+		
+		for (r in 2:(ncat-1)) {
+			p[1, r] <- Q[1, r-1] - Q[1, r]
 		}
 		
 		for (i in 2:(ncat-1)) {
@@ -148,7 +148,7 @@ model.ord <- function (Covs, prior, path, mod.id)
 		}
 		Q0 ~ dunif(0, 0.2)
 		for (i in 1:nobs) {
-			Y[i] ~ dcat(v)
+			Y[i] ~ dcat(p[i, ])
 		}
 		slope ~ ", prior$Prior.slope, 
 		file = paste(path, "model.txt", sep = ""), append = T, sep = "")
@@ -165,11 +165,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 			}
 		}
 		
-
-
-
-		for (r in 1:ncat) {
-			p[1, r] <- p[2, r]
+		p[1, 1] <- 1 - Q[1, 1]
+		p[1, ncat] <- Q[1, (ncat-1)]
+		
+		for (r in 2:(ncat-1)) {
+			p[1, r] <- Q[1, r-1] - Q[1, r]
 		}
 		
 		for (i in 2:(ncat-1)) {
@@ -187,7 +187,7 @@ model.ord <- function (Covs, prior, path, mod.id)
 		}
 		Q0 ~ dunif(0, 0.2)
 		for (i in 1:nobs) {
-			Y[i] ~ dcat(v)
+			Y[i] ~ dcat(p[i, ])
 		}
 		slope1 ~ ", prior$Prior.slope, "
 		slope2 ~ ", prior$Prior.slope,
@@ -205,11 +205,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 			}
 		}
 		
-
-
-
-		for (r in 1:ncat) {
-			p[1, r] <- p[2, r]
+		p[1, 1] <- 1 - Q[1, 1]
+		p[1, ncat] <- Q[1, (ncat-1)]
+		
+		for (r in 2:(ncat-1)) {
+			p[1, r] <- Q[1, r-1] - Q[1, r]
 		}
 		
 		for (i in 2:(ncat-1)) {
@@ -225,7 +225,7 @@ model.ord <- function (Covs, prior, path, mod.id)
 		}
 		Q0 ~ dunif(0, 0.2)
 		for (i in 1:nobs) {
-			Y[i] ~ dcat(v)
+			Y[i] ~ dcat(p[i, ])
 		}
 		slope1 ~ ", prior$Prior.slope, "
 		slope2 ~ ", prior$Prior.slope,
@@ -243,11 +243,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 			}
 		}
 		
-
-
-
-		for (r in 1:ncat) {
-			p[1, r] <- p[2, r]
+		p[1, 1] <- 1 - Q[1, 1]
+		p[1, ncat] <- Q[1, (ncat-1)]
+		
+		for (r in 2:(ncat-1)) {
+			p[1, r] <- Q[1, r-1] - Q[1, r]
 		}
 		
 		for (i in 2:(ncat-1)) {
@@ -263,7 +263,7 @@ model.ord <- function (Covs, prior, path, mod.id)
 		}
 		Q0 ~ dunif(0, 0.2)
 		for (i in 1:nobs) {
-			Y[i] ~ dcat(v)
+			Y[i] ~ dcat(p[i, ])
 		}
 		slope1 ~ ", prior$Prior.slope, "
 		slope2 ~ ", prior$Prior.slope, "
@@ -282,11 +282,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 			}
 		}
 		
-
-
-
-		for (r in 1:ncat) {
-			p[1, r] <- p[2, r]
+		p[1, 1] <- 1 - Q[1, 1]
+		p[1, ncat] <- Q[1, (ncat-1)]
+		
+		for (r in 2:(ncat-1)) {
+			p[1, r] <- Q[1, r-1] - Q[1, r]
 		}
 		
 		for (i in 2:(ncat-1)) {
@@ -302,7 +302,7 @@ model.ord <- function (Covs, prior, path, mod.id)
 		}
 		Q0 ~ dunif(0, 0.2)
 		for (i in 1:nobs) {
-			Y[i] ~ dcat(v)
+			Y[i] ~ dcat(p[i, ])
 		}
 		slope1 ~ ", prior$Prior.slope, "
 		slope2 ~ ", prior$Prior.slope, "
@@ -445,11 +445,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 			}
 		}
 		
-
-
-
-		for (r in 1:ncat) {
-			p[1, r] <- p[2, r]
+		p[1, 1] <- 1 - Q[1, 1]
+		p[1, ncat] <- Q[1, (ncat-1)]
+		
+		for (r in 2:(ncat-1)) {
+			p[1, r] <- Q[1, r-1] - Q[1, r]
 		}
 		
 		for (i in 2:(ncat-1)) {
@@ -465,7 +465,7 @@ model.ord <- function (Covs, prior, path, mod.id)
 		}
 		Q0 ~ dunif(0, 0.2)
 		for (i in 1:nobs) {
-			Y[i] ~ dcat(v)
+			Y[i] ~ dcat(p[i, ])
 		}
 		slope1 ~ ", prior$Prior.slope, "
 		slope2 ~ ", prior$Prior.slope, "
@@ -483,13 +483,14 @@ model.ord <- function (Covs, prior, path, mod.id)
 				logit(Q[i, r]) <- beta*Treat[i] - c[r] + slope1*logit(Q[i - 1, r]) + slope2*x[i] + slope3*z1[i] + slope4*z2[i]
 			}
 		}
-
-
-
-
-		for (r in 1:ncat) {
-			p[1, r] <- p[2, r]
+		
+		p[1, 1] <- 1 - Q[1, 1]
+		p[1, ncat] <- Q[1, (ncat-1)]
+		
+		for (r in 2:(ncat-1)) {
+			p[1, r] <- Q[1, r-1] - Q[1, r]
 		}
+		
 		for (i in 2:(ncat-1)) {
 			dc[i] ~ dunif(lower.dc, upper.dc)
 		}
@@ -500,12 +501,12 @@ model.ord <- function (Covs, prior, path, mod.id)
 		for (i in 1:nobs) {
 			x[i] ~ dunif(j[i], l[i])
 		}
-		for (i in 2:(ncat-1)) {
+		for (i in 1:(ncat-1)) {
 			logit(Q[1, i]) <- beta*Treat[1] - c[i] + slope1*logit(Q0) + slope2*x[1] + slope3*z1[1] + slope4*z2[1]
 		}
 		Q0 ~ dunif(0, 0.2)
 		for (i in 1:nobs) {
-			Y[i] ~ dcat(v)
+			Y[i] ~ dcat(p[i, ])
 		}
 		slope1 ~ ", prior$Prior.slope, "
 		slope2 ~ ", prior$Prior.slope, "
@@ -525,11 +526,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 			}
 		}
 		
-
-
-
-		for (r in 1:ncat) {
-			p[1, r] <- p[2, r]
+		p[1, 1] <- 1 - Q[1, 1]
+		p[1, ncat] <- Q[1, (ncat-1)]
+		
+		for (r in 2:(ncat-1)) {
+			p[1, r] <- Q[1, r-1] - Q[1, r]
 		}
 		
 		for (i in 2:(ncat-1)) {
@@ -541,11 +542,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 		}
 		
 		for (i in 1:(ncat-1)) {
-			logit(Q[1, i]) <- beta*Treat[i] - c[r] + slope1*logit(Q0) + slope2*x1[1] + slope3*z1[1] + slope4*z2[1]
+			logit(Q[1, i]) <- beta*Treat[i] - c[i] + slope1*logit(Q0) + slope2*x1[1] + slope3*z1[1] + slope4*z2[1]
 		}
 		Q0 ~ dunif(0, 0.2)
 		for (i in 1:nobs) {
-			Y[i] ~ dcat(v)
+			Y[i] ~ dcat(p[i, ])
 		}
 		slope1 ~ ", prior$Prior.slope, "
 		slope2 ~ ", prior$Prior.slope, "
@@ -565,11 +566,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 			}
 		}
 		
-
-
-
-		for (r in 1:ncat) {
-			p[1, r] <- p[2, r]
+		p[1, 1] <- 1 - Q[1, 1]
+		p[1, ncat] <- Q[1, (ncat-1)]
+		
+		for (r in 2:(ncat-1)) {
+			p[1, r] <- Q[1, r-1] - Q[1, r]
 		}
 		
 		for (i in 2:(ncat-1)) {
@@ -585,7 +586,7 @@ model.ord <- function (Covs, prior, path, mod.id)
 		}
 		Q0 ~ dunif(0, 0.2)
 		for (i in 1:nobs) {
-			Y[i] ~ dcat(v)
+			Y[i] ~ dcat(p[i, ])
 		}
 		slope1 ~ ", prior$Prior.slope, "
 		slope2 ~ ", prior$Prior.slope, "
@@ -607,11 +608,11 @@ model.ord <- function (Covs, prior, path, mod.id)
 			}
 		}
 		
-
-
-
-		for (r in 1:ncat) {
-			p[1, r] <- p[2, r]
+		p[1, 1] <- 1 - Q[1, 1]
+		p[1, ncat] = Q[1, (ncat-1)]
+		
+		for (r in 2:(ncat-1)) {
+			p[1, r] <- Q[1, r-1] - Q[1, r]
 		}
 		
 		for (i in 2:(ncat-1)) {
@@ -628,7 +629,7 @@ model.ord <- function (Covs, prior, path, mod.id)
 		}
 		Q0 ~ dunif(0, 0.2)
 		for (i in 1:nobs) {
-			Y[i] ~ dcat(v)
+			Y[i] ~ dcat(p[i, ])
 		}
 		slope1 ~ ", prior$Prior.slope, "
 		slope2 ~ ", prior$Prior.slope, "
