@@ -2702,6 +2702,8 @@ wrap <- function(data, metadata) {
 	
 	meta.data[[length(meta.data) + 1]] = Best.Model
 	names(meta.data)[length(meta.data)] = "Best.Model"
+	meta.data[[length(meta.data) + 1]] = "Oct3_0937"
+	names(meta.data)[length(meta.data)] = "UpdateTime"
 	
 	out[[length(out) + 1]] = meta.data
 	names(out)[length(out)] = "meta.data"
