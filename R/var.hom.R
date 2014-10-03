@@ -9,4 +9,3 @@ var.hom <- function (prior, varprior, path)
 			file = paste(path, "model.txt", sep = ""), append = T, sep = "")
     }
 }
-
