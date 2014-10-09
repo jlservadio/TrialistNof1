@@ -178,8 +178,8 @@ cleanData <- function(data, metadata) {
 	meta.data[[length(meta.data) + 1]] = insufficient_data
 	names(meta.data)[length(meta.data)] = "Insufficient_Data"
 	
-	meta.data[[length(meta.data) + 1]] = observations
-	names(meta.data)[length(meta.data)] = "Observations"
+#	meta.data[[length(meta.data) + 1]] = observations
+#	names(meta.data)[length(meta.data)] = "Observations"
 	
 	################################################
 	# Correcting for observations outside trial time
@@ -247,14 +247,18 @@ cleanData <- function(data, metadata) {
 	}
 	
 	if (metadata[["regimen_duration"]] >= 14) {
-		for (i in 1:(length(car.B)-1)) {
+#		for (i in 1:(length(car.B)-1)) {
+		for (i in (length(car.B)-1):1) {
 			if (car.A[i] == 1) { car.A[i + 1] = 1 }
 			if (car.B[i] == 1) { car.B[i + 1] = 1 }
 		}
 	}
 	
 	observations = cbind(observations, car.A, car.B)
-	
+###	
+	meta.data[[length(meta.data) + 1]] = observations
+	names(meta.data)[length(meta.data)] = "Observations"
+###	
 	out = list(observations, Block.Covs, Lag.Covs, No_Neuropain, meta.data, insufficient_data)
 	return(out)
 }
