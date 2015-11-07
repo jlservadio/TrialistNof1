@@ -91,7 +91,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 			Pain.treat.diff.change = treat.diff.change(Pain.treat.diff, score.range[1])
 			Pain.urun = FALSE
 		} else {
-			Pain.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+			Pain.treat.diff.change = list(c(-1, 0, 1), c(0,0.2,0.2,0.2,0.2,0.2,0))
 			Pain.urun = TRUE
 		}
 		change.interval = round(Pain.treat.diff.change[[1]], 3)
@@ -107,7 +107,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 			Fatigue.treat.diff.change = treat.diff.change(Fatigue.treat.diff,score.range[2])
 			Fatigue.urun = FALSE
 		} else{
-			Fatigue.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+			Fatigue.treat.diff.change = list(c(-1, 0, 1), c(0,0.2,0.2,0.2,0.2,0.2,0))
 			Fatigue.urun = TRUE
 		}
 		change.interval = round(Fatigue.treat.diff.change[[1]], 3)
@@ -124,7 +124,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 			Drowsy.treat.diff.change = treat.diff.change(Drowsy.treat.diff,score.range[3])
 			Drowsy.urun = FALSE
 		} else{
-			Drowsy.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+			Drowsy.treat.diff.change = list(c(-1, 0, 1), c(0,0.2,0.2,0.2,0.2,0.2,0))
 			Drowsy.urun = TRUE
 		}
 		change.interval = round(Drowsy.treat.diff.change[[1]], 3)
@@ -142,7 +142,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 			Sleep.treat.diff.change = treat.diff.change(Sleep.treat.diff,score.range[4])
 			Sleep.urun = FALSE
 		} else{
-			Sleep.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+			Sleep.treat.diff.change = list(c(-1, 0, 1), c(0,0.2,0.2,0.2,0.2,0.2,0))
 			Sleep.urun = TRUE
 		}
 		change.interval = round(Sleep.treat.diff.change[[1]], 3)
@@ -158,7 +158,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 			Thinking.treat.diff.change = treat.diff.change(Thinking.treat.diff,score.range[5])
 			Thinking.urun = FALSE
 		} else{
-			Thinking.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+			Thinking.treat.diff.change = list(c(-1, 0, 1), c(0,0.2,0.2,0.2,0.2,0.2,0))
 			Thinking.urun = TRUE
 		}
 		change.interval = round(Thinking.treat.diff.change[[1]], 3)
@@ -175,7 +175,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 			Constipation.treat.diff.change = treat.diff.change(Constipation.treat.diff,score.range[6])
 			Constipation.urun = FALSE
 		} else{
-			Constipation.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+			Constipation.treat.diff.change = list(c(-1, 0, 1), c(0,0.2,0.2,0.2,0.2,0.2,0))
 			Constipation.urun = TRUE
 		}
 		change.interval = round(Constipation.treat.diff.change[[1]], 3)
@@ -193,7 +193,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 			Neuropain.treat.diff.change = treat.diff.change(Neuropain.treat.diff, score.range[1])
 			Neuropain.urun = FALSE
 		} else{
-			Neuropain.treat.diff.change = list(c(-1, 0, 1), c(0, 0.5, 0.5, 0))
+			Neuropain.treat.diff.change = list(c(-1, 0, 1), c(0,0.2,0.2,0.2,0.2,0.2,0))
 			Neuropain.urun = TRUE
 		}
 		change.interval = round(Neuropain.treat.diff.change[[1]], 3)
