@@ -40,8 +40,8 @@ evaluate <- function(observations, Outcome, Covs, mod.id, No_Neuropain) {
 
 	names(nof1)[c(1, 4, 5)] = c("o", "o.urun", "o.treat.diff.change")
 	
-	Results = c(nof1$o$interval$P025, nof1$o$interval$Median, nof1$o$interval$P975, nof1$o$probs$'Proportion < -0.2', 
-		nof1$o$probs$'Proportion -0.2 - 0', nof1$o$probs$'Proportion 0 - 0.2', nof1$o$probs$'Proportion > 0.2')
+	Results = c(nof1$o$interval$P025, nof1$o$interval$Median, nof1$o$interval$P975, nof1$o$probs$'P(< -0.2)', 
+		nof1$o$probs$'P(-0.2 - -0.1)', nof1$o$probs$'P(-0.1 - -0.05)', nof1$o$probs$'P(-0.05 - 0.05)', nof1$o$probs$'P(0.05 - 0.1)', nof1$o$probs$'P(0.1 - 0.2)', nof1$o$probs$'P(> 0.2)')
 		
 	failed.slope.array = array(0, dim = c(100, 3, 10))
 	failed.slope.array[ , 1, ] = -50:49 + rnorm(100, 0, 1)
@@ -219,4 +219,3 @@ evaluate <- function(observations, Outcome, Covs, mod.id, No_Neuropain) {
 	
 	return(out)
 }
-	
