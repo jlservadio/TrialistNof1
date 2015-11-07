@@ -1827,7 +1827,7 @@ wrap <- function(data, metadata) {
 	
 	graph5_names = c("lower_bound", "lower_bound_regimen", "median_effect", "more_effective_regimen", 
 		"upper_bound", "upper_bound_regimen")
-	graph6_names = c("b_clinically_better", "b_marginally_better", "a_marginally_better", "a_clinically_better")
+	graph6_names = c("b_better(big)", "b_better(modest)", "b_better(small)", "unnoticeable", "a_better(small)", "a_better(modest)", "a_better(big")
 	
 	if (Best.Model[1] == 1) { 
 		Results = Pain.M1$Results 
@@ -1835,7 +1835,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Pain.M1$Results[2] < 0), abs(Pain.M1$Results[3]), as.numeric(Pain.M1$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Pain.M1$Results[4], Pain.M1$Results[5], Pain.M1$Results[6], Pain.M1$Results[7])
+		graph6 = list(Pain.M1$Results[4], Pain.M1$Results[5], Pain.M1$Results[6], Pain.M1$Results[7], Pain.M1$Results[8], Pain.M1$Results[9], Pain.M1$Results[10])
 		names(graph6) = graph6_names
 		pain = list(as.logical(1 - Pain.M1$urun), graph5, graph6)
 		names(pain) = c("successful_run", "graph_5", "graph_6")
@@ -1845,7 +1845,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Pain.M2$Results[2] < 0), abs(Pain.M2$Results[3]), as.numeric(Pain.M2$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Pain.M2$Results[4], Pain.M2$Results[5], Pain.M2$Results[6], Pain.M2$Results[7])
+		graph6 = list(Pain.M2$Results[4], Pain.M2$Results[5], Pain.M2$Results[6], Pain.M2$Results[7], Pain.M2$Results[8], Pain.M2$Results[9], Pain.M2$Results[10])
 		names(graph6) = graph6_names
 		pain = list(as.logical(1 - Pain.M2$urun), graph5, graph6)
 		names(pain) = c("successful_run", "graph_5", "graph_6")
@@ -1855,7 +1855,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Pain.M3$Results[2] < 0), abs(Pain.M3$Results[3]), as.numeric(Pain.M3$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Pain.M3$Results[4], Pain.M3$Results[5], Pain.M3$Results[6], Pain.M3$Results[7])
+		graph6 = list(Pain.M3$Results[4], Pain.M3$Results[5], Pain.M3$Results[6], Pain.M3$Results[7], Pain.M3$Results[8], Pain.M3$Results[9], Pain.M3$Results[10])
 		names(graph6) = graph6_names
 		pain = list(as.logical(1 - Pain.M3$urun), graph5, graph6)
 		names(pain) = c("successful_run", "graph_5", "graph_6")
@@ -1865,7 +1865,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Pain.M4$Results[2] < 0), abs(Pain.M4$Results[3]), as.numeric(Pain.M4$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Pain.M4$Results[4], Pain.M4$Results[5], Pain.M4$Results[6], Pain.M4$Results[7])
+		graph6 = list(Pain.M4$Results[4], Pain.M4$Results[5], Pain.M4$Results[6], Pain.M4$Results[7], Pain.M4$Results[8], Pain.M4$Results[9], Pain.M4$Results[10])
 		names(graph6) = graph6_names
 		pain = list(as.logical(1 - Pain.M4$urun), graph5, graph6)
 		names(pain) = c("successful_run", "graph_5", "graph_6")
@@ -1875,7 +1875,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Pain.M4.1$Results[2] < 0), abs(Pain.M4.1$Results[3]), as.numeric(Pain.M4.1$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Pain.M4.1$Results[4], Pain.M4.1$Results[5], Pain.M4.1$Results[6], Pain.M4.1$Results[7])
+		graph6 = list(Pain.M4.1$Results[4], Pain.M4.1$Results[5], Pain.M4.1$Results[6], Pain.M4.1$Results[7], Pain.M4.1$Results[8], Pain.M4.1$Results[9], Pain.M4.1$Results[10])
 		names(graph6) = graph6_names
 		pain = list(as.logical(1 - Pain.M4.1$urun), graph5, graph6)
 		names(pain) = c("successful_run", "graph_5", "graph_6")
@@ -1885,7 +1885,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Pain.M4.2$Results[2] < 0), abs(Pain.M4.2$Results[3]), as.numeric(Pain.M4.2$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Pain.M4.2$Results[4], Pain.M4.2$Results[5], Pain.M4.2$Results[6], Pain.M4.2$Results[7])
+		graph6 = list(Pain.M4.2$Results[4], Pain.M4.2$Results[5], Pain.M4.2$Results[6], Pain.M4.2$Results[7], Pain.M4.2$Results[8], Pain.M4.2$Results[9], Pain.M4.2$Results[10])
 		names(graph6) = graph6_names
 		pain = list(as.logical(1 - Pain.M4.2$urun), graph5, graph6)
 		names(pain) = c("successful_run", "graph_5", "graph_6")
@@ -1895,7 +1895,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Pain.M1c$Results[2] < 0), abs(Pain.M1c$Results[3]), as.numeric(Pain.M1c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Pain.M1c$Results[4], Pain.M1c$Results[5], Pain.M1c$Results[6], Pain.M1c$Results[7])
+		graph6 = list(Pain.M1c$Results[4], Pain.M1c$Results[5], Pain.M1c$Results[6], Pain.M1c$Results[7], Pain.M1c$Results[8], Pain.M1c$Results[9], Pain.M1c$Results[10])
 		names(graph6) = graph6_names
 		pain = list(as.logical(1 - Pain.M1c$urun), graph5, graph6)
 		names(pain) = c("successful_run", "graph_5", "graph_6")
@@ -1905,7 +1905,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Pain.M2c$Results[2] < 0), abs(Pain.M2c$Results[3]), as.numeric(Pain.M2c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Pain.M2c$Results[4], Pain.M2c$Results[5], Pain.M2c$Results[6], Pain.M2c$Results[7])
+		graph6 = list(Pain.M2c$Results[4], Pain.M2c$Results[5], Pain.M2c$Results[6], Pain.M2c$Results[7], Pain.M2c$Results[8], Pain.M2c$Results[9], Pain.M2c$Results[10])
 		names(graph6) = graph6_names
 		pain = list(as.logical(1 - Pain.M2c$urun), graph5, graph6)
 		names(pain) = c("successful_run", "graph_5", "graph_6")
@@ -1915,7 +1915,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Pain.M3c$Results[2] < 0), abs(Pain.M3c$Results[3]), as.numeric(Pain.M3c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Pain.M3c$Results[4], Pain.M3c$Results[5], Pain.M3c$Results[6], Pain.M3c$Results[7])
+		graph6 = list(Pain.M3c$Results[4], Pain.M3c$Results[5], Pain.M3c$Results[6], Pain.M3c$Results[7], Pain.M3c$Results[8], Pain.M3c$Results[9], Pain.M3c$Results[10])
 		names(graph6) = graph6_names
 		pain = list(as.logical(1 - Pain.M3c$urun), graph5, graph6)
 		names(pain) = c("successful_run", "graph_5", "graph_6")
@@ -1925,7 +1925,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Pain.M4c$Results[2] < 0), abs(Pain.M4c$Results[3]), as.numeric(Pain.M4c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Pain.M4c$Results[4], Pain.M4c$Results[5], Pain.M4c$Results[6], Pain.M4c$Results[7])
+		graph6 = list(Pain.M4c$Results[4], Pain.M4c$Results[5], Pain.M4c$Results[6], Pain.M4c$Results[7], Pain.M4c$Results[8], Pain.M4c$Results[9], Pain.M4c$Results[10])
 		names(graph6) = graph6_names
 		pain = list(as.logical(1 - Pain.M4c$urun), graph5, graph6)
 		names(pain) = c("successful_run", "graph_5", "graph_6")
@@ -1935,7 +1935,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Pain.M4.1c$Results[2] < 0), abs(Pain.M4.1c$Results[3]), as.numeric(Pain.M4.1c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Pain.M4.1c$Results[4], Pain.M4.1c$Results[5], Pain.M4.1c$Results[6], Pain.M4.1c$Results[7])
+		graph6 = list(Pain.M4.1c$Results[4], Pain.M4.1c$Results[5], Pain.M4.1c$Results[6], Pain.M4.1c$Results[7], Pain.M4.1c$Results[8], Pain.M4.1c$Results[9], Pain.M4.1c$Results[10])
 		names(graph6) = graph6_names
 		pain = list(as.logical(1 - Pain.M4.1c$urun), graph5, graph6)
 		names(pain) = c("successful_run", "graph_5", "graph_6")
@@ -1945,7 +1945,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Pain.M4.2c$Results[2] < 0), abs(Pain.M4.2c$Results[3]), as.numeric(Pain.M4.2c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Pain.M4.2c$Results[4], Pain.M4.2c$Results[5], Pain.M4.2c$Results[6], Pain.M4.2c$Results[7])
+		graph6 = list(Pain.M4.2c$Results[4], Pain.M4.2c$Results[5], Pain.M4.2c$Results[6], Pain.M4.2c$Results[7], Pain.M4.2c$Results[8], Pain.M4.2c$Results[9], Pain.M4.2c$Results[10])
 		names(graph6) = graph6_names
 		pain = list(as.logical(1 - Pain.M4.2c$urun), graph5, graph6)
 		names(pain) = c("successful_run", "graph_5", "graph_6")
@@ -1957,7 +1957,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Fatigue.M1$Results[2] < 0), abs(Fatigue.M1$Results[3]), as.numeric(Fatigue.M1$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Fatigue.M1$Results[4], Fatigue.M1$Results[5], Fatigue.M1$Results[6], Fatigue.M1$Results[7])
+		graph6 = list(Fatigue.M1$Results[4], Fatigue.M1$Results[5], Fatigue.M1$Results[6], Fatigue.M1$Results[7], Fatigue.M1$Results[8], Fatigue.M1$Results[9], Fatigue.M1$Results[10])
 		names(graph6) = graph6_names
 		fatigue = list(as.logical(1 - Fatigue.M1$urun), graph5, graph6)
 		names(fatigue) = c("successful_run", "graph_5", "graph_6")
@@ -1967,7 +1967,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Fatigue.M2$Results[2] < 0), abs(Fatigue.M2$Results[3]), as.numeric(Fatigue.M2$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Fatigue.M2$Results[4], Fatigue.M2$Results[5], Fatigue.M2$Results[6], Fatigue.M2$Results[7])
+		graph6 = list(Fatigue.M2$Results[4], Fatigue.M2$Results[5], Fatigue.M2$Results[6], Fatigue.M2$Results[7], Fatigue.M2$Results[8], Fatigue.M2$Results[9], Fatigue.M2$Results[10])
 		names(graph6) = graph6_names
 		fatigue = list(as.logical(1 - Fatigue.M2$urun), graph5, graph6)
 		names(fatigue) = c("successful_run", "graph_5", "graph_6")
@@ -1977,7 +1977,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Fatigue.M3$Results[2] < 0), abs(Fatigue.M3$Results[3]), as.numeric(Fatigue.M3$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Fatigue.M3$Results[4], Fatigue.M3$Results[5], Fatigue.M3$Results[6], Fatigue.M3$Results[7])
+		graph6 = list(Fatigue.M3$Results[4], Fatigue.M3$Results[5], Fatigue.M3$Results[6], Fatigue.M3$Results[7], Fatigue.M3$Results[8], Fatigue.M3$Results[9], Fatigue.M3$Results[10])
 		names(graph6) = graph6_names
 		fatigue = list(as.logical(1 - Fatigue.M3$urun), graph5, graph6)
 		names(fatigue) = c("successful_run", "graph_5", "graph_6")
@@ -1987,7 +1987,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Fatigue.M4$Results[2] < 0), abs(Fatigue.M4$Results[3]), as.numeric(Fatigue.M4$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Fatigue.M4$Results[4], Fatigue.M4$Results[5], Fatigue.M4$Results[6], Fatigue.M4$Results[7])
+		graph6 = list(Fatigue.M4$Results[4], Fatigue.M4$Results[5], Fatigue.M4$Results[6], Fatigue.M4$Results[7], Fatigue.M4$Results[8], Fatigue.M4$Results[9], Fatigue.M4$Results[10])
 		names(graph6) = graph6_names
 		fatigue = list(as.logical(1 - Fatigue.M4$urun), graph5, graph6)
 		names(fatigue) = c("successful_run", "graph_5", "graph_6")
@@ -1997,7 +1997,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Fatigue.M4.1$Results[2] < 0), abs(Fatigue.M4.1$Results[3]), as.numeric(Fatigue.M4.1$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Fatigue.M4.1$Results[4], Fatigue.M4.1$Results[5], Fatigue.M4.1$Results[6], Fatigue.M4.1$Results[7])
+		graph6 = list(Fatigue.M4.1$Results[4], Fatigue.M4.1$Results[5], Fatigue.M4.1$Results[6], Fatigue.M4.1$Results[7], Fatigue.M4.1$Results[8], Fatigue.M4.1$Results[9], Fatigue.M4.1$Results[10])
 		names(graph6) = graph6_names
 		fatigue = list(as.logical(1 - Fatigue.M4.1$urun), graph5, graph6)
 		names(fatigue) = c("successful_run", "graph_5", "graph_6")
@@ -2007,7 +2007,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Fatigue.M4.2$Results[2] < 0), abs(Fatigue.M4.2$Results[3]), as.numeric(Fatigue.M4.2$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Fatigue.M4.2$Results[4], Fatigue.M4.2$Results[5], Fatigue.M4.2$Results[6], Fatigue.M4.2$Results[7])
+		graph6 = list(Fatigue.M4.2$Results[4], Fatigue.M4.2$Results[5], Fatigue.M4.2$Results[6], Fatigue.M4.2$Results[7], Fatigue.M4.2$Results[8], Fatigue.M4.2$Results[9], Fatigue.M4.2$Results[10])
 		names(graph6) = graph6_names
 		fatigue = list(as.logical(1 - Fatigue.M4.2$urun), graph5, graph6)
 		names(fatigue) = c("successful_run", "graph_5", "graph_6")
@@ -2017,7 +2017,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Fatigue.M1c$Results[2] < 0), abs(Fatigue.M1c$Results[3]), as.numeric(Fatigue.M1c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Fatigue.M1c$Results[4], Fatigue.M1c$Results[5], Fatigue.M1c$Results[6], Fatigue.M1c$Results[7])
+		graph6 = list(Fatigue.M1c$Results[4], Fatigue.M1c$Results[5], Fatigue.M1c$Results[6], Fatigue.M1c$Results[7], Fatigue.M1c$Results[8], Fatigue.M1c$Results[9], Fatigue.M1c$Results[10])
 		names(graph6) = graph6_names
 		fatigue = list(as.logical(1 - Fatigue.M1c$urun), graph5, graph6)
 		names(fatigue) = c("successful_run", "graph_5", "graph_6")
@@ -2027,7 +2027,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Fatigue.M2c$Results[2] < 0), abs(Fatigue.M2c$Results[3]), as.numeric(Fatigue.M2c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Fatigue.M2c$Results[4], Fatigue.M2c$Results[5], Fatigue.M2c$Results[6], Fatigue.M2c$Results[7])
+		graph6 = list(Fatigue.M2c$Results[4], Fatigue.M2c$Results[5], Fatigue.M2c$Results[6], Fatigue.M2c$Results[7], Fatigue.M2c$Results[8], Fatigue.M2c$Results[9], Fatigue.M2c$Results[10])
 		names(graph6) = graph6_names
 		fatigue = list(as.logical(1 - Fatigue.M2c$urun), graph5, graph6)
 		names(fatigue) = c("successful_run", "graph_5", "graph_6")
@@ -2037,7 +2037,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Fatigue.M3c$Results[2] < 0), abs(Fatigue.M3c$Results[3]), as.numeric(Fatigue.M3c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Fatigue.M3c$Results[4], Fatigue.M3c$Results[5], Fatigue.M3c$Results[6], Fatigue.M3c$Results[7])
+		graph6 = list(Fatigue.M3c$Results[4], Fatigue.M3c$Results[5], Fatigue.M3c$Results[6], Fatigue.M3c$Results[7], Fatigue.M3c$Results[8], Fatigue.M3c$Results[9], Fatigue.M3c$Results[10])
 		names(graph6) = graph6_names
 		fatigue = list(as.logical(1 - Fatigue.M3c$urun), graph5, graph6)
 		names(fatigue) = c("successful_run", "graph_5", "graph_6")
@@ -2047,7 +2047,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Fatigue.M4c$Results[2] < 0), abs(Fatigue.M4c$Results[3]), as.numeric(Fatigue.M4c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Fatigue.M4c$Results[4], Fatigue.M4c$Results[5], Fatigue.M4c$Results[6], Fatigue.M4c$Results[7])
+		graph6 = list(Fatigue.M4c$Results[4], Fatigue.M4c$Results[5], Fatigue.M4c$Results[6], Fatigue.M4c$Results[7], Fatigue.M4c$Results[8], Fatigue.M4c$Results[9], Fatigue.M4c$Results[10])
 		names(graph6) = graph6_names
 		fatigue = list(as.logical(1 - Fatigue.M4c$urun), graph5, graph6)
 		names(fatigue) = c("successful_run", "graph_5", "graph_6")
@@ -2057,7 +2057,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Fatigue.M4.1c$Results[2] < 0), abs(Fatigue.M4.1c$Results[3]), as.numeric(Fatigue.M4.1c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Fatigue.M4.1c$Results[4], Fatigue.M4.1c$Results[5], Fatigue.M4.1c$Results[6], Fatigue.M4.1c$Results[7])
+		graph6 = list(Fatigue.M4.1c$Results[4], Fatigue.M4.1c$Results[5], Fatigue.M4.1c$Results[6], Fatigue.M4.1c$Results[7], Fatigue.M4.1c$Results[8], Fatigue.M4.1c$Results[9], Fatigue.M4.1c$Results[10])
 		names(graph6) = graph6_names
 		fatigue = list(as.logical(1 - Fatigue.M4.1c$urun), graph5, graph6)
 		names(fatigue) = c("successful_run", "graph_5", "graph_6")
@@ -2067,7 +2067,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Fatigue.M4.2c$Results[2] < 0), abs(Fatigue.M4.2c$Results[3]), as.numeric(Fatigue.M4.2c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Fatigue.M4.2c$Results[4], Fatigue.M4.2c$Results[5], Fatigue.M4.2c$Results[6], Fatigue.M4.2c$Results[7])
+		graph6 = list(Fatigue.M4.2c$Results[4], Fatigue.M4.2c$Results[5], Fatigue.M4.2c$Results[6], Fatigue.M4.2c$Results[7], Fatigue.M4.2c$Results[8], Fatigue.M4.2c$Results[9], Fatigue.M4.2c$Results[10])
 		names(graph6) = graph6_names
 		fatigue = list(as.logical(1 - Fatigue.M4.2c$urun), graph5, graph6)
 		names(fatigue) = c("successful_run", "graph_5", "graph_6")
@@ -2079,7 +2079,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Drowsy.M1$Results[2] < 0), abs(Drowsy.M1$Results[3]), as.numeric(Drowsy.M1$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Drowsy.M1$Results[4], Drowsy.M1$Results[5], Drowsy.M1$Results[6], Drowsy.M1$Results[7])
+		graph6 = list(Drowsy.M1$Results[4], Drowsy.M1$Results[5], Drowsy.M1$Results[6], Drowsy.M1$Results[7], Drowsy.M1$Results[8], Drowsy.M1$Results[9], Drowsy.M1$Results[10])
 		names(graph6) = graph6_names
 		drowsiness = list(as.logical(1 - Drowsy.M1$urun), graph5, graph6)
 		names(drowsiness) = c("successful_run", "graph_5", "graph_6")
@@ -2089,7 +2089,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Drowsy.M2$Results[2] < 0), abs(Drowsy.M2$Results[3]), as.numeric(Drowsy.M2$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Drowsy.M2$Results[4], Drowsy.M2$Results[5], Drowsy.M2$Results[6], Drowsy.M2$Results[7])
+		graph6 = list(Drowsy.M2$Results[4], Drowsy.M2$Results[5], Drowsy.M2$Results[6], Drowsy.M2$Results[7], Drowsy.M2$Results[8], Drowsy.M2$Results[9], Drowsy.M2$Results[10])
 		names(graph6) = graph6_names
 		drowsiness = list(as.logical(1 - Drowsy.M2$urun), graph5, graph6)
 		names(drowsiness) = c("successful_run", "graph_5", "graph_6")
@@ -2099,7 +2099,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Drowsy.M3$Results[2] < 0), abs(Drowsy.M3$Results[3]), as.numeric(Drowsy.M3$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Drowsy.M3$Results[4], Drowsy.M3$Results[5], Drowsy.M3$Results[6], Drowsy.M3$Results[7])
+		graph6 = list(Drowsy.M3$Results[4], Drowsy.M3$Results[5], Drowsy.M3$Results[6], Drowsy.M3$Results[7], Drowsy.M3$Results[8], Drowsy.M3$Results[9], Drowsy.M3$Results[10])
 		names(graph6) = graph6_names
 		drowsiness = list(as.logical(1 - Drowsy.M3$urun), graph5, graph6)
 		names(drowsiness) = c("successful_run", "graph_5", "graph_6")
@@ -2109,7 +2109,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Drowsy.M4$Results[2] < 0), abs(Drowsy.M4$Results[3]), as.numeric(Drowsy.M4$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Drowsy.M4$Results[4], Drowsy.M4$Results[5], Drowsy.M4$Results[6], Drowsy.M4$Results[7])
+		graph6 = list(Drowsy.M4$Results[4], Drowsy.M4$Results[5], Drowsy.M4$Results[6], Drowsy.M4$Results[7], Drowsy.M4$Results[8], Drowsy.M4$Results[9], Drowsy.M4$Results[10])
 		names(graph6) = graph6_names
 		drowsiness = list(as.logical(1 - Drowsy.M4$urun), graph5, graph6)
 		names(drowsiness) = c("successful_run", "graph_5", "graph_6")
@@ -2119,7 +2119,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Drowsy.M4.1$Results[2] < 0), abs(Drowsy.M4.1$Results[3]), as.numeric(Drowsy.M4.1$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Drowsy.M4.1$Results[4], Drowsy.M4.1$Results[5], Drowsy.M4.1$Results[6], Drowsy.M4.1$Results[7])
+		graph6 = list(Drowsy.M4.1$Results[4], Drowsy.M4.1$Results[5], Drowsy.M4.1$Results[6], Drowsy.M4.1$Results[7], Drowsy.M4.1$Results[8], Drowsy.M4.1$Results[9], Drowsy.M4.1$Results[10])
 		names(graph6) = graph6_names
 		drowsiness = list(as.logical(1 - Drowsy.M4.1$urun), graph5, graph6)
 		names(drowsiness) = c("successful_run", "graph_5", "graph_6")
@@ -2129,7 +2129,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Drowsy.M4.2$Results[2] < 0), abs(Drowsy.M4.2$Results[3]), as.numeric(Drowsy.M4.2$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Drowsy.M4.2$Results[4], Drowsy.M4.2$Results[5], Drowsy.M4.2$Results[6], Drowsy.M4.2$Results[7])
+		graph6 = list(Drowsy.M4.2$Results[4], Drowsy.M4.2$Results[5], Drowsy.M4.2$Results[6], Drowsy.M4.2$Results[7], Drowsy.M4.2$Results[8], Drowsy.M4.2$Results[9], Drowsy.M4.2$Results[10])
 		names(graph6) = graph6_names
 		drowsiness = list(as.logical(1 - Drowsy.M4.2$urun), graph5, graph6)
 		names(drowsiness) = c("successful_run", "graph_5", "graph_6")
@@ -2139,7 +2139,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Drowsy.M1c$Results[2] < 0), abs(Drowsy.M1c$Results[3]), as.numeric(Drowsy.M1c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Drowsy.M1c$Results[4], Drowsy.M1c$Results[5], Drowsy.M1c$Results[6], Drowsy.M1c$Results[7])
+		graph6 = list(Drowsy.M1c$Results[4], Drowsy.M1c$Results[5], Drowsy.M1c$Results[6], Drowsy.M1c$Results[7], Drowsy.M1c$Results[8], Drowsy.M1c$Results[9], Drowsy.M1c$Results[10])
 		names(graph6) = graph6_names
 		drowsiness = list(as.logical(1 - Drowsy.M1c$urun), graph5, graph6)
 		names(drowsiness) = c("successful_run", "graph_5", "graph_6")
@@ -2149,7 +2149,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Drowsy.M2c$Results[2] < 0), abs(Drowsy.M2c$Results[3]), as.numeric(Drowsy.M2c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Drowsy.M2c$Results[4], Drowsy.M2c$Results[5], Drowsy.M2c$Results[6], Drowsy.M2c$Results[7])
+		graph6 = list(Drowsy.M2c$Results[4], Drowsy.M2c$Results[5], Drowsy.M2c$Results[6], Drowsy.M2c$Results[7], Drowsy.M2c$Results[8], Drowsy.M2c$Results[9], Drowsy.M2c$Results[10])
 		names(graph6) = graph6_names
 		drowsiness = list(as.logical(1 - Drowsy.M2c$urun), graph5, graph6)
 		names(drowsiness) = c("successful_run", "graph_5", "graph_6")
@@ -2159,7 +2159,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Drowsy.M3c$Results[2] < 0), abs(Drowsy.M3c$Results[3]), as.numeric(Drowsy.M3c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Drowsy.M3c$Results[4], Drowsy.M3c$Results[5], Drowsy.M3c$Results[6], Drowsy.M3c$Results[7])
+		graph6 = list(Drowsy.M3c$Results[4], Drowsy.M3c$Results[5], Drowsy.M3c$Results[6], Drowsy.M3c$Results[7], Drowsy.M3c$Results[8], Drowsy.M3c$Results[9], Drowsy.M3c$Results[10])
 		names(graph6) = graph6_names
 		drowsiness = list(as.logical(1 - Drowsy.M3c$urun), graph5, graph6)
 		names(drowsiness) = c("successful_run", "graph_5", "graph_6")
@@ -2169,7 +2169,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Drowsy.M4c$Results[2] < 0), abs(Drowsy.M4c$Results[3]), as.numeric(Drowsy.M4c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Drowsy.M4c$Results[4], Drowsy.M4c$Results[5], Drowsy.M4c$Results[6], Drowsy.M4c$Results[7])
+		graph6 = list(Drowsy.M4c$Results[4], Drowsy.M4c$Results[5], Drowsy.M4c$Results[6], Drowsy.M4c$Results[7], Drowsy.M4c$Results[8], Drowsy.M4c$Results[9], Drowsy.M4c$Results[10])
 		names(graph6) = graph6_names
 		drowsiness = list(as.logical(1 - Drowsy.M4c$urun), graph5, graph6)
 		names(drowsiness) = c("successful_run", "graph_5", "graph_6")
@@ -2179,7 +2179,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Drowsy.M4.1c$Results[2] < 0), abs(Drowsy.M4.1c$Results[3]), as.numeric(Drowsy.M4.1c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Drowsy.M4.1c$Results[4], Drowsy.M4.1c$Results[5], Drowsy.M4.1c$Results[6], Drowsy.M4.1c$Results[7])
+		graph6 = list(Drowsy.M4.1c$Results[4], Drowsy.M4.1c$Results[5], Drowsy.M4.1c$Results[6], Drowsy.M4.1c$Results[7], Drowsy.M4.1c$Results[8], Drowsy.M4.1c$Results[9], Drowsy.M4.1c$Results[10])
 		names(graph6) = graph6_names
 		drowsiness = list(as.logical(1 - Drowsy.M4.1c$urun), graph5, graph6)
 		names(drowsiness) = c("successful_run", "graph_5", "graph_6")
@@ -2189,7 +2189,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Drowsy.M4.2c$Results[2] < 0), abs(Drowsy.M4.2c$Results[3]), as.numeric(Drowsy.M4.2c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Drowsy.M4.2c$Results[4], Drowsy.M4.2c$Results[5], Drowsy.M4.2c$Results[6], Drowsy.M4.2c$Results[7])
+		graph6 = list(Drowsy.M4.2c$Results[4], Drowsy.M4.2c$Results[5], Drowsy.M4.2c$Results[6], Drowsy.M4.2c$Results[7], Drowsy.M4.2c$Results[8], Drowsy.M4.2c$Results[9], Drowsy.M4.2c$Results[10])
 		names(graph6) = graph6_names
 		drowsiness = list(as.logical(1 - Drowsy.M4.2c$urun), graph5, graph6)
 		names(drowsiness) = c("successful_run", "graph_5", "graph_6")
@@ -2201,7 +2201,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Sleep.M1$Results[2] < 0), abs(Sleep.M1$Results[3]), as.numeric(Sleep.M1$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Sleep.M1$Results[4], Sleep.M1$Results[5], Sleep.M1$Results[6], Sleep.M1$Results[7])
+		graph6 = list(Sleep.M1$Results[4], Sleep.M1$Results[5], Sleep.M1$Results[6], Sleep.M1$Results[7], Sleep.M1$Results[8], Sleep.M1$Results[9], Sleep.M1$Results[10])
 		names(graph6) = graph6_names
 		sleep_problems = list(as.logical(1 - Sleep.M1$urun), graph5, graph6)
 		names(sleep_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2211,7 +2211,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Sleep.M2$Results[2] < 0), abs(Sleep.M2$Results[3]), as.numeric(Sleep.M2$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Sleep.M2$Results[4], Sleep.M2$Results[5], Sleep.M2$Results[6], Sleep.M2$Results[7])
+		graph6 = list(Sleep.M2$Results[4], Sleep.M2$Results[5], Sleep.M2$Results[6], Sleep.M2$Results[7], Sleep.M2$Results[8], Sleep.M2$Results[9], Sleep.M2$Results[10])
 		names(graph6) = graph6_names
 		sleep_problems = list(as.logical(1 - Sleep.M2$urun), graph5, graph6)
 		names(sleep_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2221,7 +2221,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Sleep.M3$Results[2] < 0), abs(Sleep.M3$Results[3]), as.numeric(Sleep.M3$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Sleep.M3$Results[4], Sleep.M3$Results[5], Sleep.M3$Results[6], Sleep.M3$Results[7])
+		graph6 = list(Sleep.M3$Results[4], Sleep.M3$Results[5], Sleep.M3$Results[6], Sleep.M3$Results[7], Sleep.M3$Results[8], Sleep.M3$Results[9], Sleep.M3$Results[10])
 		names(graph6) = graph6_names
 		sleep_problems = list(as.logical(1 - Sleep.M3$urun), graph5, graph6)
 		names(sleep_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2231,7 +2231,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Sleep.M4$Results[2] < 0), abs(Sleep.M4$Results[3]), as.numeric(Sleep.M4$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Sleep.M4$Results[4], Sleep.M4$Results[5], Sleep.M4$Results[6], Sleep.M4$Results[7])
+		graph6 = list(Sleep.M4$Results[4], Sleep.M4$Results[5], Sleep.M4$Results[6], Sleep.M4$Results[7], Sleep.M4$Results[8], Sleep.M4$Results[9], Sleep.M4$Results[10])
 		names(graph6) = graph6_names
 		sleep_problems = list(as.logical(1 - Sleep.M4$urun), graph5, graph6)
 		names(sleep_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2241,7 +2241,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Sleep.M4.1$Results[2] < 0), abs(Sleep.M4.1$Results[3]), as.numeric(Sleep.M4.1$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Sleep.M4.1$Results[4], Sleep.M4.1$Results[5], Sleep.M4.1$Results[6], Sleep.M4.1$Results[7])
+		graph6 = list(Sleep.M4.1$Results[4], Sleep.M4.1$Results[5], Sleep.M4.1$Results[6], Sleep.M4.1$Results[7], Sleep.M4.1$Results[8], Sleep.M4.1$Results[9], Sleep.M4.1$Results[10])
 		names(graph6) = graph6_names
 		sleep_problems = list(as.logical(1 - Sleep.M4.1$urun), graph5, graph6)
 		names(sleep_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2251,7 +2251,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Sleep.M4.2$Results[2] < 0), abs(Sleep.M4.2$Results[3]), as.numeric(Sleep.M4.2$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Sleep.M4.2$Results[4], Sleep.M4.2$Results[5], Sleep.M4.2$Results[6], Sleep.M4.2$Results[7])
+		graph6 = list(Sleep.M4.2$Results[4], Sleep.M4.2$Results[5], Sleep.M4.2$Results[6], Sleep.M4.2$Results[7], Sleep.M4.2$Results[8], Sleep.M4.2$Results[9], Sleep.M4.2$Results[10])
 		names(graph6) = graph6_names
 		sleep_problems = list(as.logical(1 - Sleep.M4.2$urun), graph5, graph6)
 		names(sleep_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2261,7 +2261,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Sleep.M1c$Results[2] < 0), abs(Sleep.M1c$Results[3]), as.numeric(Sleep.M1c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Sleep.M1c$Results[4], Sleep.M1c$Results[5], Sleep.M1c$Results[6], Sleep.M1c$Results[7])
+		graph6 = list(Sleep.M1c$Results[4], Sleep.M1c$Results[5], Sleep.M1c$Results[6], Sleep.M1c$Results[7], Sleep.M1c$Results[8], Sleep.M1c$Results[9], Sleep.M1c$Results[10])
 		names(graph6) = graph6_names
 		sleep_problems = list(as.logical(1 - Sleep.M1c$urun), graph5, graph6)
 		names(sleep_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2271,7 +2271,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Sleep.M2c$Results[2] < 0), abs(Sleep.M2c$Results[3]), as.numeric(Sleep.M2c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Sleep.M2c$Results[4], Sleep.M2c$Results[5], Sleep.M2c$Results[6], Sleep.M2c$Results[7])
+		graph6 = list(Sleep.M2c$Results[4], Sleep.M2c$Results[5], Sleep.M2c$Results[6], Sleep.M2c$Results[7], Sleep.M2c$Results[8], Sleep.M2c$Results[9], Sleep.M2c$Results[10])
 		names(graph6) = graph6_names
 		sleep_problems = list(as.logical(1 - Sleep.M2c$urun), graph5, graph6)
 		names(sleep_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2281,7 +2281,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Sleep.M3c$Results[2] < 0), abs(Sleep.M3c$Results[3]), as.numeric(Sleep.M3c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Sleep.M3c$Results[4], Sleep.M3c$Results[5], Sleep.M3c$Results[6], Sleep.M3c$Results[7])
+		graph6 = list(Sleep.M3c$Results[4], Sleep.M3c$Results[5], Sleep.M3c$Results[6], Sleep.M3c$Results[7], Sleep.M3c$Results[8], Sleep.M3c$Results[9], Sleep.M3c$Results[10])
 		names(graph6) = graph6_names
 		sleep_problems = list(as.logical(1 - Sleep.M3c$urun), graph5, graph6)
 		names(sleep_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2291,7 +2291,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Sleep.M4c$Results[2] < 0), abs(Sleep.M4c$Results[3]), as.numeric(Sleep.M4c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Sleep.M4c$Results[4], Sleep.M4c$Results[5], Sleep.M4c$Results[6], Sleep.M4c$Results[7])
+		graph6 = list(Sleep.M4c$Results[4], Sleep.M4c$Results[5], Sleep.M4c$Results[6], Sleep.M4c$Results[7], Sleep.M4c$Results[8], Sleep.M4c$Results[9], Sleep.M4c$Results[10])
 		names(graph6) = graph6_names
 		sleep_problems = list(as.logical(1 - Sleep.M4c$urun), graph5, graph6)
 		names(sleep_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2301,7 +2301,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Sleep.M4.1c$Results[2] < 0), abs(Sleep.M4.1c$Results[3]), as.numeric(Sleep.M4.1c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Sleep.M4.1c$Results[4], Sleep.M4.1c$Results[5], Sleep.M4.1c$Results[6], Sleep.M4.1c$Results[7])
+		graph6 = list(Sleep.M4.1c$Results[4], Sleep.M4.1c$Results[5], Sleep.M4.1c$Results[6], Sleep.M4.1c$Results[7], Sleep.M4.1c$Results[8], Sleep.M4.1c$Results[9], Sleep.M4.1c$Results[10])
 		names(graph6) = graph6_names
 		sleep_problems = list(as.logical(1 - Sleep.M4.1c$urun), graph5, graph6)
 		names(sleep_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2311,7 +2311,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Sleep.M4.2c$Results[2] < 0), abs(Sleep.M4.2c$Results[3]), as.numeric(Sleep.M4.2c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Sleep.M4.2c$Results[4], Sleep.M4.2c$Results[5], Sleep.M4.2c$Results[6], Sleep.M4.2c$Results[7])
+		graph6 = list(Sleep.M4.2c$Results[4], Sleep.M4.2c$Results[5], Sleep.M4.2c$Results[6], Sleep.M4.2c$Results[7], Sleep.M4.2c$Results[8], Sleep.M4.2c$Results[9], Sleep.M4.2c$Results[10])
 		names(graph6) = graph6_names
 		sleep_problems = list(as.logical(1 - Sleep.M4.2c$urun), graph5, graph6)
 		names(sleep_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2323,7 +2323,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Thinking.M1$Results[2] < 0), abs(Thinking.M1$Results[3]), as.numeric(Thinking.M1$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Thinking.M1$Results[4], Thinking.M1$Results[5], Thinking.M1$Results[6], Thinking.M1$Results[7])
+		graph6 = list(Thinking.M1$Results[4], Thinking.M1$Results[5], Thinking.M1$Results[6], Thinking.M1$Results[7], Thinking.M1$Results[8], Thinking.M1$Results[9], Thinking.M1$Results[10])
 		names(graph6) = graph6_names
 		thinking_problems = list(as.logical(1 - Thinking.M1$urun), graph5, graph6)
 		names(thinking_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2333,7 +2333,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Thinking.M2$Results[2] < 0), abs(Thinking.M2$Results[3]), as.numeric(Thinking.M2$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Thinking.M2$Results[4], Thinking.M2$Results[5], Thinking.M2$Results[6], Thinking.M2$Results[7])
+		graph6 = list(Thinking.M2$Results[4], Thinking.M2$Results[5], Thinking.M2$Results[6], Thinking.M2$Results[7], Thinking.M2$Results[8], Thinking.M2$Results[9], Thinking.M2$Results[10])
 		names(graph6) = graph6_names
 		thinking_problems = list(as.logical(1 - Thinking.M2$urun), graph5, graph6)
 		names(thinking_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2343,7 +2343,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Thinking.M3$Results[2] < 0), abs(Thinking.M3$Results[3]), as.numeric(Thinking.M3$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Thinking.M3$Results[4], Thinking.M3$Results[5], Thinking.M3$Results[6], Thinking.M3$Results[7])
+		graph6 = list(Thinking.M3$Results[4], Thinking.M3$Results[5], Thinking.M3$Results[6], Thinking.M3$Results[7], Thinking.M3$Results[8], Thinking.M3$Results[9], Thinking.M3$Results[10])
 		names(graph6) = graph6_names
 		thinking_problems = list(as.logical(1 - Thinking.M3$urun), graph5, graph6)
 		names(thinking_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2353,7 +2353,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Thinking.M4$Results[2] < 0), abs(Thinking.M4$Results[3]), as.numeric(Thinking.M4$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Thinking.M4$Results[4], Thinking.M4$Results[5], Thinking.M4$Results[6], Thinking.M4$Results[7])
+		graph6 = list(Thinking.M4$Results[4], Thinking.M4$Results[5], Thinking.M4$Results[6], Thinking.M4$Results[7], Thinking.M4$Results[8], Thinking.M4$Results[9], Thinking.M4$Results[10])
 		names(graph6) = graph6_names
 		thinking_problems = list(as.logical(1 - Thinking.M4$urun), graph5, graph6)
 		names(thinking_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2363,7 +2363,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Thinking.M4.1$Results[2] < 0), abs(Thinking.M4.1$Results[3]), as.numeric(Thinking.M4.1$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Thinking.M4.1$Results[4], Thinking.M4.1$Results[5], Thinking.M4.1$Results[6], Thinking.M4.1$Results[7])
+		graph6 = list(Thinking.M4.1$Results[4], Thinking.M4.1$Results[5], Thinking.M4.1$Results[6], Thinking.M4.1$Results[7], Thinking.M4.1$Results[8], Thinking.M4.1$Results[9], Thinking.M4.1$Results[10])
 		names(graph6) = graph6_names
 		thinking_problems = list(as.logical(1 - Thinking.M4.1$urun), graph5, graph6)
 		names(thinking_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2373,7 +2373,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Thinking.M4.2$Results[2] < 0), abs(Thinking.M4.2$Results[3]), as.numeric(Thinking.M4.2$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Thinking.M4.2$Results[4], Thinking.M4.2$Results[5], Thinking.M4.2$Results[6], Thinking.M4.2$Results[7])
+		graph6 = list(Thinking.M4.2$Results[4], Thinking.M4.2$Results[5], Thinking.M4.2$Results[6], Thinking.M4.2$Results[7], Thinking.M4.2$Results[8], Thinking.M4.2$Results[9], Thinking.M4.2$Results[10])
 		names(graph6) = graph6_names
 		thinking_problems = list(as.logical(1 - Thinking.M4.2$urun), graph5, graph6)
 		names(thinking_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2383,7 +2383,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Thinking.M1c$Results[2] < 0), abs(Thinking.M1c$Results[3]), as.numeric(Thinking.M1c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Thinking.M1c$Results[4], Thinking.M1c$Results[5], Thinking.M1c$Results[6], Thinking.M1c$Results[7])
+		graph6 = list(Thinking.M1c$Results[4], Thinking.M1c$Results[5], Thinking.M1c$Results[6], Thinking.M1c$Results[7], Thinking.M1c$Results[8], Thinking.M1c$Results[9], Thinking.M1c$Results[10])
 		names(graph6) = graph6_names
 		thinking_problems = list(as.logical(1 - Thinking.M1c$urun), graph5, graph6)
 		names(thinking_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2393,7 +2393,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Thinking.M2c$Results[2] < 0), abs(Thinking.M2c$Results[3]), as.numeric(Thinking.M2c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Thinking.M2c$Results[4], Thinking.M2c$Results[5], Thinking.M2c$Results[6], Thinking.M2c$Results[7])
+		graph6 = list(Thinking.M2c$Results[4], Thinking.M2c$Results[5], Thinking.M2c$Results[6], Thinking.M2c$Results[7], Thinking.M2c$Results[8], Thinking.M2c$Results[9], Thinking.M2c$Results[10])
 		names(graph6) = graph6_names
 		thinking_problems = list(as.logical(1 - Thinking.M2c$urun), graph5, graph6)
 		names(thinking_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2403,7 +2403,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Thinking.M3c$Results[2] < 0), abs(Thinking.M3c$Results[3]), as.numeric(Thinking.M3c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Thinking.M3c$Results[4], Thinking.M3c$Results[5], Thinking.M3c$Results[6], Thinking.M3c$Results[7])
+		graph6 = list(Thinking.M3c$Results[4], Thinking.M3c$Results[5], Thinking.M3c$Results[6], Thinking.M3c$Results[7], Thinking.M3c$Results[8], Thinking.M3c$Results[9], Thinking.M3c$Results[10])
 		names(graph6) = graph6_names
 		thinking_problems = list(as.logical(1 - Thinking.M3c$urun), graph5, graph6)
 		names(thinking_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2413,7 +2413,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Thinking.M4c$Results[2] < 0), abs(Thinking.M4c$Results[3]), as.numeric(Thinking.M4c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Thinking.M4c$Results[4], Thinking.M4c$Results[5], Thinking.M4c$Results[6], Thinking.M4c$Results[7])
+		graph6 = list(Thinking.M4c$Results[4], Thinking.M4c$Results[5], Thinking.M4c$Results[6], Thinking.M4c$Results[7], Thinking.M4c$Results[8], Thinking.M4c$Results[9], Thinking.M4c$Results[10])
 		names(graph6) = graph6_names
 		thinking_problems = list(as.logical(1 - Thinking.M4c$urun), graph5, graph6)
 		names(thinking_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2423,7 +2423,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Thinking.M4.1c$Results[2] < 0), abs(Thinking.M4.1c$Results[3]), as.numeric(Thinking.M4.1c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Thinking.M4.1c$Results[4], Thinking.M4.1c$Results[5], Thinking.M4.1c$Results[6], Thinking.M4.1c$Results[7])
+		graph6 = list(Thinking.M4.1c$Results[4], Thinking.M4.1c$Results[5], Thinking.M4.1c$Results[6], Thinking.M4.1c$Results[7], Thinking.M4.1c$Results[8], Thinking.M4.1c$Results[9], Thinking.M4.1c$Results[10])
 		names(graph6) = graph6_names
 		thinking_problems = list(as.logical(1 - Thinking.M4.1c$urun), graph5, graph6)
 		names(thinking_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2433,7 +2433,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Thinking.M4.2c$Results[2] < 0), abs(Thinking.M4.2c$Results[3]), as.numeric(Thinking.M4.2c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Thinking.M4.2c$Results[4], Thinking.M4.2c$Results[5], Thinking.M4.2c$Results[6], Thinking.M4.2c$Results[7])
+		graph6 = list(Thinking.M4.2c$Results[4], Thinking.M4.2c$Results[5], Thinking.M4.2c$Results[6], Thinking.M4.2c$Results[7], Thinking.M4.2c$Results[8], Thinking.M4.2c$Results[9], Thinking.M4.2c$Results[10])
 		names(graph6) = graph6_names
 		thinking_problems = list(as.logical(1 - Thinking.M4.2c$urun), graph5, graph6)
 		names(thinking_problems) = c("successful_run", "graph_5", "graph_6")
@@ -2445,7 +2445,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Constipation.M1$Results[2] < 0), abs(Constipation.M1$Results[3]), as.numeric(Constipation.M1$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Constipation.M1$Results[4], Constipation.M1$Results[5], Constipation.M1$Results[6], Constipation.M1$Results[7])
+		graph6 = list(Constipation.M1$Results[4], Constipation.M1$Results[5], Constipation.M1$Results[6], Constipation.M1$Results[7], Constipation.M1$Results[8], Constipation.M1$Results[9], Constipation.M1$Results[10])
 		names(graph6) = graph6_names
 		constipation = list(as.logical(1 - Constipation.M1$urun), graph5, graph6)
 		names(constipation) = c("successful_run", "graph_5", "graph_6")
@@ -2455,7 +2455,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Constipation.M2$Results[2] < 0), abs(Constipation.M2$Results[3]), as.numeric(Constipation.M2$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Constipation.M2$Results[4], Constipation.M2$Results[5], Constipation.M2$Results[6], Constipation.M2$Results[7])
+		graph6 = list(Constipation.M2$Results[4], Constipation.M2$Results[5], Constipation.M2$Results[6], Constipation.M2$Results[7], Constipation.M2$Results[8], Constipation.M2$Results[9], Constipation.M2$Results[10])
 		names(graph6) = graph6_names
 		constipation = list(as.logical(1 - Constipation.M2$urun), graph5, graph6)
 		names(constipation) = c("successful_run", "graph_5", "graph_6")
@@ -2465,7 +2465,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Constipation.M3$Results[2] < 0), abs(Constipation.M3$Results[3]), as.numeric(Constipation.M3$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Constipation.M3$Results[4], Constipation.M3$Results[5], Constipation.M3$Results[6], Constipation.M3$Results[7])
+		graph6 = list(Constipation.M3$Results[4], Constipation.M3$Results[5], Constipation.M3$Results[6], Constipation.M3$Results[7], Constipation.M3$Results[8], Constipation.M3$Results[9], Constipation.M3$Results[10])
 		names(graph6) = graph6_names
 		constipation = list(as.logical(1 - Constipation.M3$urun), graph5, graph6)
 		names(constipation) = c("successful_run", "graph_5", "graph_6")
@@ -2475,7 +2475,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Constipation.M4$Results[2] < 0), abs(Constipation.M4$Results[3]), as.numeric(Constipation.M4$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Constipation.M4$Results[4], Constipation.M4$Results[5], Constipation.M4$Results[6], Constipation.M4$Results[7])
+		graph6 = list(Constipation.M4$Results[4], Constipation.M4$Results[5], Constipation.M4$Results[6], Constipation.M4$Results[7], Constipation.M4$Results[8], Constipation.M4$Results[9], Constipation.M4$Results[10])
 		names(graph6) = graph6_names
 		constipation = list(as.logical(1 - Constipation.M4$urun), graph5, graph6)
 		names(constipation) = c("successful_run", "graph_5", "graph_6")
@@ -2485,7 +2485,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Constipation.M4.1$Results[2] < 0), abs(Constipation.M4.1$Results[3]), as.numeric(Constipation.M4.1$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Constipation.M4.1$Results[4], Constipation.M4.1$Results[5], Constipation.M4.1$Results[6], Constipation.M4.1$Results[7])
+		graph6 = list(Constipation.M4.1$Results[4], Constipation.M4.1$Results[5], Constipation.M4.1$Results[6], Constipation.M4.1$Results[7], Constipation.M4.1$Results[8], Constipation.M4.1$Results[9], Constipation.M4.1$Results[10])
 		names(graph6) = graph6_names
 		constipation = list(as.logical(1 - Constipation.M4.1$urun), graph5, graph6)
 		names(constipation) = c("successful_run", "graph_5", "graph_6")
@@ -2495,7 +2495,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Constipation.M4.2$Results[2] < 0), abs(Constipation.M4.2$Results[3]), as.numeric(Constipation.M4.2$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Constipation.M4.2$Results[4], Constipation.M4.2$Results[5], Constipation.M4.2$Results[6], Constipation.M4.2$Results[7])
+		graph6 = list(Constipation.M4.2$Results[4], Constipation.M4.2$Results[5], Constipation.M4.2$Results[6], Constipation.M4.2$Results[7], Constipation.M4.2$Results[8], Constipation.M4.2$Results[9], Constipation.M4.2$Results[10])
 		names(graph6) = graph6_names
 		constipation = list(as.logical(1 - Constipation.M4.2$urun), graph5, graph6)
 		names(constipation) = c("successful_run", "graph_5", "graph_6")
@@ -2505,7 +2505,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Constipation.M1c$Results[2] < 0), abs(Constipation.M1c$Results[3]), as.numeric(Constipation.M1c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Constipation.M1c$Results[4], Constipation.M1c$Results[5], Constipation.M1c$Results[6], Constipation.M1c$Results[7])
+		graph6 = list(Constipation.M1c$Results[4], Constipation.M1c$Results[5], Constipation.M1c$Results[6], Constipation.M1c$Results[7], Constipation.M1c$Results[8], Constipation.M1c$Results[9], Constipation.M1c$Results[10])
 		names(graph6) = graph6_names
 		constipation = list(as.logical(1 - Constipation.M1c$urun), graph5, graph6)
 		names(constipation) = c("successful_run", "graph_5", "graph_6")
@@ -2515,7 +2515,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Constipation.M2c$Results[2] < 0), abs(Constipation.M2c$Results[3]), as.numeric(Constipation.M2c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Constipation.M2c$Results[4], Constipation.M2c$Results[5], Constipation.M2c$Results[6], Constipation.M2c$Results[7])
+		graph6 = list(Constipation.M2c$Results[4], Constipation.M2c$Results[5], Constipation.M2c$Results[6], Constipation.M2c$Results[7], Constipation.M2c$Results[8], Constipation.M2c$Results[9], Constipation.M2c$Results[10])
 		names(graph6) = graph6_names
 		constipation = list(as.logical(1 - Constipation.M2c$urun), graph5, graph6)
 		names(constipation) = c("successful_run", "graph_5", "graph_6")
@@ -2525,7 +2525,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Constipation.M3c$Results[2] < 0), abs(Constipation.M3c$Results[3]), as.numeric(Constipation.M3c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Constipation.M3c$Results[4], Constipation.M3c$Results[5], Constipation.M3c$Results[6], Constipation.M3c$Results[7])
+		graph6 = list(Constipation.M3c$Results[4], Constipation.M3c$Results[5], Constipation.M3c$Results[6], Constipation.M3c$Results[7], Constipation.M3c$Results[8], Constipation.M3c$Results[9], Constipation.M3c$Results[10])
 		names(graph6) = graph6_names
 		constipation = list(as.logical(1 - Constipation.M3c$urun), graph5, graph6)
 		names(constipation) = c("successful_run", "graph_5", "graph_6")
@@ -2535,7 +2535,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Constipation.M4c$Results[2] < 0), abs(Constipation.M4c$Results[3]), as.numeric(Constipation.M4c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Constipation.M4c$Results[4], Constipation.M4c$Results[5], Constipation.M4c$Results[6], Constipation.M4c$Results[7])
+		graph6 = list(Constipation.M4c$Results[4], Constipation.M4c$Results[5], Constipation.M4c$Results[6], Constipation.M4c$Results[7], Constipation.M4c$Results[8], Constipation.M4c$Results[9], Constipation.M4c$Results[10])
 		names(graph6) = graph6_names
 		constipation = list(as.logical(1 - Constipation.M4c$urun), graph5, graph6)
 		names(constipation) = c("successful_run", "graph_5", "graph_6")
@@ -2545,7 +2545,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Constipation.M4.1c$Results[2] < 0), abs(Constipation.M4.1c$Results[3]), as.numeric(Constipation.M4.1c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Constipation.M4.1c$Results[4], Constipation.M4.1c$Results[5], Constipation.M4.1c$Results[6], Constipation.M4.1c$Results[7])
+		graph6 = list(Constipation.M4.1c$Results[4], Constipation.M4.1c$Results[5], Constipation.M4.1c$Results[6], Constipation.M4.1c$Results[7], Constipation.M4.1c$Results[8], Constipation.M4.1c$Results[9], Constipation.M4.1c$Results[10])
 		names(graph6) = graph6_names
 		constipation = list(as.logical(1 - Constipation.M4.1c$urun), graph5, graph6)
 		names(constipation) = c("successful_run", "graph_5", "graph_6")
@@ -2555,7 +2555,7 @@ wrap <- function(data, metadata) {
 			as.numeric(Constipation.M4.2c$Results[2] < 0), abs(Constipation.M4.2c$Results[3]), as.numeric(Constipation.M4.2c$Results[3] < 0))
 		for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 		names(graph5) = graph5_names
-		graph6 = list(Constipation.M4.2c$Results[4], Constipation.M4.2c$Results[5], Constipation.M4.2c$Results[6], Constipation.M4.2c$Results[7])
+		graph6 = list(Constipation.M4.2c$Results[4], Constipation.M4.2c$Results[5], Constipation.M4.2c$Results[6], Constipation.M4.2c$Results[7], Constipation.M4.2c$Results[8], Constipation.M4.2c$Results[9], Constipation.M4.2c$Results[10])
 		names(graph6) = graph6_names
 		constipation = list(as.logical(1 - Constipation.M4.2c$urun), graph5, graph6)
 		names(constipation) = c("successful_run", "graph_5", "graph_6")
@@ -2568,7 +2568,7 @@ wrap <- function(data, metadata) {
 				as.numeric(Neuropain.M1$Results[2] < 0), abs(Neuropain.M1$Results[3]), as.numeric(Neuropain.M1$Results[3] < 0))
 			for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 			names(graph5) = graph5_names
-			graph6 = list(Neuropain.M1$Results[4], Neuropain.M1$Results[5], Neuropain.M1$Results[6], Neuropain.M1$Results[7])
+			graph6 = list(Neuropain.M1$Results[4], Neuropain.M1$Results[5], Neuropain.M1$Results[6], Neuropain.M1$Results[7], Neuropain.M1$Results[8], Neuropain.M1$Results[9], Neuropain.M1$Results[10])
 			names(graph6) = graph6_names
 			neuropathic_pain = list(as.logical(1 - Neuropain.M1$urun), graph5, graph6)
 			names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
@@ -2578,7 +2578,7 @@ wrap <- function(data, metadata) {
 				as.numeric(Neuropain.M2$Results[2] < 0), abs(Neuropain.M2$Results[3]), as.numeric(Neuropain.M2$Results[3] < 0))
 			for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 			names(graph5) = graph5_names
-			graph6 = list(Neuropain.M2$Results[4], Neuropain.M2$Results[5], Neuropain.M2$Results[6], Neuropain.M2$Results[7])
+			graph6 = list(Neuropain.M2$Results[4], Neuropain.M2$Results[5], Neuropain.M2$Results[6], Neuropain.M2$Results[7], Neuropain.M2$Results[8], Neuropain.M2$Results[9], Neuropain.M2$Results[10])
 			names(graph6) = graph6_names
 			neuropathic_pain = list(as.logical(1 - Neuropain.M2$urun), graph5, graph6)
 			names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
@@ -2588,7 +2588,7 @@ wrap <- function(data, metadata) {
 				as.numeric(Neuropain.M3$Results[2] < 0), abs(Neuropain.M3$Results[3]), as.numeric(Neuropain.M3$Results[3] < 0))
 			for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 			names(graph5) = graph5_names
-			graph6 = list(Neuropain.M3$Results[4], Neuropain.M3$Results[5], Neuropain.M3$Results[6], Neuropain.M3$Results[7])
+			graph6 = list(Neuropain.M3$Results[4], Neuropain.M3$Results[5], Neuropain.M3$Results[6], Neuropain.M3$Results[7], Neuropain.M3$Results[8], Neuropain.M3$Results[9], Neuropain.M3$Results[10])
 			names(graph6) = graph6_names
 			neuropathic_pain = list(as.logical(1 - Neuropain.M3$urun), graph5, graph6)
 			names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
@@ -2598,7 +2598,7 @@ wrap <- function(data, metadata) {
 				as.numeric(Neuropain.M4$Results[2] < 0), abs(Neuropain.M4$Results[3]), as.numeric(Neuropain.M4$Results[3] < 0))
 			for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 			names(graph5) = graph5_names
-			graph6 = list(Neuropain.M4$Results[4], Neuropain.M4$Results[5], Neuropain.M4$Results[6], Neuropain.M4$Results[7])
+			graph6 = list(Neuropain.M4$Results[4], Neuropain.M4$Results[5], Neuropain.M4$Results[6], Neuropain.M4$Results[7], Neuropain.M4$Results[8], Neuropain.M4$Results[9], Neuropain.M4$Results[10])
 			names(graph6) = graph6_names
 			neuropathic_pain = list(as.logical(1 - Neuropain.M4$urun), graph5, graph6)
 			names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
@@ -2608,7 +2608,7 @@ wrap <- function(data, metadata) {
 				as.numeric(Neuropain.M4.1$Results[2] < 0), abs(Neuropain.M4.1$Results[3]), as.numeric(Neuropain.M4.1$Results[3] < 0))
 			for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 			names(graph5) = graph5_names
-			graph6 = list(Neuropain.M4.1$Results[4], Neuropain.M4.1$Results[5], Neuropain.M4.1$Results[6], Neuropain.M4.1$Results[7])
+			graph6 = list(Neuropain.M4.1$Results[4], Neuropain.M4.1$Results[5], Neuropain.M4.1$Results[6], Neuropain.M4.1$Results[7], Neuropain.M4.1$Results[8], Neuropain.M4.1$Results[9], Neuropain.M4.1$Results[10])
 			names(graph6) = graph6_names
 			neuropathic_pain = list(as.logical(1 - Neuropain.M4.1$urun), graph5, graph6)
 			names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
@@ -2618,7 +2618,7 @@ wrap <- function(data, metadata) {
 				as.numeric(Neuropain.M4.2$Results[2] < 0), abs(Neuropain.M4.2$Results[3]), as.numeric(Neuropain.M4.2$Results[3] < 0))
 			for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 			names(graph5) = graph5_names
-			graph6 = list(Neuropain.M4.2$Results[4], Neuropain.M4.2$Results[5], Neuropain.M4.2$Results[6], Neuropain.M4.2$Results[7])
+			graph6 = list(Neuropain.M4.2$Results[4], Neuropain.M4.2$Results[5], Neuropain.M4.2$Results[6], Neuropain.M4.2$Results[7], Neuropain.M4.2$Results[8], Neuropain.M4.2$Results[9], Neuropain.M4.2$Results[10])
 			names(graph6) = graph6_names
 			neuropathic_pain = list(as.logical(1 - Neuropain.M4.2$urun), graph5, graph6)
 			names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
@@ -2628,7 +2628,7 @@ wrap <- function(data, metadata) {
 				as.numeric(Neuropain.M1c$Results[2] < 0), abs(Neuropain.M1c$Results[3]), as.numeric(Neuropain.M1c$Results[3] < 0))
 			for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 			names(graph5) = graph5_names
-			graph6 = list(Neuropain.M1c$Results[4], Neuropain.M1c$Results[5], Neuropain.M1c$Results[6], Neuropain.M1c$Results[7])
+			graph6 = list(Neuropain.M1c$Results[4], Neuropain.M1c$Results[5], Neuropain.M1c$Results[6], Neuropain.M1c$Results[7], Neuropain.M1c$Results[8], Neuropain.M1c$Results[9], Neuropain.M1c$Results[10])
 			names(graph6) = graph6_names
 			neuropathic_pain = list(as.logical(1 - Neuropain.M1c$urun), graph5, graph6)
 			names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
@@ -2638,7 +2638,7 @@ wrap <- function(data, metadata) {
 				as.numeric(Neuropain.M2c$Results[2] < 0), abs(Neuropain.M2c$Results[3]), as.numeric(Neuropain.M2c$Results[3] < 0))
 			for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 			names(graph5) = graph5_names
-			graph6 = list(Neuropain.M2c$Results[4], Neuropain.M2c$Results[5], Neuropain.M2c$Results[6], Neuropain.M2c$Results[7])
+			graph6 = list(Neuropain.M2c$Results[4], Neuropain.M2c$Results[5], Neuropain.M2c$Results[6], Neuropain.M2c$Results[7], Neuropain.M2c$Results[8], Neuropain.M2c$Results[9], Neuropain.M2c$Results[10])
 			names(graph6) = graph6_names
 			neuropathic_pain = list(as.logical(1 - Neuropain.M2c$urun), graph5, graph6)
 			names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
@@ -2648,7 +2648,7 @@ wrap <- function(data, metadata) {
 				as.numeric(Neuropain.M3c$Results[2] < 0), abs(Neuropain.M3c$Results[3]), as.numeric(Neuropain.M3c$Results[3] < 0))
 			for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 			names(graph5) = graph5_names
-			graph6 = list(Neuropain.M3c$Results[4], Neuropain.M3c$Results[5], Neuropain.M3c$Results[6], Neuropain.M3c$Results[7])
+			graph6 = list(Neuropain.M3c$Results[4], Neuropain.M3c$Results[5], Neuropain.M3c$Results[6], Neuropain.M3c$Results[7], Neuropain.M3c$Results[8], Neuropain.M3c$Results[9], Neuropain.M3c$Results[10])
 			names(graph6) = graph6_names
 			neuropathic_pain = list(as.logical(1 - Neuropain.M3c$urun), graph5, graph6)
 			names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
@@ -2658,7 +2658,7 @@ wrap <- function(data, metadata) {
 				as.numeric(Neuropain.M4c$Results[2] < 0), abs(Neuropain.M4c$Results[3]), as.numeric(Neuropain.M4c$Results[3] < 0))
 			for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 			names(graph5) = graph5_names
-			graph6 = list(Neuropain.M4c$Results[4], Neuropain.M4c$Results[5], Neuropain.M4c$Results[6], Neuropain.M4c$Results[7])
+			graph6 = list(Neuropain.M4c$Results[4], Neuropain.M4c$Results[5], Neuropain.M4c$Results[6], Neuropain.M4c$Results[7], Neuropain.M4c$Results[8], Neuropain.M4c$Results[9], Neuropain.M4c$Results[10])
 			names(graph6) = graph6_names
 			neuropathic_pain = list(as.logical(1 - Neuropain.M4c$urun), graph5, graph6)
 			names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
@@ -2668,7 +2668,7 @@ wrap <- function(data, metadata) {
 				as.numeric(Neuropain.M4.1c$Results[2] < 0), abs(Neuropain.M4.1c$Results[3]), as.numeric(Neuropain.M4.1c$Results[3] < 0))
 			for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 			names(graph5) = graph5_names
-			graph6 = list(Neuropain.M4.1c$Results[4], Neuropain.M4.1c$Results[5], Neuropain.M4.1c$Results[6], Neuropain.M4.1c$Results[7])
+			graph6 = list(Neuropain.M4.1c$Results[4], Neuropain.M4.1c$Results[5], Neuropain.M4.1c$Results[6], Neuropain.M4.1c$Results[7], Neuropain.M4.1c$Results[8], Neuropain.M4.1c$Results[9], Neuropain.M4.1c$Results[10])
 			names(graph6) = graph6_names
 			neuropathic_pain = list(as.logical(1 - Neuropain.M4.1c$urun), graph5, graph6)
 			names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
@@ -2678,14 +2678,14 @@ wrap <- function(data, metadata) {
 				as.numeric(Neuropain.M4.2c$Results[2] < 0), abs(Neuropain.M4.2c$Results[3]), as.numeric(Neuropain.M4.2c$Results[3] < 0))
 			for (i in c(2, 4, 6)) { if (graph5[[i]] == 0) { graph5[[i]] = "A" } else { graph5[[i]] = "B" } }
 			names(graph5) = graph5_names
-			graph6 = list(Neuropain.M4.2c$Results[4], Neuropain.M4.2c$Results[5], Neuropain.M4.2c$Results[6], Neuropain.M4.2c$Results[7])
+			graph6 = list(Neuropain.M4.2c$Results[4], Neuropain.M4.2c$Results[5], Neuropain.M4.2c$Results[6], Neuropain.M4.2c$Results[7], Neuropain.M4.2c$Results[8], Neuropain.M4.2c$Results[9], Neuropain.M4.2c$Results[10])
 			names(graph6) = graph6_names
 			neuropathic_pain = list(as.logical(1 - Neuropain.M4.2c$urun), graph5, graph6)
 			names(neuropathic_pain) = c("successful_run", "graph_5", "graph_6")
 		}
 	}
 	
-	colnames(Results) = c("P025", "Median", "P975", "P(< -0.2)", "P(-0.2 - 0)", "P(0 - 0.2)", "P(> 0.2)")
+	colnames(Results) = c("P025", "Median", "P975", "P(< -0.2)", "P(-0.2 - -0.1)", "P(-0.1 - -0.05)", "P(-0.05 - 0.05)", "P(0.05 - 0.1)", "P(0.1 - 0.2)", "P(> 0.2)")
 	if (nrow(Results) == 6) {
 		rownames(Results) = c("Pain", "Fatigue", "Drowsy", "Sleep", "Thinking", "Constipation")
 	} else if (nrow(Results) == 7) {
@@ -2713,3 +2713,4 @@ wrap <- function(data, metadata) {
 	
 	return(out)
 }
+
