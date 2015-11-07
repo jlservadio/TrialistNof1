@@ -98,7 +98,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 		change.probs = round(Pain.treat.diff.change[[2]], 3)
 		out = list(list(
 			"interval" = structure(as.list(change.interval), names=c("P025", "Median", "P975")),
-			"probs" = structure(as.list(change.probs), names=paste("Proportion",c("< -0.2", "-0.2 - 0", "0 - 0.2", "> 0.2")))
+			"probs" = structure(as.list(change.probs), names=c("P(< -0.2)", "P(-0.2 - -0.1)", "P(-0.1 - -0.05)", "P(-0.05 - 0.05)", "P(0.05 - 0.1)", "P(0.1 - 0.2)", "P(> 0.2)"))
 			), Outcome, mod.id, Pain.urun, Pain.treat.diff.change, Pain.out$alpha, Pain.out$beta, Pain.out$Sd, Pain.out$Slope, Pain.out$DIC, Pain.out$Dev)
 		names(out) = c("pain", "Outcome", "mod.id", "Pain.urun", "Pain.treat.diff.change", "alpha", "beta", "Sd", "Slope", "DIC", "Dev")
 	} else if (index == 2) {
@@ -114,7 +114,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 		change.probs = round(Fatigue.treat.diff.change[[2]], 3)
 		out = list(list(
 			"interval" = structure(as.list(change.interval), names=c("P025", "Median", "P975")),
-			"probs" = structure(as.list(change.probs), names=paste("Proportion",c("< -0.2", "-0.2 - 0", "0 - 0.2", "> 0.2")))
+			"probs" = structure(as.list(change.probs), names=c("P(< -0.2)", "P(-0.2 - -0.1)", "P(-0.1 - -0.05)", "P(-0.05 - 0.05)", "P(0.05 - 0.1)", "P(0.1 - 0.2)", "P(> 0.2)"))
 			), Outcome, mod.id, Fatigue.urun, Fatigue.treat.diff.change, Fatigue.out$beta, Fatigue.out$c, Fatigue.out$p, Fatigue.out$Slopes, 
 			Fatigue.out$DIC)
 		names(out) = c("fatigue", "Outcome", "mod.id", "Fatigue.urun", "Fatigue.treat.diff.change", "beta", "c", "p", "Slope", "DIC")
@@ -131,7 +131,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 		change.probs = round(Drowsy.treat.diff.change[[2]], 3)
 		out = list(list(
 			"interval" = structure(as.list(change.interval), names=c("P025", "Median", "P975")),
-			"probs" = structure(as.list(change.probs), names=paste("Proportion",c("< -0.2", "-0.2 - 0", "0 - 0.2", "> 0.2")))
+			"probs" = structure(as.list(change.probs), names=c("P(< -0.2)", "P(-0.2 - -0.1)", "P(-0.1 - -0.05)", "P(-0.05 - 0.05)", "P(0.05 - 0.1)", "P(0.1 - 0.2)", "P(> 0.2)"))
 			), Outcome, mod.id, Drowsy.urun, Drowsy.treat.diff.change, Drowsy.out$beta, Drowsy.out$c, Drowsy.out$p, Drowsy.out$Slopes, 
 			Drowsy.out$DIC)
 		names(out) = c("drowsy", "Outcome", "mod.id", "Drowsy.urun", "Drowsy.treat.diff.change", "beta", "c", "p", "Slope", "DIC")
@@ -149,7 +149,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 		change.probs = round(Sleep.treat.diff.change[[2]], 3)
 		out = list(list(
 			"interval" = structure(as.list(change.interval), names=c("P025", "Median", "P975")),
-			"probs" = structure(as.list(change.probs), names=paste("Proportion",c("< -0.2", "-0.2 - 0", "0 - 0.2", "> 0.2")))
+			"probs" = structure(as.list(change.probs), names=c("P(< -0.2)", "P(-0.2 - -0.1)", "P(-0.1 - -0.05)", "P(-0.05 - 0.05)", "P(0.05 - 0.1)", "P(0.1 - 0.2)", "P(> 0.2)"))
 			), Outcome, mod.id, Sleep.urun, Sleep.treat.diff.change, Sleep.out$beta, Sleep.out$c, Sleep.out$p, Sleep.out$Slopes, Sleep.out$DIC)
 		names(out) = c("sleep", "Outcome", "mod.id", "Sleep.urun", "Sleep.treat.diff.change", "beta", "c", "p", "Slope", "DIC")
 	} else if (index == 5) {
@@ -165,7 +165,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 		change.probs = round(Thinking.treat.diff.change[[2]], 3)
 		out = list(list(
 			"interval" = structure(as.list(change.interval), names=c("P025", "Median", "P975")),
-			"probs" = structure(as.list(change.probs), names=paste("Proportion",c("< -0.2", "-0.2 - 0", "0 - 0.2", "> 0.2")))
+			"probs" = structure(as.list(change.probs), names=c("P(< -0.2)", "P(-0.2 - -0.1)", "P(-0.1 - -0.05)", "P(-0.05 - 0.05)", "P(0.05 - 0.1)", "P(0.1 - 0.2)", "P(> 0.2)"))
 			), Outcome, mod.id, Thinking.urun, Thinking.treat.diff.change, Thinking.out$beta, Thinking.out$c, Thinking.out$p, 
 			Thinking.out$Slopes, Thinking.out$DIC)
 		names(out) = c("thinking", "Outcome", "mod.id", "Thinking.urun", "Thinking.treat.diff.change", "beta", "c", "p", "Slope", "DIC")
@@ -182,7 +182,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 		change.probs = round(Constipation.treat.diff.change[[2]], 3)
 		out = list(list(
 			"interval" = structure(as.list(change.interval), names=c("P025", "Median", "P975")),
-			"probs" = structure(as.list(change.probs), names=paste("Proportion",c("< -0.2", "-0.2 - 0", "0 - 0.2", "> 0.2")))
+			"probs" = structure(as.list(change.probs), names=c("P(< -0.2)", "P(-0.2 - -0.1)", "P(-0.1 - -0.05)", "P(-0.05 - 0.05)", "P(0.05 - 0.1)", "P(0.1 - 0.2)", "P(> 0.2)"))
 			), Outcome, mod.id, Constipation.urun, Constipation.treat.diff.change, Constipation.out$beta, Constipation.out$c, 
 			Constipation.out$p, Constipation.out$Slopes, Constipation.out$DIC)
 		names(out) = c("constipation", "Outcome", "mod.id", "Constipation.urun", "Constipation.treat.diff.change", "beta", "c", "p", "Slope", 
@@ -200,7 +200,7 @@ analyze <- function(Y, Outcome, Treat, score.range = c(30, 4, 5, 4, 4, 4,30), Co
 		change.probs = round(Neuropain.treat.diff.change[[2]], 3)
 		out = list(list(
 			"interval" = structure(as.list(change.interval), names=c("P025", "Median", "P975")),
-			"probs" = structure(as.list(change.probs), names=paste("Proportion",c("< -0.2", "-0.2 - 0", "0 - 0.2", "> 0.2")))
+			"probs" = structure(as.list(change.probs), names=c("P(< -0.2)", "P(-0.2 - -0.1)", "P(-0.1 - -0.05)", "P(-0.05 - 0.05)", "P(0.05 - 0.1)", "P(0.1 - 0.2)", "P(> 0.2)"))
 			), Outcome, mod.id, Neuropain.urun, Neuropain.treat.diff.change, Neuropain.out$alpha, Neuropain.out$beta, Neuropain.out$Sd, 
 			Neuropain.out$Slopes, Neuropain.out$DIC, Neuropain.out$Dev)
 		names(out) = c("neuropain", "Outcome", "mod.id", "Neuropain.urun", "Neuropain.treat.diff.change", "alpha", "beta", "Sd", "Slope", "DIC", "Dev")
