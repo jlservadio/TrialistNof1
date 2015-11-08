@@ -1827,7 +1827,7 @@ wrap <- function(data, metadata) {
 	
 	graph5_names = c("lower_bound", "lower_bound_regimen", "median_effect", "more_effective_regimen", 
 		"upper_bound", "upper_bound_regimen")
-	graph6_names = c("b_better(big)", "b_better(modest)", "b_better(small)", "unnoticeable", "a_better(small)", "a_better(modest)", "a_better(big")
+	graph6_names = c("b_better_large", "b_better_modest", "b_better_small", "indistinguishable", "a_better_small", "a_better_modest", "a_better_large")
 	
 	if (Best.Model[1] == 1) { 
 		Results = Pain.M1$Results 
@@ -2713,4 +2713,5 @@ wrap <- function(data, metadata) {
 	
 	return(out)
 }
+
 
